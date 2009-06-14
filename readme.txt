@@ -40,7 +40,7 @@ USAGE INSTRUCTIONS
   3. Add Games To Blog
 
 == Frequently Asked Questions ==
-http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
+http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
 
 == Screenshots ==
-http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
+http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
