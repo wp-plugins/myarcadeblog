@@ -3,8 +3,8 @@ Contributors: NetReview
 Donate link: http://netreview.de
 Tags: Arcade, Flash Games, Mochiads, Auto Post, Games
 Requires at least: 2.0.2
-Tested up to: 2.7
-Stable tag: 1.0
+Tested up to: 2.8
+Stable tag: 1.1
 
 MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net using games from Mochiads. It published automatically new games on your blog. 
 
