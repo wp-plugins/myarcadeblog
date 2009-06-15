@@ -38,9 +38,16 @@ USAGE INSTRUCTIONS
   1. Set Your Settings
   2. Feed Games
   3. Add Games To Blog
-
+  
 == Frequently Asked Questions ==
 http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
 
 == Screenshots ==
 http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
+
+== Changelog ==  
+v1.1  - 2009-07-15
+  - Added new download method for feed, games and thumbs. if allow_url_fopen is 
+    set to 0 the plugin will use cURL for downloading files.
+v1.0  - 2009-07-14 
+  Initial Version  

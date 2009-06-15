@@ -3,7 +3,7 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.0
+Version:      1.1
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -13,7 +13,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-$myarcade_version = "1.0";
+$myarcade_version = "1.1";
 
 
 /**
@@ -457,6 +457,21 @@ function myarcade_edit_feed() {
   myarcade_footer();
 }
 
+/*
+ * @brief This function is for alternative download using cURL instead of  
+ *        file_get_contents 
+ */
+function myarcade_get_file_curl($url) {
+  $ch = curl_init();
+  
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+  
+  $result = curl_exec($ch);
+  
+  return $result;    
+}
 
 function myarcade_feed_games() {
   global $wpdb;
@@ -494,7 +509,18 @@ function myarcade_feed_games() {
   //====================================  
   echo "Downloading feed.. ";
   
-  $feed = file_get_contents($mochi_feed); 
+  // Check for allow_url_open
+  if (ini_get('allow_url_fopen')) {
+    // Using file_get_contents
+   $feed = file_get_contents($mochi_feed); 
+  }
+  else {
+    // Using cURL
+    $feed = myarcade_get_file_curl($mochi_feed);
+  }
+  
+  
+ 
   
   if ($feed) {
     echo '<font style="color:green;">OK</font><br>';
@@ -699,8 +725,17 @@ function myarcade_add_games_to_blog() {
       // Download Thumbs?
       if ($download_thumbs == true) {
         $thumb = '';
-        $thumb = file_get_contents($game->thumbnail_url, FILE_BINARY);
         
+        // Check for allow_url_open
+        if (ini_get('allow_url_fopen')) {
+          // Using file_get_contents
+         $thumb = myarcade_get_file_curl($game->thumbnail_url, FILE_BINARY); 
+        }
+        else {
+          // Using cURL
+          $thumb = myarcade_get_file_curl($game->thumbnail_url, FILE_BINARY);
+        }        
+                
         if ($thumb) {
           $path_parts = pathinfo($game->thumbnail_url);
           $extension  = $path_parts['extension'];
@@ -723,8 +758,17 @@ function myarcade_add_games_to_blog() {
       // Download Games?
       if ($download_games == true) {
         $game_swf = '';
-        $game_swf = file_get_contents($game->swf_url, FILE_BINARY);
         
+        // Check for allow_url_open
+        if (ini_get('allow_url_fopen')) {
+          // Using file_get_contents
+         $game_swf = myarcade_get_file_curl($game->swf_url, FILE_BINARY); 
+        }
+        else {
+          // Using cURL
+          $game_swf = myarcade_get_file_curl($game->swf_url, FILE_BINARY);
+        }  
+                
         if ($game_swf) {
           $file_name  = basename($game->swf_url);
           $result     = file_put_contents($games_dir.$file_name, $game_swf);
@@ -814,8 +858,7 @@ function myarcade_prepare_environment() {
 
   $cant     = '<p class="error">ERROR! Can\'t set value for ';
   $contact  = '. Please contact your administrator!</p>';
-
-
+  
   if ( !(ini_set("max_execution_time", 0)) ) 
     echo $cant .'max_execution_time'. $contact;
     
