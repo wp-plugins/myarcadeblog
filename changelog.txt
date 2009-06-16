@@ -1,5 +1,11 @@
+v1.2  - 2009-07-17
+  - Fixed some error messages.
+  
 v1.1  - 2009-07-15
+
   - Added new download method for feed, games and thumbs. if allow_url_fopen is 
     set to 0 the plugin will use cURL for downloading files.
+    
+    
 v1.0  - 2009-07-14 
-  Initial Version
+  Initial Version  

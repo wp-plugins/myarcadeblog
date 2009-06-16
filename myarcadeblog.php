@@ -3,7 +3,7 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.1
+Version:      1.2
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -13,7 +13,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-$myarcade_version = "1.1";
+$myarcade_version = "1.2";
 
 
 /**
@@ -519,14 +519,11 @@ function myarcade_feed_games() {
     $feed = myarcade_get_file_curl($mochi_feed);
   }
   
-  
- 
-  
   if ($feed) {
     echo '<font style="color:green;">OK</font><br>';
   }
   else {
-    echo '<font style="color:red;">OK</font><br>';
+    echo '<font style="color:red;">Can not download Feed from Mochiads.</font><br>';
     return;
   }
   
@@ -538,7 +535,7 @@ function myarcade_feed_games() {
     echo '<font style="color:green;">OK</font><br><br>';
   }
   else {
-    echo '<font style="color:red;">OK</font><br><br>';
+    echo '<font style="color:red;">Can not decode Json Feed!</font><br><br>';
     return;
   }
 
