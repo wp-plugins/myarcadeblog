@@ -4,7 +4,7 @@ Donate link: http://netreview.de
 Tags: Arcade, Flash Games, Mochiads, Auto Post, Games
 Requires at least: 2.0.2
 Tested up to: 2.8
-Stable tag: 1.2
+Stable tag: 1.3
 
 MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net using games from Mochiads. It published automatically new games on your blog. 
 
@@ -40,20 +40,7 @@ USAGE INSTRUCTIONS
   3. Add Games To Blog
   
 == Frequently Asked Questions ==
-http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
+[Tutorial & FAQ](http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/ "Tutorial & FAQ")
 
 == Screenshots ==
-http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/
-
-== Changelog ==  
-v1.2  - 2009-07-16
-  - Fixed some error messages.
-  
-v1.1  - 2009-07-15
-
-  - Added new download method for feed, games and thumbs. if allow_url_fopen is 
-    set to 0 the plugin will use cURL for downloading files.
-    
-    
-v1.0  - 2009-07-14 
-  Initial Version  
+[MyArcadeBlog Screenshots](http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/ "MyArcadeBlog Screenshots")

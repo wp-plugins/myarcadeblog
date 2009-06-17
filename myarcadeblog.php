@@ -3,17 +3,32 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.2
+Version:      1.3
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
+
+/* 
+  Copyright 2009  NetReview.de (Daniel B.)  (email : kontakt@netreview.de)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+*/
+
 
 /**
  *******************************************************************************
  *   G L O B A L S
  *******************************************************************************
  */
-$myarcade_version = "1.2";
+define (MYARCADE_VERSION, '1.3');
 
 
 /**
@@ -54,7 +69,6 @@ function myarcade_footer() {
   $pound  = WP_PLUGIN_URL.'/myarcadeblog/paypal-pound.gif';
   
   ?>
-  
     <table class='form-table'>
     <tr><td>
     <p>
@@ -63,13 +77,13 @@ function myarcade_footer() {
         <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_xclick" type="hidden"><input name="business" value="danbak@web.de" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="EUR" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $euro; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
         <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_xclick" type="hidden"><input name="business" value="danbak@web.de" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="GBP" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $pound; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
       </div>
-      Does this plugin make you happy? Do you find it useful? 
+      Does this plugin makes you happy? Do you find it useful? 
       <br>If you think this plugin helps you, please consider donating. 
       <br><strong>Thank you for your support!</strong>
     </p>
     </td></tr>
     <tr><td>
-      <strong>MyArcadeBlog v<?php echo $myarcade_version;?></strong> | <strong><a href="http://netreview.de" target="_blank">NetReview.de</a> </strong> 
+      <strong>MyArcadeBlog v<?php echo MYARCADE_VERSION;?></strong> | <strong><a href="http://netreview.de" target="_blank">NetReview.de</a> </strong> 
     </td></tr>    
     
     </table>
@@ -414,7 +428,7 @@ function myarcade_edit_feed() {
           <input type="radio" name="downloadgames" value="Yes"  <?php echo $downloadgames_yes; ?>>&nbsp;Yes<br>
           <input type="radio" name="downloadgames" value="No"   <?php echo $downloadgames_no; ?>>&nbsp;No
         </td>
-        <td>Should games be downloaded to your web server? Make sure that folder "../wp-content/games/" is writeable!</td>
+        <td>Should games be downloaded to your web server?</td>
       </tr>    
       <tr valign="top">
         <td>Games Categories:</td>
@@ -434,7 +448,7 @@ function myarcade_edit_feed() {
           <input type="checkbox" name="gamecats[]" value="Sports"     <?php echo $cat_Sports; ?>>&nbsp;Sports
         </td>
         <td>
-          Choose mochiads game categories witch should be published.
+          Choose mochiads game categories which should be published.
         </td>
       </tr>
       <tr>
@@ -461,93 +475,112 @@ function myarcade_edit_feed() {
  * @brief This function is for alternative download using cURL instead of  
  *        file_get_contents 
  */
-function myarcade_get_file_curl($url) {
+function myarcade_get_file_curl($url, $binary = false) {
   $ch = curl_init();
-  
+
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_BINARYTRANSFER, $binary);
   curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-  
+
   $result = curl_exec($ch);
   
-  return $result;    
+  curl_close($ch);
+
+  return $result;
 }
+
+/*
+ * @brief Download a file
+ */
+function myarcade_get_file($url, $binary = false) {
+        
+  // Check for allow_url_open
+  if (ini_get('allow_url_fopen')) {
+    // Using file_get_contents
+    if ($binary == true) {
+      $file_data = file_get_contents($url, FILE_BINARY);
+    }
+    else {
+      $file_data = file_get_contents($url);
+    }
+  }
+  else {
+    // Using cURL
+    $file_data = myarcade_get_file_curl($url, $binary);
+  }
+  
+  return $file_data;
+}
+
 
 function myarcade_feed_games() {
   global $wpdb;
-  
+
   $new_games = 0;
   $add_game = false;
-  
+
   $home = get_option('home');
-  
+
   myarcade_header();
-  
-  myarcade_prepare_environment();  
-  
+
+  myarcade_prepare_environment();
+
   $game_table = $wpdb->prefix . "myarcadegames";
   $settings_table   = $wpdb->prefix . "myarcadesettings";
-  
+
   $myarcade_settings = $wpdb->get_row("SELECT * FROM $settings_table");
-  
+
   $myarcade_categories = explode (', ', $myarcade_settings->game_categories);
-  
-  
-  $feed_format ='?format=json'; 
-  
+
+  $feed_format ='?format=json';
+
   if ($myarcade_settings->feed_games > 0) {
     $limit = '&limit='.$myarcade_settings->feed_games;
   }
   else {
     $limit = '';
   }
-      
+
   $mochi_feed = $myarcade_settings->mochiads_url . $myarcade_settings->mochiads_id . $feed_format . $limit;
-  
+
   echo '<h3>Feed Games</h3>';
-  
-  //====================================  
+
+  //====================================
   echo "Downloading feed.. ";
   
-  // Check for allow_url_open
-  if (ini_get('allow_url_fopen')) {
-    // Using file_get_contents
-   $feed = file_get_contents($mochi_feed); 
-  }
-  else {
-    // Using cURL
-    $feed = myarcade_get_file_curl($mochi_feed);
-  }
-  
+  $feed = myarcade_get_file($mochi_feed, false);
+
   if ($feed) {
     echo '<font style="color:green;">OK</font><br>';
   }
   else {
-    echo '<font style="color:red;">Can not download Feed from Mochiads.</font><br>';
+    echo '<font style="color:red;">Can\'t download Feed from Mochiads!</font><br>';
     return;
   }
-  
+
   //====================================
   echo "Decode feed.. ";
+  
   $json_games = json_decode($feed);
-      
+
   if ($json_games) {
     echo '<font style="color:green;">OK</font><br><br>';
   }
   else {
-    echo '<font style="color:red;">Can not decode Json Feed!</font><br><br>';
+    echo '<font style="color:red;">Can\'t decode Json Feed!</font><br><br>';
     return;
   }
+  
+  echo '<ul id="gamelist">';
 
-    echo '<ul id="gamelist">';
-    
   //====================================
   foreach ($json_games->games as $game) {
     // Prüfe, ob das Spiel schon in der Tabelle vorhanden ist
     $game_uuid = $wpdb->get_var("SELECT uuid FROM ".$game_table." WHERE uuid = '$game->uuid'");
-    
+
     if (!$game_uuid) {
-    
+
       // Prüfe kategorien
       // Wenn Game in der Kategorie, dann hinzufügen
       $add_game   = false;
@@ -559,10 +592,10 @@ function myarcade_feed_games() {
             break;
           }
         }
-        
+
         if ($add_game == true) break;
       }
-      
+
       if ($add_game == true) {
         $categories = implode(",", $game->categories);
       }
@@ -571,20 +604,20 @@ function myarcade_feed_games() {
       }
 
       $tags = implode(",", $game->tags);
-      
+
       // Controls
       $game_control = '';
       foreach ($game->controls as $control) {
         $game_control .= implode(" = ", $control) . ";";
       }
-      
+
       $game->name         = str_replace("'", "\\'", $game->name);
       $game->description  = str_replace("'", "\\'", $game->description);
       $game->instructions = str_replace("'", "\\'", $game->instructions);
       $game->thumbnail_url = str_replace("'", "\\'", $game->thumbnail_url);
       $game->swf_url      = str_replace("'", "\\'", $game->swf_url);
       $tags               = str_replace("'", "\\'", $tags);
-      
+
       // Das Spiel in die Tabelle eintragen
       $query = "INSERT INTO ".$game_table." (
                 uuid,
@@ -618,22 +651,22 @@ function myarcade_feed_games() {
                 '$game->created',
                 '$game->leaderboard_enabled',
                 'new')";
-      
+
       $wpdb->query($query);
-      
+
       $new_games++;
-            
+
       echo '<ol>'.$new_games.': '.$game->name.'</ol>';
-      
+
     }
   }
-  
+
   if ($new_games > 0) {
     echo '<p><strong>'.$new_games.' new games were found.</strong></p>';
-    echo '<p class="noerror">You can now add new games to your blog.</p>';
+    echo '<p class="noerror">Now, you can add new games to your blog.</p>';
   }
   else {
-    echo '<p class="myerror"><strong>No new games found!<br>You can try to increase the number of "Feed Games".<br>Go to "My Arcade Settings".</strong></p>';
+    echo '<p class="myerror"><strong>No new games found!<br>You can try to increase the number of "Feed Games" at the settings page or wait until Mochiads updates the feed.</strong></p>';
   }
 
   myarcade_footer();
@@ -643,20 +676,20 @@ function myarcade_feed_games() {
 
 function myarcade_add_games_to_blog() {
   global $wpdb;
-  
+
   myarcade_header();
-  
+
   myarcade_prepare_environment();
-  
+
   $home = get_option('home');
-  
+
   // Directory Locations
   $games_dir  = ABSPATH .'wp-content/games/';
-  $thumbs_dir = ABSPATH .'wp-content/thumbs/';  
-  
+  $thumbs_dir = ABSPATH .'wp-content/thumbs/';
+
   $post_interval = 0;
   $new_games = false;
-  
+
   $game_table = $wpdb->prefix . "myarcadegames";
   $settings_table   = $wpdb->prefix . "myarcadesettings";
 
@@ -664,18 +697,18 @@ function myarcade_add_games_to_blog() {
   $myarcade_settings = $wpdb->get_row("SELECT * FROM $settings_table");
   
   $unpublished_games  = $wpdb->get_var("SELECT COUNT(*) FROM ".$game_table." WHERE status = 'new'");
-  
+
   if (intval($myarcade_settings->publish_games) <= $unpublished_games) {
     $game_limit = $myarcade_settings->publish_games;
   } else {
     $game_limit = $unpublished_games;
   }
-  
+
   // Check Download Directories
   $download_games = false;
   if ($myarcade_settings->download_games == 'Yes') {
     if (!is_writable($games_dir)) {
-      echo '<p class="myerror">The games directory "' . $games_dir . '" must be writeable (chmod 777) in order to download the games.</p>';
+      echo '<p class="myerror">The games directory "' . $games_dir . '" must be writeable (chmod 777) in order to download games.</p>';
     } else {
       $download_games = true;
     }
@@ -684,12 +717,12 @@ function myarcade_add_games_to_blog() {
   $download_thumbs = false;
   if ($myarcade_settings->download_thumbs == 'Yes') {
     if (!is_writable($thumbs_dir)) {
-      echo '<p class="myerror">The thumbails directory "' . $thumbs_dir . '" must be writeable (chmod 777) in order to download the thumbnails.</p>';
+      echo '<p class="myerror">The thumbails directory "' . $thumbs_dir . '" must be writeable (chmod 777) in order to download thumbnails.</p>';
     } else {
       $download_thumbs = true;
-    }    
+    }
   }
-  
+
 
   //====================================
   echo "<h3>Games To Blog</h3>";
@@ -697,13 +730,13 @@ function myarcade_add_games_to_blog() {
 
   // Publish Games
   for($i = 1; $i <= $game_limit; $i++) {
- 
+
     // Get a game
     $game = $wpdb->get_row("SELECT * FROM ".$game_table." WHERE status = 'new' order by created asc");
 
     if ($game) {
       $new_games = true;
-      
+
       $cat_id = array();
 
       echo "<li>
@@ -711,28 +744,19 @@ function myarcade_add_games_to_blog() {
             <ul>
               <li>Categories: $game->categories</li>";
 
-      // Mach aus String ein Array
       $categs = explode(",",$game->categories);
 
       for($x=0; $x < count($categs); $x++) {
         $categs[$x] = str_replace("-"," ",$categs[$x]);
         array_push ($cat_id, get_cat_id($categs[$x])); 
       }
-      
+
       // Download Thumbs?
       if ($download_thumbs == true) {
         $thumb = '';
-        
-        // Check for allow_url_open
-        if (ini_get('allow_url_fopen')) {
-          // Using file_get_contents
-         $thumb = myarcade_get_file_curl($game->thumbnail_url, FILE_BINARY); 
-        }
-        else {
-          // Using cURL
-          $thumb = myarcade_get_file_curl($game->thumbnail_url, FILE_BINARY);
-        }        
-                
+
+        $thumb = myarcade_get_file($game->thumbnail_url, true);
+
         if ($thumb) {
           $path_parts = pathinfo($game->thumbnail_url);
           $extension  = $path_parts['extension'];
@@ -749,32 +773,24 @@ function myarcade_add_games_to_blog() {
           }
         } else {
           echo "<li>Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..</li>";
-        }       
+        }
       }
-      
+
       // Download Games?
       if ($download_games == true) {
         $game_swf = '';
         
-        // Check for allow_url_open
-        if (ini_get('allow_url_fopen')) {
-          // Using file_get_contents
-         $game_swf = myarcade_get_file_curl($game->swf_url, FILE_BINARY); 
-        }
-        else {
-          // Using cURL
-          $game_swf = myarcade_get_file_curl($game->swf_url, FILE_BINARY);
-        }  
-                
+        $game_swf = myarcade_get_file($game->swf_url, true);
+
         if ($game_swf) {
           $file_name  = basename($game->swf_url);
           $result     = file_put_contents($games_dir.$file_name, $game_swf);
-          
+
           if ($result == false) {
             echo '<li class="myerror">Game download <strong>failed</strong>! Ignore this game..</li>';
             // Set status to ignored
             $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
-            $wpdb->query($query);           
+            $wpdb->query($query);
             continue;
           } else {
             echo "<li>Game download <strong>OK</strong>!</li>";
@@ -784,13 +800,12 @@ function myarcade_add_games_to_blog() {
           echo '<li class="myerror">Game download <strong>failed</strong>! Ignore this game..</li>';
           // Set status to ignored
           $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
-          $wpdb->query($query);           
+          $wpdb->query($query);
           continue;
-        }       
+        }
       }
 
-      echo "</ul>";      
-      
+      echo "</ul>";
 
       if ($myarcade_settings->publish_status == 'Scheduled') {
         $post_interval = $post_interval + $myarcade_settings->schedule;
@@ -798,11 +813,10 @@ function myarcade_add_games_to_blog() {
       else if ($myarcade_settings->publish_status == 'Publish') {
         $post_interval = 0;
       }
-      
+
       $publish_date = gmdate( 'Y-m-d H:i:s', ( time() + ($post_interval*60) + (get_option( 'gmt_offset' ) * 3600 ) ) );
 
 
-      
       //====================================
       // Post Zusammenbauen
       $post = array();
@@ -830,9 +844,9 @@ function myarcade_add_games_to_blog() {
       $wpdb->query($query); 
 
       echo "</li>";
-      
+
     }
-    
+
   } // END - for games
 
   //====================================
@@ -855,20 +869,20 @@ function myarcade_prepare_environment() {
 
   $cant     = '<p class="error">ERROR! Can\'t set value for ';
   $contact  = '. Please contact your administrator!</p>';
-  
+
   if ( !(ini_set("max_execution_time", 0)) ) 
     echo $cant .'max_execution_time'. $contact;
-    
+
   if ( !(ini_set("default_socket_timeout", 480)) )
     echo $cant .'default_socket_timeout'. $contact;
-    
+
   if ( !(ini_set("memory_limit", "128M")) )
     if ( !(ini_set("memory_limit", "64M")) )
       echo $cant .'memory_limit'. $contact;
-    
-  if ( !(set_time_limit(0)) )   
+
+  if ( !(set_time_limit(0)) )
     echo $cant .'set_time_limit'. $contact;
-    
+
 } // END - myarcade_prepare_environment
 
 
@@ -899,14 +913,14 @@ function myarcade_install() {
       `status` text collate utf8_unicode_ci NOT NULL,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  
+
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
   }
 
-  
+
   $settings_table = $wpdb->prefix . "myarcadesettings";
-  
+
  if ($wpdb->get_var("show tables like '$settings_table'") != $settings_table) {
 
     $sql = "CREATE TABLE `$settings_table` (
@@ -923,12 +937,11 @@ function myarcade_install() {
       `create_categories` text collate utf8_unicode_ci NOT NULL,
       PRIMARY KEY  (`ID`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  
+
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
-    
-    
-     $query = "INSERT INTO $settings_table (
+
+    $query = "INSERT INTO $settings_table (
               `ID` ,
               `mochiads_url` ,
               `mochiads_id` ,
@@ -942,18 +955,18 @@ function myarcade_install() {
               `create_categories`
               ) VALUES (
                   NULL , 
-                  'http://www.mochiads.com/feeds/games/', 
-                  '', 
-                  '100', 
-                  '20', 
-                  'Publish', 
-                  'No', 
-                  'No', 
-                  '', 
-                  '', 
+                  'http://www.mochiads.com/feeds/games/',
+                  '',
+                  '100',
+                  '20',
+                  'Publish',
+                  'No',
+                  'No',
+                  '',
+                  '',
                   ''
               )";
-     
+
      $wpdb->query($query);
   }
 }
@@ -1009,7 +1022,6 @@ function add_cssstyle() {
   border:0px;
   background:white;
 }
- 
 
 </style>
 <?php
@@ -1022,12 +1034,13 @@ function add_cssstyle() {
 
 function get_game($postid) {
   global $post;
-    
+
   $game_url = get_post_meta($postid, "swf_url", true); 
-  
+
   // Show the game
   $code = '<embed src="'.$game_url.'" menu="false" quality="high" width="'.get_post_meta($postid, "width", true).'" height="'.get_post_meta($postid, "height", true).'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
-  return $code;  
+
+  return $code;
 } // END - get_game
 
 ?>
