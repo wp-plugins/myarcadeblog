@@ -3,7 +3,7 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.3
+Version:      1.4
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,10 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.3');
+define (MYARCADE_VERSION, '1.4');
+
+// You need at least PHP Version 5.2.0+ to run this plugin
+define (MYARCADE_PHP_VERSION, '5.2.0');
 
 
 /**
@@ -42,7 +45,10 @@ register_activation_hook( __FILE__, 'myarcade_install' );
 if ( ! defined( 'WP_PLUGIN_URL' ) )
       define( 'WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins' );
 
-
+      
+/*
+ * @brief Shows the admin menu
+ */
 function myarcade_admin_menu() {
 
   add_menu_page('My Arcade', 'My Arcade', 8, __FILE__, 'myarcade_show_stats');
@@ -52,6 +58,9 @@ function myarcade_admin_menu() {
 }
 
 
+/*
+ * @brief 
+ */
 function myarcade_header() {
   
   add_cssstyle();
@@ -61,6 +70,9 @@ function myarcade_header() {
 }
 
 
+/*
+ * @brief
+ */
 function myarcade_footer() {
   global $myarcade_version;
 
@@ -92,6 +104,9 @@ function myarcade_footer() {
 }
 
 
+/*
+ * @brief Shows the ovewview page in WordPress backend
+ */
 function myarcade_show_stats() {
   global $wpdb;
   
@@ -151,7 +166,9 @@ function myarcade_show_stats() {
 
 }
 
-
+/*
+ * @brief Shows the settings page and handels all settings changes 
+ */
 function myarcade_edit_feed() {
   global $wpdb;
     
@@ -190,7 +207,7 @@ function myarcade_edit_feed() {
   
   if ($action == 'save') {
   
-    // Hole alle relevanten POST-Daten 
+    // Get POST data
     $mochiurl       = $_POST['mochiurl'];
     $mochiid        = $_POST['mochiid'];
     $feedcount      = $_POST['feed_count'];
@@ -202,7 +219,7 @@ function myarcade_edit_feed() {
     $categories_post = $_POST['gamecats'];
     $create_game_cats = $_POST['createcats'];
                 
-    // Kategorienamen korrigieren, weil im POST kein Leerzeichen übertragen werden kann
+    // Correct categorie names
     $cat_count = count($categories_post);
     
     for ($x = 0; $x < $cat_count; $x++) {
@@ -216,7 +233,6 @@ function myarcade_edit_feed() {
       }
     }
     
-    // String aus dem Array machen
     if ($cat_count > 0) {
       $categories_str = implode(', ', $categories_post);
     }
@@ -253,7 +269,7 @@ function myarcade_edit_feed() {
       }    
     }        
     
-    // Settings speichern
+    // Save settings
     $wpdb->query("UPDATE $settings_table SET 
           mochiads_url    ='$mochiurl',
           mochiads_id     ='$mochiid',
@@ -275,7 +291,7 @@ function myarcade_edit_feed() {
   $myarcade_settings  = $wpdb->get_row("SELECT * FROM $settings_table");
 
   
-  // Radio-Buttons belegen
+  // Check Radio-Buttons
   if ($myarcade_settings->download_games == 'Yes') {
     if (!is_writable($games_dir)) {
       echo '<p class="myerror">The games directory "' . $games_dir . '" must be writeable (chmod 777) in order to download the games.</p>';
@@ -317,7 +333,7 @@ function myarcade_edit_feed() {
      
     $categories = explode(', ', $myarcade_settings->game_categories); 
     
-    // Prüfe, welche Kategorien ausgewählt wurden
+    // Which categories have been selected..
     foreach ($categories as $cat) {
       switch ($cat) {
         case 'Action':
@@ -471,6 +487,7 @@ function myarcade_edit_feed() {
   myarcade_footer();
 }
 
+
 /*
  * @brief This function is for alternative download using cURL instead of  
  *        file_get_contents 
@@ -489,6 +506,7 @@ function myarcade_get_file_curl($url, $binary = false) {
 
   return $result;
 }
+
 
 /*
  * @brief Download a file
@@ -513,7 +531,9 @@ function myarcade_get_file($url, $binary = false) {
   return $file_data;
 }
 
-
+/*
+ * @brief Gets a feed from mochiads and adds new games into the games table 
+ */
 function myarcade_feed_games() {
   global $wpdb;
 
@@ -545,6 +565,20 @@ function myarcade_feed_games() {
   $mochi_feed = $myarcade_settings->mochiads_url . $myarcade_settings->mochiads_id . $feed_format . $limit;
 
   echo '<h3>Feed Games</h3>';
+  
+  //====================================
+  // Check if json_decode exisits
+  if (function_exists(json_decode)) {   
+     $phpversion = phpversion();
+    
+    if($phpversion < MYARCADE_PHP_VERSION) {
+      echo '<font style="color:red;">You need at least PHP 5.2.0 to run this plugin.<br>You have '.$phpversion.' installed.<br>Contact your administrator to update PHP.</font><br><br>';
+    }
+    else {
+     echo '<font style="color:red;">JSON Support is disabeld in your PHP configuration.<br>Please contact your administrator to activate JSON Support.</font><br><br>';
+    }
+     return;
+  }  
 
   //====================================
   echo "Downloading feed.. ";
@@ -576,13 +610,12 @@ function myarcade_feed_games() {
 
   //====================================
   foreach ($json_games->games as $game) {
-    // Prüfe, ob das Spiel schon in der Tabelle vorhanden ist
+    // Check, if this game is present in the games table
     $game_uuid = $wpdb->get_var("SELECT uuid FROM ".$game_table." WHERE uuid = '$game->uuid'");
 
     if (!$game_uuid) {
 
-      // Prüfe kategorien
-      // Wenn Game in der Kategorie, dann hinzufügen
+      // Check game categories and add game if it's category has been selected
       $add_game   = false;
       $categories = '';
       foreach($game->categories as $gamecat) {
@@ -618,7 +651,7 @@ function myarcade_feed_games() {
       $game->swf_url      = str_replace("'", "\\'", $game->swf_url);
       $tags               = str_replace("'", "\\'", $tags);
 
-      // Das Spiel in die Tabelle eintragen
+      // Put this game into games table
       $query = "INSERT INTO ".$game_table." (
                 uuid,
                 name,
@@ -673,7 +706,9 @@ function myarcade_feed_games() {
 
 } // END - mochi_feed_games
 
-
+/*
+ * @brief Adds feeded games to the blog as posts
+ */
 function myarcade_add_games_to_blog() {
   global $wpdb;
 
@@ -818,7 +853,7 @@ function myarcade_add_games_to_blog() {
 
 
       //====================================
-      // Post Zusammenbauen
+      // Create a WordPress post
       $post = array();
       $post['post_title']     = $game->name;
       $post['post_content']   = '<img src="'.$game->thumbnail_url.'" style="float:left;margin-right:5px;">'.$game->description;
@@ -838,7 +873,7 @@ function myarcade_add_games_to_blog() {
       add_post_meta($post_id, 'swf_url',        $game->swf_url);  
       add_post_meta($post_id, 'thumbnail_url',  $game->thumbnail_url);
 
-      // Setze Status auf "published" in der Mochi-Tabelle
+      // Mochi-Table: Set post status to poblished
       $query = "update ".$game_table." set status = 'published' where id = $game->id";
 
       $wpdb->query($query); 
@@ -865,6 +900,9 @@ function myarcade_add_games_to_blog() {
  * S E T U P  F U N C T I O N S
  ******************************************************************************/
 
+/*
+ * @brief Increases the memory limit and disables time out 
+ */
 function myarcade_prepare_environment() {
 
   $cant     = '<p class="error">ERROR! Can\'t set value for ';
@@ -886,6 +924,9 @@ function myarcade_prepare_environment() {
 } // END - myarcade_prepare_environment
 
 
+/*
+ * @brief Plugin installation. Adds needed tables
+ */
 function myarcade_install() {
   global $wpdb;
 
@@ -976,7 +1017,9 @@ function myarcade_install() {
  * S T Y L E S  F U N C T I O N S
  ******************************************************************************/
 
-
+/*
+ * @brief Includes CSS-Styles
+ */
 function add_cssstyle() {
 ?>
 <style type="text/css">
@@ -1032,6 +1075,9 @@ function add_cssstyle() {
  * G A M E  O U T P U T  F U N C T I O N S
  ******************************************************************************/
 
+/*
+ * @brief Shows a game swf
+ */
 function get_game($postid) {
   global $post;
 
