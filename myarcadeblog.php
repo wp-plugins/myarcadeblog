@@ -568,7 +568,7 @@ function myarcade_feed_games() {
   
   //====================================
   // Check if json_decode exisits
-  if (function_exists(json_decode)) {   
+  if (!function_exists(json_decode)) {   
      $phpversion = phpversion();
     
     if($phpversion < MYARCADE_PHP_VERSION) {
