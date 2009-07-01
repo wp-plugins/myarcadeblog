@@ -40,7 +40,7 @@ USAGE INSTRUCTIONS
   3. Add Games To Blog
   
 CHANGELOG
-[Changelog v1.5](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "Changelog v1.5)
+[Changelog v1.5](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "Changelog v1.5")
   
 == Frequently Asked Questions ==
 [Tutorial & FAQ](http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/ "Tutorial & FAQ")
