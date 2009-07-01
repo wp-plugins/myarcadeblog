@@ -3,7 +3,7 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.4
+Version:      1.5
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.4');
+define (MYARCADE_VERSION, '1.5');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -76,22 +76,22 @@ function myarcade_header() {
 function myarcade_footer() {
   global $myarcade_version;
 
-  $dollar = WP_PLUGIN_URL.'/myarcadeblog/paypal-dollar.gif';
-  $euro   = WP_PLUGIN_URL.'/myarcadeblog/paypal-euro.gif';
-  $pound  = WP_PLUGIN_URL.'/myarcadeblog/paypal-pound.gif';
+  $dollar = WP_PLUGIN_URL.'/myarcadeblog/paypal-dollar.png';
+  $euro   = WP_PLUGIN_URL.'/myarcadeblog/paypal-euro.png';
+  $pound  = WP_PLUGIN_URL.'/myarcadeblog/paypal-pound.png';
   
   ?>
     <table class='form-table'>
     <tr><td>
     <p>
       <div class="mg_paypal">
-        <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_xclick" type="hidden"><input name="business" value="danbak@web.de" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="USD" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $dollar; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
-        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_xclick" type="hidden"><input name="business" value="danbak@web.de" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="EUR" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $euro; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
-        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_xclick" type="hidden"><input name="business" value="danbak@web.de" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="GBP" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $pound; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+        <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513813" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="USD" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $dollar; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513268" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="EUR" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $euro; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513917" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="GBP" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $pound; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
       </div>
       Does this plugin make you happy? Do you find it useful? 
-      <br>If you think this plugin helps you, please consider donating. 
-      <br><strong>Thank you for your support!</strong>
+      <br />If you think this plugin helps you, please consider donating. 
+      <br /><strong>Thank you for your support!</strong>
     </p>
     </td></tr>
     <tr><td>
@@ -142,7 +142,7 @@ function myarcade_show_stats() {
           <th scope="col" class="manage-column column-title">Feed Games</th>
           <th scope="col" class="manage-column column-title">Publish Games</th>
           <th scope="col" class="manage-column column-title">Publish Status</th>
-          <th scope="col" class="manage-column column-title">Publish Interval</th>
+          <th scope="col" class="manage-column column-title">Publish Interval (min.)</th>
           <th scope="col" class="manage-column column-title">Download Thumbnails</th>
           <th scope="col" class="manage-column column-title">Download Games</th>
         </tr>
@@ -153,7 +153,7 @@ function myarcade_show_stats() {
         <td scope="col"><?php echo $myarcade_settings->feed_games;?></td>
         <td scope="col"><?php echo $myarcade_settings->publish_games;?></td>
         <td scope="col"><?php echo $myarcade_settings->publish_status;?></td>
-        <td scope="col"><?php echo $myarcade_settings->schedule;?> min.</td>
+        <td scope="col"><?php echo $myarcade_settings->schedule;?></td>
         <td scope="col"><?php echo $myarcade_settings->download_thumbs;?></td>
         <td scope="col"><?php echo $myarcade_settings->download_games;?></td>
     </tr>
@@ -422,10 +422,10 @@ function myarcade_edit_feed() {
       <tr valign="top" height="150px">
         <td>Publish Status:</td>
         <td>
-          <input type="radio" name="publishstatus" value="Publish"        <?php echo $publishposts; ?>>&nbsp;Publish<br>
-          <input type="radio" name="publishstatus" value="Scheduled"      <?php echo $scheduled; ?>>&nbsp;Scheduled<br>
-            <br>
-            Time between posts in minutes<br> (only if Scheduled is checked):<br><br>
+          <input type="radio" name="publishstatus" value="Publish"        <?php echo $publishposts; ?>>&nbsp;Publish<br />
+          <input type="radio" name="publishstatus" value="Scheduled"      <?php echo $scheduled; ?>>&nbsp;Scheduled<br />
+            <br />
+            Time between posts in minutes<br /> (only if Scheduled is checked):<br /><br />
               <input type="text" name="schedtime" value="<?php echo $myarcade_settings->schedule; ?>">
         </td>
         <td>Choose how games should be added as new posts.</td>
@@ -433,7 +433,7 @@ function myarcade_edit_feed() {
       <tr valign="top">
         <td>Download Thumbnails:</td>
         <td>
-          <input type="radio" name="downloadthumbs" value="Yes" <?php echo $downloadthumbs_yes; ?>>&nbsp;Yes<br>
+          <input type="radio" name="downloadthumbs" value="Yes" <?php echo $downloadthumbs_yes; ?>>&nbsp;Yes<br />
           <input type="radio" name="downloadthumbs" value="No"  <?php echo $downloadthumbs_no; ?>>&nbsp;No
         </td>
         <td>Should game thumnails be downloaded to your web server?</td>
@@ -441,7 +441,7 @@ function myarcade_edit_feed() {
       <tr valign="top">
         <td>Download Games:</td>
         <td>
-          <input type="radio" name="downloadgames" value="Yes"  <?php echo $downloadgames_yes; ?>>&nbsp;Yes<br>
+          <input type="radio" name="downloadgames" value="Yes"  <?php echo $downloadgames_yes; ?>>&nbsp;Yes<br />
           <input type="radio" name="downloadgames" value="No"   <?php echo $downloadgames_no; ?>>&nbsp;No
         </td>
         <td>Should games be downloaded to your web server?</td>
@@ -449,18 +449,18 @@ function myarcade_edit_feed() {
       <tr valign="top">
         <td>Games Categories:</td>
         <td>
-          <input type="checkbox" name="gamecats[]" value="Action"     <?php echo $cat_Action; ?>>&nbsp;Action<br>
-          <input type="checkbox" name="gamecats[]" value="Adventure"  <?php echo $cat_Adventure; ?>>&nbsp;Adventure<br>
-          <input type="checkbox" name="gamecats[]" value="BoardGames"  <?php echo $cat_BoardGames; ?>>&nbsp;Board Games<br>
-          <input type="checkbox" name="gamecats[]" value="Casino"     <?php echo $cat_Casino; ?>>&nbsp;Casino<br>
-          <input type="checkbox" name="gamecats[]" value="Customize"  <?php echo $cat_Customize; ?>>&nbsp;Customize<br>
-          <input type="checkbox" name="gamecats[]" value="DressUp"    <?php echo $cat_DressUp; ?>>&nbsp;Dress-Up<br>
-          <input type="checkbox" name="gamecats[]" value="Driving"    <?php echo $cat_Driving; ?>>&nbsp;Driving<br>
-          <input type="checkbox" name="gamecats[]" value="Fighting"   <?php echo $cat_Fighting; ?>>&nbsp;Fighting<br>
-          <input type="checkbox" name="gamecats[]" value="HighScores" <?php echo $cat_HighScores; ?>>&nbsp;High Scores<br>
-          <input type="checkbox" name="gamecats[]" value="Other"      <?php echo $cat_Other; ?>>&nbsp;Other<br>
-          <input type="checkbox" name="gamecats[]" value="Puzzles"    <?php echo $cat_Puzzles; ?>>&nbsp;Puzzles<br>
-          <input type="checkbox" name="gamecats[]" value="Shooting"   <?php echo $cat_Shooting; ?>>&nbsp;Shooting<br>
+          <input type="checkbox" name="gamecats[]" value="Action"     <?php echo $cat_Action; ?>>&nbsp;Action<br />
+          <input type="checkbox" name="gamecats[]" value="Adventure"  <?php echo $cat_Adventure; ?>>&nbsp;Adventure<br />
+          <input type="checkbox" name="gamecats[]" value="BoardGames"  <?php echo $cat_BoardGames; ?>>&nbsp;Board Games<br />
+          <input type="checkbox" name="gamecats[]" value="Casino"     <?php echo $cat_Casino; ?>>&nbsp;Casino<br />
+          <input type="checkbox" name="gamecats[]" value="Customize"  <?php echo $cat_Customize; ?>>&nbsp;Customize<br />
+          <input type="checkbox" name="gamecats[]" value="DressUp"    <?php echo $cat_DressUp; ?>>&nbsp;Dress-Up<br />
+          <input type="checkbox" name="gamecats[]" value="Driving"    <?php echo $cat_Driving; ?>>&nbsp;Driving<br />
+          <input type="checkbox" name="gamecats[]" value="Fighting"   <?php echo $cat_Fighting; ?>>&nbsp;Fighting<br />
+          <input type="checkbox" name="gamecats[]" value="HighScores" <?php echo $cat_HighScores; ?>>&nbsp;High Scores<br />
+          <input type="checkbox" name="gamecats[]" value="Other"      <?php echo $cat_Other; ?>>&nbsp;Other<br />
+          <input type="checkbox" name="gamecats[]" value="Puzzles"    <?php echo $cat_Puzzles; ?>>&nbsp;Puzzles<br />
+          <input type="checkbox" name="gamecats[]" value="Shooting"   <?php echo $cat_Shooting; ?>>&nbsp;Shooting<br />
           <input type="checkbox" name="gamecats[]" value="Sports"     <?php echo $cat_Sports; ?>>&nbsp;Sports
         </td>
         <td>
@@ -555,6 +555,7 @@ function myarcade_feed_games() {
 
   $feed_format ='?format=json';
 
+  // Check if there is a feed limit. If not, feed all games
   if ($myarcade_settings->feed_games > 0) {
     $limit = '&limit='.$myarcade_settings->feed_games;
   }
@@ -562,34 +563,57 @@ function myarcade_feed_games() {
     $limit = '';
   }
 
-  $mochi_feed = $myarcade_settings->mochiads_url . $myarcade_settings->mochiads_id . $feed_format . $limit;
+  // Creat the Mochisads Feed URL
+  $mochi_feed = trim($myarcade_settings->mochiads_url)
+              . trim($myarcade_settings->mochiads_id) 
+              . $feed_format 
+              . $limit;
 
   echo '<h3>Feed Games</h3>';
-  
+    
   //====================================
   // Check if json_decode exisits
   if (!function_exists(json_decode)) {   
      $phpversion = phpversion();
     
     if($phpversion < MYARCADE_PHP_VERSION) {
-      echo '<font style="color:red;">You need at least PHP 5.2.0 to run this plugin.<br>You have '.$phpversion.' installed.<br>Contact your administrator to update PHP.</font><br><br>';
+      echo '<font style="color:red;">You need at least PHP 5.2.0 to run this plugin.<br />You have '.$phpversion.' installed.<br />Contact your administrator to update PHP.</font><br /><br />';
     }
     else {
-     echo '<font style="color:red;">JSON Support is disabeld in your PHP configuration.<br>Please contact your administrator to activate JSON Support.</font><br><br>';
+     echo '<font style="color:red;">JSON Support is disabeld in your PHP configuration.<br />Please contact your administrator to activate JSON Support.</font><br /><br />';
     }
-     return;
+
+    // Show Footer 
+    myarcade_footer();
+      
+    return;
   }  
 
   //====================================
+  // Show the Feed URL
+  echo "Your Feed URL: <a href='".$mochi_feed."'>".$mochi_feed."</a><br /><br />";
+  
   echo "Downloading feed.. ";
   
   $feed = myarcade_get_file($mochi_feed, false);
-
+  
+  // Check, if we got a Error-Page  
+  if (!strncmp($feed, "<!DOCTYPE", 9)) {    
+    echo '<font style="color:red;">Feed not found. Please check or remove your MochiadsID!</font><br /><br />';
+    
+    myarcade_footer();
+    
+    return;
+  }
+  
   if ($feed) {
-    echo '<font style="color:green;">OK</font><br>';
+    echo '<font style="color:green;">OK</font><br />';
   }
   else {
-    echo '<font style="color:red;">Can\'t download Feed from Mochiads!</font><br>';
+    echo '<font style="color:red;">Can\'t download Feed from Mochiads!</font><br />';
+    
+    myarcade_footer();
+    
     return;
   }
 
@@ -599,10 +623,13 @@ function myarcade_feed_games() {
   $json_games = json_decode($feed);
 
   if ($json_games) {
-    echo '<font style="color:green;">OK</font><br><br>';
+    echo '<font style="color:green;">OK</font><br /><br />';
   }
   else {
-    echo '<font style="color:red;">Can\'t decode Json Feed!</font><br><br>';
+    echo '<font style="color:red;">Can\'t decode Json Feed!</font><br /><br />';
+    
+    myarcade_footer();
+    
     return;
   }
   
@@ -699,7 +726,7 @@ function myarcade_feed_games() {
     echo '<p class="noerror">Now, you can add new games to your blog.</p>';
   }
   else {
-    echo '<p class="myerror"><strong>No new games found!<br>You can try to increase the number of "Feed Games" at the settings page or wait until Mochiads updates the feed.</strong></p>';
+    echo '<p class="myerror"><strong>No new games found!<br />You can try to increase the number of "Feed Games" at the settings page or wait until Mochiads updates the feed.</strong></p>';
   }
 
   myarcade_footer();
@@ -761,7 +788,7 @@ function myarcade_add_games_to_blog() {
 
   //====================================
   echo "<h3>Games To Blog</h3>";
-  echo "<ol>";
+  echo "<ul>";
 
   // Publish Games
   for($i = 1; $i <= $game_limit; $i++) {
@@ -773,11 +800,24 @@ function myarcade_add_games_to_blog() {
       $new_games = true;
 
       $cat_id = array();
-
-      echo "<li>
-            <strong>$game->name</strong>
-            <ul>
-              <li>Categories: $game->categories</li>";
+      
+      
+      if (($i % 2) == 0)
+        $bg_color = 'style="background-color: #EFEFEF;"';
+      else
+        $bg_color = '';
+        
+      ?>
+        <li <?php echo $bg_color; ?>>
+          <div>
+            <div style="float:left;margin-right:5px">
+              <img src="<?php echo $game->thumbnail_url; ?>" alt="">      
+            </div>
+            <div style="float:left">
+            <strong><?php echo $game->name; ?></strong><br /><br />
+            <strong>Categories:</strong> <?php echo $game->categories; ?><br />
+            
+      <?php 
 
       $categs = explode(",",$game->categories);
 
@@ -800,14 +840,14 @@ function myarcade_add_games_to_blog() {
           $result = file_put_contents($thumbs_dir.$file_name, $thumb);
           
           if ($result == false) {
-            echo "<li>Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..</li>";
+            echo "Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..<br />";
           }
           else {
-            echo "<li>Thumbnail download <strong>OK</strong>!</li>";
+            echo "Thumbnail download <strong>OK</strong>!<br />";
             $game->thumbnail_url = $home.'/wp-content/thumbs/'.$file_name;
           }
         } else {
-          echo "<li>Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..</li>";
+          echo "Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..<br />";
         }
       }
 
@@ -818,21 +858,21 @@ function myarcade_add_games_to_blog() {
         $game_swf = myarcade_get_file($game->swf_url, true);
 
         if ($game_swf) {
-          $file_name  = basename($game->swf_url);
+          $file_name  = urldecode(basename($game->swf_url));
           $result     = file_put_contents($games_dir.$file_name, $game_swf);
 
           if ($result == false) {
-            echo '<li class="myerror">Game download <strong>failed</strong>! Ignore this game..</li>';
+            echo '<p class="myerror">Game download <strong>failed</strong>! Ignore this game..</p>';
             // Set status to ignored
             $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
             $wpdb->query($query);
             continue;
           } else {
-            echo "<li>Game download <strong>OK</strong>!</li>";
+            echo "Game download <strong>OK</strong>!<br />";
             $game->swf_url = $home. '/wp-content/games/'.$file_name;
           }
         } else {
-          echo '<li class="myerror">Game download <strong>failed</strong>! Ignore this game..</li>';
+          echo '<p class="myerror">Game download <strong>failed</strong>! Ignore this game..</p>';
           // Set status to ignored
           $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
           $wpdb->query($query);
@@ -840,7 +880,7 @@ function myarcade_add_games_to_blog() {
         }
       }
 
-      echo "</ul>";
+      echo '</div></div><div style="clear:both;"></div></li>';
 
       if ($myarcade_settings->publish_status == 'Scheduled') {
         $post_interval = $post_interval + $myarcade_settings->schedule;
@@ -877,9 +917,6 @@ function myarcade_add_games_to_blog() {
       $query = "update ".$game_table." set status = 'published' where id = $game->id";
 
       $wpdb->query($query); 
-
-      echo "</li>";
-
     }
 
   } // END - for games
@@ -889,7 +926,7 @@ function myarcade_add_games_to_blog() {
     echo '<li><p class="myerror">No new games to add. Feed Games first!</p></li>';
   }
 
-  echo "</ol>";
+  echo "</ul>";
   
   myarcade_footer();
 
