@@ -3,12 +3,12 @@
 Plugin Name:  My Arcade Blog for Mochiads
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.5
+Version:      1.6
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
 
-/* 
+/*
   Copyright 2009  NetReview.de (Daniel B.)  (email : kontakt@netreview.de)
 
     This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.5');
+define (MYARCADE_VERSION, '1.6');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -45,7 +45,7 @@ register_activation_hook( __FILE__, 'myarcade_install' );
 if ( ! defined( 'WP_PLUGIN_URL' ) )
       define( 'WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins' );
 
-      
+
 /*
  * @brief Shows the admin menu
  */
@@ -74,7 +74,6 @@ function myarcade_header() {
  * @brief
  */
 function myarcade_footer() {
-  global $myarcade_version;
 
   $dollar = WP_PLUGIN_URL.'/myarcadeblog/paypal-dollar.png';
   $euro   = WP_PLUGIN_URL.'/myarcadeblog/paypal-euro.png';
@@ -166,6 +165,7 @@ function myarcade_show_stats() {
 
 }
 
+
 /*
  * @brief Shows the settings page and handels all settings changes 
  */
@@ -208,17 +208,18 @@ function myarcade_edit_feed() {
   if ($action == 'save') {
   
     // Get POST data
-    $mochiurl       = $_POST['mochiurl'];
-    $mochiid        = $_POST['mochiid'];
-    $feedcount      = $_POST['feed_count'];
-    $gamecount      = $_POST['game_count'];
-    $publishstatus  = $_POST['publishstatus'];
-    $schedtime      = $_POST['schedtime'];
-    $downloadthumbs = $_POST['downloadthumbs'];
-    $downloadgames  = $_POST['downloadgames'];
-    $categories_post = $_POST['gamecats'];
+    $mochiurl         = trim($_POST['mochiurl']);
+    $mochiid          = trim($_POST['mochiid']);
+    $feedcount        = trim($_POST['feed_count']);
+    $gamecount        = trim($_POST['game_count']);
+    $publishstatus    = $_POST['publishstatus'];
+    $schedtime        = trim($_POST['schedtime']);
+    $downloadthumbs   = $_POST['downloadthumbs'];
+    $downloadgames    = $_POST['downloadgames'];
+    $categories_post  = $_POST['gamecats'];
     $create_game_cats = $_POST['createcats'];
-                
+    $maxwidth         = trim($_POST['maxwidth']);
+                    
     // Correct categorie names
     $cat_count = count($categories_post);
     
@@ -271,18 +272,19 @@ function myarcade_edit_feed() {
     
     // Save settings
     $wpdb->query("UPDATE $settings_table SET 
-          mochiads_url    ='$mochiurl',
-          mochiads_id     ='$mochiid',
-          feed_games      ='$feedcount',
-          publish_games   ='$gamecount',
-          publish_status  ='$publishstatus',
-          download_thumbs ='$downloadthumbs',
-          download_games  ='$downloadgames',
-          schedule        ='$schedtime',
-          game_categories ='$categories_str',
-          create_categories = '$create_game_cats'
+          mochiads_url      ='$mochiurl',
+          mochiads_id       ='$mochiid',
+          feed_games        ='$feedcount',
+          publish_games     ='$gamecount',
+          publish_status    ='$publishstatus',
+          download_thumbs   ='$downloadthumbs',
+          download_games    ='$downloadgames',
+          schedule          ='$schedtime',
+          game_categories   ='$categories_str',
+          create_categories = '$create_game_cats',
+          maxwidth          = '$maxwidth'
     ");
-
+    
     echo '<p class="noerror">Your settings have been updated!</p>';
     
   } // END - if action
@@ -475,8 +477,15 @@ function myarcade_edit_feed() {
         <td>Check this if you want to create selected mochiads categories in your blog.</td>
       </tr>
       <tr>
+        <td>Max. Game Width: </td>
+        <td>   
+          <input type="text"  name="maxwidth" value="<?php echo $myarcade_settings->maxwidth; ?>">
+        </td>
+        <td>Max. allowed game width in px. (optional)</td>
+      </tr>
+      <tr>
         <td colspan="3">
-          <input type="submit" name="submit" value="Save Settings">
+          <input class="button-primary" type="submit" name="submit" value="Save Settings">
         </td>
       </tr>
       </table>
@@ -531,6 +540,7 @@ function myarcade_get_file($url, $binary = false) {
   return $file_data;
 }
 
+
 /*
  * @brief Gets a feed from mochiads and adds new games into the games table 
  */
@@ -546,8 +556,8 @@ function myarcade_feed_games() {
 
   myarcade_prepare_environment();
 
-  $game_table = $wpdb->prefix . "myarcadegames";
-  $settings_table   = $wpdb->prefix . "myarcadesettings";
+  $game_table     = $wpdb->prefix . "myarcadegames";
+  $settings_table = $wpdb->prefix . "myarcadesettings";
 
   $myarcade_settings = $wpdb->get_row("SELECT * FROM $settings_table");
 
@@ -599,7 +609,7 @@ function myarcade_feed_games() {
   
   // Check, if we got a Error-Page  
   if (!strncmp($feed, "<!DOCTYPE", 9)) {    
-    echo '<font style="color:red;">Feed not found. Please check or remove your MochiadsID!</font><br /><br />';
+    echo '<font style="color:red;">Feed not found. Please check Mochiad Feed URL and MochiadsID!</font><br /><br />';
     
     myarcade_footer();
     
@@ -733,6 +743,7 @@ function myarcade_feed_games() {
 
 } // END - mochi_feed_games
 
+
 /*
  * @brief Adds feeded games to the blog as posts
  */
@@ -784,7 +795,10 @@ function myarcade_add_games_to_blog() {
       $download_thumbs = true;
     }
   }
-
+  
+  // Disable Error Reporting
+  $error_lvl = ini_get('error_reporting');
+  ini_set('error_reporting', 0);
 
   //====================================
   echo "<h3>Games To Blog</h3>";
@@ -837,8 +851,16 @@ function myarcade_add_games_to_blog() {
           $extension  = $path_parts['extension'];
           $file_name  = $game->slug.'.'.$extension;
           
-          $result = file_put_contents($thumbs_dir.$file_name, $thumb);
-          
+          // Check, if we got a Error-Page  
+          if (!strncmp($thumb, "<!DOCTYPE", 9)) {
+            $result = false;  
+          }
+          else {
+            // Save the thumbnail to the thumbs folder
+            $result = file_put_contents($thumbs_dir.$file_name, $thumb);
+          }
+      
+          // Error-Check
           if ($result == false) {
             echo "Thumbnail download <strong>failed</strong>! Using mochiads thumbnail file..<br />";
           }
@@ -857,15 +879,26 @@ function myarcade_add_games_to_blog() {
         
         $game_swf = myarcade_get_file($game->swf_url, true);
 
+        // We got a file
         if ($game_swf) {
           $file_name  = urldecode(basename($game->swf_url));
-          $result     = file_put_contents($games_dir.$file_name, $game_swf);
+          
+          // Check, if we got a Error-Page  
+          if (!strncmp($game_swf, "<!DOCTYPE", 9)) {
+              $result = false;  
+          }
+          else {
+            // Save the game to the games directory
+            $result = file_put_contents($games_dir.$file_name, $game_swf);
+          }
 
+          // Error-Check 
           if ($result == false) {
             echo '<p class="myerror">Game download <strong>failed</strong>! Ignore this game..</p>';
             // Set status to ignored
             $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
             $wpdb->query($query);
+            echo '</div></div><div style="clear:both;"></div></li>';
             continue;
           } else {
             echo "Game download <strong>OK</strong>!<br />";
@@ -876,6 +909,7 @@ function myarcade_add_games_to_blog() {
           // Set status to ignored
           $query = "UPDATE ".$game_table." SET status = 'ignored' where id = $game->id";
           $wpdb->query($query);
+          echo '</div></div><div style="clear:both;"></div></li>';
           continue;
         }
       }
@@ -910,7 +944,7 @@ function myarcade_add_games_to_blog() {
       add_post_meta($post_id, 'instructions',   $game->instructions);
       add_post_meta($post_id, 'height',         $game->height);
       add_post_meta($post_id, 'width',          $game->width);
-      add_post_meta($post_id, 'swf_url',        $game->swf_url);  
+      add_post_meta($post_id, 'swf_url',        $game->swf_url);
       add_post_meta($post_id, 'thumbnail_url',  $game->thumbnail_url);
 
       // Mochi-Table: Set post status to poblished
@@ -927,8 +961,11 @@ function myarcade_add_games_to_blog() {
   }
 
   echo "</ul>";
-  
+    
   myarcade_footer();
+  
+  // Restore Error Reporting
+  ini_set('error_reporting', $error_lvl);
 
 } // END - Games To Blog
 
@@ -966,7 +1003,7 @@ function myarcade_prepare_environment() {
  */
 function myarcade_install() {
   global $wpdb;
-
+  
   // Create needed tables
   $game_table = $wpdb->prefix . "myarcadegames";
   
@@ -997,22 +1034,23 @@ function myarcade_install() {
   }
 
 
+  // Check if settings table exisits
   $settings_table = $wpdb->prefix . "myarcadesettings";
 
- if ($wpdb->get_var("show tables like '$settings_table'") != $settings_table) {
-
+  if ($wpdb->get_var("show tables like '$settings_table'") != $settings_table) {
     $sql = "CREATE TABLE `$settings_table` (
-      `ID` int(11) NOT NULL auto_increment,
-      `mochiads_url`    text collate utf8_unicode_ci NOT NULL,
-      `mochiads_id`     text collate utf8_unicode_ci NOT NULL,
-      `feed_games`      text collate utf8_unicode_ci NOT NULL,
-      `publish_games`   text collate utf8_unicode_ci NOT NULL,
-      `publish_status`  text collate utf8_unicode_ci NOT NULL,
-      `download_thumbs` text collate utf8_unicode_ci NOT NULL,
-      `download_games`  text collate utf8_unicode_ci NOT NULL,
-      `schedule`        text collate utf8_unicode_ci NOT NULL,
-      `game_categories` text collate utf8_unicode_ci NOT NULL,
+      `ID`                int(11) NOT NULL auto_increment,
+      `mochiads_url`      text collate utf8_unicode_ci NOT NULL,
+      `mochiads_id`       text collate utf8_unicode_ci NOT NULL,
+      `feed_games`        text collate utf8_unicode_ci NOT NULL,
+      `publish_games`     text collate utf8_unicode_ci NOT NULL,
+      `publish_status`    text collate utf8_unicode_ci NOT NULL,
+      `download_thumbs`   text collate utf8_unicode_ci NOT NULL,
+      `download_games`    text collate utf8_unicode_ci NOT NULL,
+      `schedule`          text collate utf8_unicode_ci NOT NULL,
+      `game_categories`   text collate utf8_unicode_ci NOT NULL,
       `create_categories` text collate utf8_unicode_ci NOT NULL,
+      `maxwidth`          text collate utf8_unicode_ci NOT NULL,
       PRIMARY KEY  (`ID`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
@@ -1030,7 +1068,8 @@ function myarcade_install() {
               `download_games` ,
               `schedule` ,
               `game_categories` ,
-              `create_categories`
+              `create_categories` ,
+              `maxwidth`
               ) VALUES (
                   NULL , 
                   'http://www.mochiads.com/feeds/games/',
@@ -1042,10 +1081,36 @@ function myarcade_install() {
                   'No',
                   '',
                   '',
+                  '',
                   ''
               )";
 
      $wpdb->query($query);
+  }
+  else {
+    // Table allready exisits..
+    // Check if the table need to be upgraded
+    myarcade_upgrade();
+  }
+}
+
+
+/*
+ * @brief Upgrades the MyArcadeBlog Tables
+ */
+function myarcade_upgrade() { 
+  global $wpdb;
+  
+  $settings_table = $wpdb->prefix . "myarcadesettings";  
+  $settings_cols  = $wpdb->get_col("SHOW COLUMNS FROM $settings_table ");
+  
+  // Upgrade from 1.5 to 1.6
+  if (!in_array('maxwidth', $settings_cols)) {
+    $wpdb->query("
+      ALTER TABLE `$settings_table`
+      ADD `maxwidth` text collate utf8_unicode_ci NOT NULL
+      AFTER `create_categories`
+    ");
   }
 }
 
@@ -1109,21 +1174,59 @@ function add_cssstyle() {
 
 
 /*******************************************************************************
- * G A M E  O U T P U T  F U N C T I O N S
+ * O U T P U T  F U N C T I O N S
  ******************************************************************************/
 
 /*
  * @brief Shows a game swf
  */
-function get_game($postid) {
-  global $post;
+function get_game($postid, $fullsize = false) {
+  global $wpdb, $post;
 
-  $game_url = get_post_meta($postid, "swf_url", true); 
-
+  $settings_table  = $wpdb->prefix . "myarcadesettings";
+  
+  $game_url   = get_post_meta($postid, "swf_url", true);  
+  $gamewidth  = intval(get_post_meta($postid, "width", true));
+  $gameheight = intval(get_post_meta($postid, "height", true));
+  $maxwidth   = intval($wpdb->get_var("SELECT maxwidth FROM ".$settings_table));
+  
+  // Should the game be resized..
+  if (($fullsize == false) && ($maxwidth))  {
+    if ($gamewidth > $maxwidth) {
+      // Adjust the game dimensions
+      $ratio      = $maxwidth / $gamewidth;
+      $gamewidth  = $maxwidth;
+      $gameheight = $gameheight * $ratio;    
+    }   
+  }
+ 
+  // Embed game code
+  $code = '<embed src="'.$game_url.'" menu="false" quality="high" width="'.$gamewidth.'" height="'.$gameheight.'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+  
   // Show the game
-  $code = '<embed src="'.$game_url.'" menu="false" quality="high" width="'.get_post_meta($postid, "width", true).'" height="'.get_post_meta($postid, "height", true).'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
-
   return $code;
 } // END - get_game
+
+
+
+/*
+ * @brief Check the game width. If the game is larger as defined max. width 
+ *        return true, otherwise false.
+ */ 
+function myarcade_check_width($postid) {
+  global $wpdb, $post;
+  
+  $result = false;
+  $settings_table  = $wpdb->prefix . "myarcadesettings";
+  
+  $maxwidth   = intval($wpdb->get_var("SELECT maxwidth FROM ".$settings_table));
+  $gamewidth  = intval(get_post_meta($postid, "width", true));
+  
+  if ($gamewidth > $maxwidth) {
+    $result = true;
+  }
+  
+  return $result;  
+}
 
 ?>
