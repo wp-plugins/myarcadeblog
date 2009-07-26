@@ -1,9 +1,9 @@
 <?php
 /* 
-Plugin Name:  My Arcade Blog for Mochiads
+Plugin Name:  MyArcadeBlog
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
-Description:  Turn your wordpress blog into a mochiads game portal.
-Version:      1.6
+Description:  Turn your wordpress blog into an arcade game portal.
+Version:      1.7
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.6');
+define (MYARCADE_VERSION, '1.7');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -46,19 +46,20 @@ if ( ! defined( 'WP_PLUGIN_URL' ) )
       define( 'WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins' );
 
 
-/*
+/**
  * @brief Shows the admin menu
  */
 function myarcade_admin_menu() {
 
   add_menu_page('My Arcade', 'My Arcade', 8, __FILE__, 'myarcade_show_stats');
-  add_submenu_page(__FILE__, 'Settings',    'Settings',   8, 'myarcade-edit-feed',  'myarcade_edit_feed');
-  add_submenu_page(__FILE__, 'Feed Games',  'Feed Games', 8, 'myarcade-feed-games',    'myarcade_feed_games');
+  add_submenu_page(__FILE__, 'Feed Mochi Games',  'Feed Mochi Games', 8, 'myarcade-feed-games',    'myarcade_feed_games');
   add_submenu_page(__FILE__, 'Games To Blog', 'Games To Blog', 8, 'myarcade-add-games-to-blog', 'myarcade_add_games_to_blog');
+  add_submenu_page(__FILE__, 'Import Games','Import Games', 8, 'myarcade-import-games',    'myarcade_import_games');
+  add_submenu_page(__FILE__, 'Settings',    'Settings',   8, 'myarcade-edit-settings',  'myarcade_edit_settings');
 }
 
 
-/*
+/**
  * @brief 
  */
 function myarcade_header() {
@@ -70,7 +71,7 @@ function myarcade_header() {
 }
 
 
-/*
+/**
  * @brief
  */
 function myarcade_footer() {
@@ -103,8 +104,8 @@ function myarcade_footer() {
 }
 
 
-/*
- * @brief Shows the ovewview page in WordPress backend
+/**
+ * @brief Shows the overview page in WordPress backend
  */
 function myarcade_show_stats() {
   global $wpdb;
@@ -166,10 +167,10 @@ function myarcade_show_stats() {
 }
 
 
-/*
- * @brief Shows the settings page and handels all settings changes 
+/**
+ * @brief Shows the settings page and handels all setting changes 
  */
-function myarcade_edit_feed() {
+function myarcade_edit_settings() {
   global $wpdb;
     
   myarcade_header();
@@ -187,21 +188,22 @@ function myarcade_edit_feed() {
   $downloadgames_yes  = '';
   $downloadgames_no   = '';
   $categories_str     = '';
-  $cat_Action = '';
-  $cat_Adventure = '';
-  $cat_BoardGames = '';
-  $cat_Casino = '';
-  $cat_Customize = '';
-  $cat_DressUp = '';
-  $cat_Driving = '';
-  $cat_Fighting = '';
-  $cat_HighScores = '';
-  $cat_Other = '';
-  $cat_Puzzles = '';
-  $cat_Shooting = '';
-  $cat_Sports = '';
+  $cat_Action         = '';
+  $cat_Adventure      = '';
+  $cat_BoardGames     = '';
+  $cat_Casino         = '';
+  $cat_Customize      = '';
+  $cat_DressUp        = '';
+  $cat_Driving        = '';
+  $cat_Fighting       = '';
+  $cat_HighScores     = '';
+  $cat_Other          = '';
+  $cat_Puzzles        = '';
+  $cat_Shooting       = '';
+  $cat_Sports         = '';
   
-  $settings_table     = $wpdb->prefix . "myarcadesettings";
+  $game_table     = $wpdb->prefix . "myarcadegames";
+  $settings_table = $wpdb->prefix . "myarcadesettings";
     
   $action = $_POST['feedaction'];
   
@@ -288,10 +290,24 @@ function myarcade_edit_feed() {
     echo '<p class="noerror">Your settings have been updated!</p>';
     
   } // END - if action
+  else {
+    $action = $_POST['resettab'];
+    
+    if ($action == 'reset') {
+      $validate = $_POST['validreset'];
+      
+      if ($validate == 'sure') {
+        // Reset Game Table
+        $wpdb->query("TRUNCATE TABLE $game_table");
+        echo '<p class="noerror">All feeded games have been deleted.</p>';
+      }
+      else {
+        echo '<p class="myerror">If you want to delete all feeded games, you have to check "Yes, I\'m sure.."</p>';
+      }
+    }
+  }
   
-
   $myarcade_settings  = $wpdb->get_row("SELECT * FROM $settings_table");
-
   
   // Check Radio-Buttons
   if ($myarcade_settings->download_games == 'Yes') {
@@ -389,7 +405,7 @@ function myarcade_edit_feed() {
 
   ?>
     <h3>Settings</h3>
-    <form method="post" name="editfeed">
+    <form method="post" name="editsettings">
       <input type="hidden" name="feedaction" value="save">
       
       <table cellspacing="15">
@@ -491,13 +507,21 @@ function myarcade_edit_feed() {
       </table>
     </form>
     
+    <div class="reset_table">
+      <form method="post" name="editsettings">
+      <input type="hidden" name="resettab" value="reset"><input type="checkbox" name="validreset" value="sure"> Yes, I'm sure.. <input class="button-secondary" type="submit" name="submit" value="Reset all feeded games">    
+      </form>
+      <span class="info">Attention! All feeded games will be deleted! Published posts will not be touched..</span>
+    </div>
+    <div class="clear"></div>
+    
   <?php
    
   myarcade_footer();
 }
 
 
-/*
+/**
  * @brief This function is for alternative download using cURL instead of  
  *        file_get_contents 
  */
@@ -517,7 +541,7 @@ function myarcade_get_file_curl($url, $binary = false) {
 }
 
 
-/*
+/**
  * @brief Download a file
  */
 function myarcade_get_file($url, $binary = false) {
@@ -541,7 +565,7 @@ function myarcade_get_file($url, $binary = false) {
 }
 
 
-/*
+/**
  * @brief Gets a feed from mochiads and adds new games into the games table 
  */
 function myarcade_feed_games() {
@@ -647,11 +671,11 @@ function myarcade_feed_games() {
 
   //====================================
   foreach ($json_games->games as $game) {
+    
     // Check, if this game is present in the games table
     $game_uuid = $wpdb->get_var("SELECT uuid FROM ".$game_table." WHERE uuid = '$game->uuid'");
 
-    if (!$game_uuid) {
-
+    if ($game_uuid != $game->uuid) {
       // Check game categories and add game if it's category has been selected
       $add_game   = false;
       $categories = '';
@@ -744,7 +768,36 @@ function myarcade_feed_games() {
 } // END - mochi_feed_games
 
 
-/*
+/**
+ * @brief Inserts a game as a wordpress post
+ */
+function myarcade_add_game_post($game) {
+    global $wpdb; 
+  
+      //====================================
+      // Create a WordPress post
+      $post = array();
+      $post['post_title']     = $game['name'];
+      $post['post_content']   = '<img src="'.$game['thumb'].'" style="float:left;margin-right:5px;">'.$game['description'];
+      $post['post_status']    = 'publish';
+      $post['post_author']    = 1;
+      $post['post_type']      = 'post';
+      $post['post_category']  = $game['categories']; // Category IDs
+      $post['post_date']      = $game['date'];
+      $post['tags_input']     = $game['tags'];
+
+      $post_id = wp_insert_post($post); 
+
+      add_post_meta($post_id, 'description',    $game['description']);
+      add_post_meta($post_id, 'instructions',   $game['instructions']);
+      add_post_meta($post_id, 'height',         $game['height']);
+      add_post_meta($post_id, 'width',          $game['width']);
+      add_post_meta($post_id, 'swf_url',        $game['file']);
+      add_post_meta($post_id, 'thumbnail_url',  $game['thumb']);  
+}
+
+
+/**
  * @brief Adds feeded games to the blog as posts
  */
 function myarcade_add_games_to_blog() {
@@ -928,24 +981,20 @@ function myarcade_add_games_to_blog() {
 
       //====================================
       // Create a WordPress post
-      $post = array();
-      $post['post_title']     = $game->name;
-      $post['post_content']   = '<img src="'.$game->thumbnail_url.'" style="float:left;margin-right:5px;">'.$game->description;
-      $post['post_status']    = 'publish';
-      $post['post_author']    = 1;
-      $post['post_type']      = 'post';
-      $post['post_category']  = $cat_id;
-      $post['post_date']      = $publish_date;
-      $post['tags_input']     = $game->tags;
-
-      $post_id = wp_insert_post($post); 
-
-      add_post_meta($post_id, 'description',    $game->description);
-      add_post_meta($post_id, 'instructions',   $game->instructions);
-      add_post_meta($post_id, 'height',         $game->height);
-      add_post_meta($post_id, 'width',          $game->width);
-      add_post_meta($post_id, 'swf_url',        $game->swf_url);
-      add_post_meta($post_id, 'thumbnail_url',  $game->thumbnail_url);
+      $mochi_game = array();
+      $mochi_game['name']           = $game->name;       
+      $mochi_game['file']           = $game->swf_url;
+      $mochi_game['width']          = $game->width;
+      $mochi_game['height']         = $game->height;
+      $mochi_game['thumb']          = $game->thumbnail_url;
+      $mochi_game['description']    = $game->description;
+      $mochi_game['instructions']   = $game->instructions;
+      $mochi_game['tags']           = $game->tags;
+      $mochi_game['categories']     = $cat_id;   
+      $mochi_game['date']           = $publish_date;
+      
+      // Add game as a post
+      myarcade_add_game_post($mochi_game);
 
       // Mochi-Table: Set post status to poblished
       $query = "update ".$game_table." set status = 'published' where id = $game->id";
@@ -969,36 +1018,244 @@ function myarcade_add_games_to_blog() {
 
 } // END - Games To Blog
 
+/**
+ * 
+ * @brief Imports other games than Mochiads games
+ */
+function myarcade_import_games() {
+  
+  myarcade_header();
+  
+  $home = get_option('home');
+  
+  // Directory Locations
+  $game_dir       = 'wp-content/games/';
+  $games_dir_abs  = ABSPATH . $game_dir;
+  $thumbs_dir     = 'wp-content/thumbs/';
+  $thumbs_dir_abs = ABSPATH . $thumbs_dir;  
+   
+  echo "<h3>Import Game To Blog</h3>";
+  
+  $action = $_POST['impcostgame'];
+  
+  if ($action == 'import') {
+    // We have a costum game to import
+    
+    $game = array();
+    $game['name']         = $_POST['gamename']; 
+    $game['file']         = $home. '/' .$game_dir .$_FILES['gamefile']['name'];
+    $game['width']        = intval($_POST['gamewidth']);
+    $game['height']       = intval($_POST['gameheight']);
+    $game['thumb']        = $home. '/' .$thumbs_dir .$_FILES['thumbfile']['name'];
+    $game['description']  = $_POST['gamedescr'];
+    $game['instructions'] = $_POST['gameinstr'];
+    $game['tags']         = $_POST['gametags'];    
+    $game['categories']   = $_POST['gamecategs'];    
+    $game['date']         = gmdate( 'Y-m-d H:i:s', ( time() + (get_option( 'gmt_offset' ) * 3600 ) ) );
+    
+    $game_file_abs   =  $games_dir_abs  . $_FILES['gamefile']['name'];
+    $thumbs_file_abs = $thumbs_dir_abs . $_FILES['thumbfile']['name'];
+        
+    if (move_uploaded_file($_FILES['gamefile']['tmp_name'], $game_file_abs)) {
+      echo 'Game Upload Successful<br />';
+      
+      if (move_uploaded_file($_FILES['thumbfile']['tmp_name'], $thumbs_file_abs)) {
+        echo 'Thumb Upload Successful';
+        
+        // Add the game to blog
+        myarcade_add_game_post($game);
+        
+        echo '<p class="noerror">Import of '.$game['name'].' was succsessfull.</p>';         
+      }
+      else {
+        echo '<p class="myerror">Can\'t upload game thumb.</p>';
+      }
+    }
+    else {
+     echo '<p class="myerror">Can\'t upload game file.</p>';
+    }    
+  }
+  
+  $categs = get_all_category_ids();
+  
+  ?>
+  <script type="text/javascript">
+  
+  function myarcade_selectmethod() {
+	  if (document.FormImportMethod.importmethod.value == 'Costum')
+	   document.getElementById("costumg").style.display  = "inline";
+	  else 			  
+	   document.getElementById("costumg").style.display  = "none";
+  } // END - myarcade_selectmethod
+
+  function myarcade_chkImportCostum() {
+
+	   if (document.FormCostumGame.gamename.value == "") {
+		      alert("Set a name first..");
+		      document.FormCostumGame.gamename.focus();
+		      return false;
+		    }
+	 if (document.FormCostumGame.gamefile.value == "") {
+	    alert("Select a game file first..");
+	    document.FormCostumGame.gamefile.focus();
+	    return false;
+	  }
+   if (document.FormCostumGame.gamewidth.value == "") {
+	      alert("Set the game width!");
+	      document.FormCostumGame.gamewidth.focus();
+	      return false;
+	    }	  
+   if (document.FormCostumGame.gameheight.value == "") {
+       alert("Set the game height!");
+       document.FormCostumGame.gameheight.focus();
+       return false;
+     }  	  
+   if (document.FormCostumGame.thumbfile.value == "") {
+       alert("Select a thumbnail for this game!");
+       document.FormCostumGame.thumbfile.focus();
+       return false;
+     }
+   if (document.FormCostumGame.gamedescr.value == "") {
+       alert("There is no game description!");
+       document.FormCostumGame.gamedescr.focus();
+       return false;
+     }
+
+   var categs = false;
+   for(var i = 0; i < document.FormCostumGame.elements.length - 1; i++) {
+	   if( (document.FormCostumGame.elements[i].type == "checkbox") && (document.FormCostumGame.elements[i].checked == true)) {
+      categs = true;
+      break;
+     }
+   }
+   
+   if (categs == false) {
+	   alert("Select at least one category!");
+	   return false;
+   }
+	} // END - myarcade_chkImportCostum
+  </script>
+  
+  <div class="importmethod">
+    <form name="FormImportMethod">
+      Select an import method:
+      <select name="importmethod" onchange='myarcade_selectmethod()'>
+        <option value="Costum" >Costum&nbsp;</option>
+        <!-- <option value="IBPArcade" >IBPArcade </option>  --> <?php // Comming soon :)?>
+      </select>
+    </form>
+  </div>
+
+<div id="costumg">  
+  <strong>Import a costum game</strong> 
+  <br /><br />
+  <form enctype="multipart/form-data" method="post" name="FormCostumGame" onsubmit="return myarcade_chkImportCostum(this.FormCostumGame)">
+  <input type="hidden" name="impcostgame" value="import">
+  <table>
+    <tr>
+      <td>Name:</td>
+      <td><input name="gamename" type="text" /></td>
+      <td><strong>(requried)</strong></td>
+    </tr>  
+    <tr>
+      <td>Select a game file:</td>
+      <td><input name="gamefile" type="file" /></td>
+      <td><strong>(requried)</strong></td>
+    </tr>
+    <tr>
+      <td>Game width:</td>
+      <td><input name="gamewidth" type="text"  size="5" /> px</td>
+      <td><strong>(requried)</strong></td>
+    </tr>
+    <tr>
+      <td>Game height:</td>
+      <td><input name="gameheight" type="text" size="5" /> px</td>
+      <td><strong>(requried)</strong></td>
+    </tr>  
+    <tr>
+      <td>Select a thumbnail:</td>
+      <td><input name="thumbfile" type="file" /></td>
+      <td><strong>(requried)</strong></td>
+    </tr>  
+    <tr valign="top">
+      <td>Game description:</td>
+      <td><textarea rows="4" cols="30" name="gamedescr"></textarea></td>
+      <td><strong>(requried)</strong></td>
+    </tr>
+    <tr valign="top">
+      <td>Instructions:</td>
+      <td><textarea rows="4" cols="30" name="gameinstr"></textarea></td>
+      <td>(optional)</td>
+    </tr>  
+    <tr>
+      <td>Tags (Comma separated):</td>
+      <td><input type="text" name="gametags" size="30"></td>
+      <td>(optional)</td>
+    </tr>
+    <tr valign="top">
+      <td valign="top">Categories:</td>
+      <td> 
+      <?php 
+        foreach ($categs as $cat_id)
+        {
+          echo '<input type="checkbox" name="gamecategs[]" value="'.$cat_id.'">&nbsp;'.get_cat_name($cat_id).'<br />';
+        }
+      ?>
+      </td>
+      <td><strong>(requried)</strong></td>
+    </tr>
+  </table>
+  
+  <input class="button-primary"  type="submit" value="Import">
+</form>
+</div>
+
+ <?php  
+  
+  myarcade_footer();
+  
+} // END - Import Games
+
 
 /*******************************************************************************
  * S E T U P  F U N C T I O N S
  ******************************************************************************/
 
-/*
+/**
  * @brief Increases the memory limit and disables time out 
  */
 function myarcade_prepare_environment() {
+  
+  $max_execution_time_l     = 60*5;   // 5 min
+  $default_socket_timeout_l = 60*5;   // 5 min
+  $memory_limit_l           = "64M";  // Should be enough
+  $set_time_limit_l         = 60*5;   // 5 min
 
-  $cant     = '<p class="error">ERROR! Can\'t set value for ';
-  $contact  = '. Please contact your administrator!</p>';
+  $cant       = '<p class="error"><strong>WARNING!</strong> Can\'t set value for ';
+  $contact_1  = '. If MyArcadeBlog doesn\'t work properly please contact your administrator to increase the value of ';
+  $contact_2  = ' to ';
+  $contact_3  = '</p>';
 
-  if ( !(ini_set("max_execution_time", 0)) ) 
-    echo $cant .'max_execution_time'. $contact;
 
-  if ( !(ini_set("default_socket_timeout", 480)) )
-    echo $cant .'default_socket_timeout'. $contact;
+  // Check max_execution_time
+  if ( !(ini_set("max_execution_time", $max_execution_time_l)) )
+    echo $cant.'max_execution_time'.$contact_1.'max_execution_time'.$contact_2.$max_execution_time_l.$contact_3;
+  
+  // Check default_socket_timeout
+  //if ( !(ini_set("default_socket_timeout", $default_socket_timeout_l)) )
+    //echo $cant.'memory_limit'.$contact_1.'memory_limit'.$contact_2.$default_socket_timeout_l.$contact_3;
 
-  if ( !(ini_set("memory_limit", "128M")) )
-    if ( !(ini_set("memory_limit", "64M")) )
-      echo $cant .'memory_limit'. $contact;
+  // Check memory limit
+    if ( !(ini_set("memory_limit", $memory_limit_l)) )
+      echo $cant.'memory_limit'.$contact_1.'memory_limit'.$contact_2.$memory_limit_l.$contact_3;
 
-  if ( !(set_time_limit(0)) )
-    echo $cant .'set_time_limit'. $contact;
+  if ( !(set_time_limit($set_time_limit_l)) )
+    echo $cant.'time_limit'.$contact_1.'time_limit'.$contact_2.$set_time_limit_l.$contact_3;
 
 } // END - myarcade_prepare_environment
 
 
-/*
+/**
  * @brief Plugin installation. Adds needed tables
  */
 function myarcade_install() {
@@ -1095,7 +1352,7 @@ function myarcade_install() {
 }
 
 
-/*
+/**
  * @brief Upgrades the MyArcadeBlog Tables
  */
 function myarcade_upgrade() { 
@@ -1119,7 +1376,7 @@ function myarcade_upgrade() {
  * S T Y L E S  F U N C T I O N S
  ******************************************************************************/
 
-/*
+/**
  * @brief Includes CSS-Styles
  */
 function add_cssstyle() {
@@ -1130,7 +1387,7 @@ function add_cssstyle() {
   color: red;
   font-weight: bold;
   background-color: #ffebe8;
-  border: 2px solid #c00;
+  border: 2px dotted #c00;
   padding: 5px;
 }
 
@@ -1168,6 +1425,47 @@ function add_cssstyle() {
   background:white;
 }
 
+.reset_table {
+  float: right;
+  background-color: #FFE08F;
+  border: 1px dashed #c00;
+  padding: 3px;
+}
+.reset_table span.info{
+  display:none;
+}
+
+.reset_table:hover span.info{
+  display:block;
+  position:absolute;
+  margin-top: 5px; 
+  margin-left: -3px;
+  width:250px; 
+  background-color: #ffebe8;
+  border: 2px groove #c00;  
+}
+
+.importmethod {
+  padding: 10px;
+  border: 1px dashed #00D4FF;
+}
+
+.imp_costum {
+  margin-top:3px;
+  padding:10px;
+  border: 1px dashed #FFB32F;
+}
+
+#costumg {
+  border: 1px dashed #FFB32F;
+  margin-top:
+  3px;padding:10px;
+}
+
+.clear {
+  clear:both;
+}
+
 </style>
 <?php
 } // END - add_cssstyle
@@ -1177,7 +1475,7 @@ function add_cssstyle() {
  * O U T P U T  F U N C T I O N S
  ******************************************************************************/
 
-/*
+/**
  * @brief Shows a game swf
  */
 function get_game($postid, $fullsize = false) {
@@ -1209,7 +1507,7 @@ function get_game($postid, $fullsize = false) {
 
 
 
-/*
+/**
  * @brief Check the game width. If the game is larger as defined max. width 
  *        return true, otherwise false.
  */ 
