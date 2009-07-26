@@ -1039,7 +1039,7 @@ function myarcade_import_games() {
   $action = $_POST['impcostgame'];
   
   if ($action == 'import') {
-    // We have a costum game to import
+    // We have a custom game to import
     
     $game = array();
     $game['name']         = $_POST['gamename']; 
@@ -1082,48 +1082,48 @@ function myarcade_import_games() {
   <script type="text/javascript">
   
   function myarcade_selectmethod() {
-	  if (document.FormImportMethod.importmethod.value == 'Costum')
-	   document.getElementById("costumg").style.display  = "inline";
+	  if (document.FormImportMethod.importmethod.value == 'Custom')
+	   document.getElementById("customg").style.display  = "inline";
 	  else 			  
-	   document.getElementById("costumg").style.display  = "none";
+	   document.getElementById("customg").style.display  = "none";
   } // END - myarcade_selectmethod
 
-  function myarcade_chkImportCostum() {
+  function myarcade_chkImportCustom() {
 
-	   if (document.FormCostumGame.gamename.value == "") {
+	   if (document.FormCustomGame.gamename.value == "") {
 		      alert("Set a name first..");
-		      document.FormCostumGame.gamename.focus();
+		      document.FormCustomGame.gamename.focus();
 		      return false;
 		    }
-	 if (document.FormCostumGame.gamefile.value == "") {
+	 if (document.FormCustomGame.gamefile.value == "") {
 	    alert("Select a game file first..");
-	    document.FormCostumGame.gamefile.focus();
+	    document.FormCustomGame.gamefile.focus();
 	    return false;
 	  }
-   if (document.FormCostumGame.gamewidth.value == "") {
+   if (document.FormCustomGame.gamewidth.value == "") {
 	      alert("Set the game width!");
-	      document.FormCostumGame.gamewidth.focus();
+	      document.FormCustomGame.gamewidth.focus();
 	      return false;
 	    }	  
-   if (document.FormCostumGame.gameheight.value == "") {
+   if (document.FormCustomGame.gameheight.value == "") {
        alert("Set the game height!");
-       document.FormCostumGame.gameheight.focus();
+       document.FormCustomGame.gameheight.focus();
        return false;
      }  	  
-   if (document.FormCostumGame.thumbfile.value == "") {
+   if (document.FormCustomGame.thumbfile.value == "") {
        alert("Select a thumbnail for this game!");
-       document.FormCostumGame.thumbfile.focus();
+       document.FormCustomGame.thumbfile.focus();
        return false;
      }
-   if (document.FormCostumGame.gamedescr.value == "") {
+   if (document.FormCustomGame.gamedescr.value == "") {
        alert("There is no game description!");
-       document.FormCostumGame.gamedescr.focus();
+       document.FormCustomGame.gamedescr.focus();
        return false;
      }
 
    var categs = false;
-   for(var i = 0; i < document.FormCostumGame.elements.length - 1; i++) {
-	   if( (document.FormCostumGame.elements[i].type == "checkbox") && (document.FormCostumGame.elements[i].checked == true)) {
+   for(var i = 0; i < document.FormCustomGame.elements.length - 1; i++) {
+	   if( (document.FormCustomGame.elements[i].type == "checkbox") && (document.FormCustomGame.elements[i].checked == true)) {
       categs = true;
       break;
      }
@@ -1133,23 +1133,23 @@ function myarcade_import_games() {
 	   alert("Select at least one category!");
 	   return false;
    }
-	} // END - myarcade_chkImportCostum
+	} // END - myarcade_chkImportCustom
   </script>
   
   <div class="importmethod">
     <form name="FormImportMethod">
       Select an import method:
       <select name="importmethod" onchange='myarcade_selectmethod()'>
-        <option value="Costum" >Costum&nbsp;</option>
+        <option value="Custom" >Custom&nbsp;</option>
         <!-- <option value="IBPArcade" >IBPArcade </option>  --> <?php // Comming soon :)?>
       </select>
     </form>
   </div>
 
-<div id="costumg">  
-  <strong>Import a costum game</strong> 
+<div id="customg">  
+  <strong>Import a custom game</strong> 
   <br /><br />
-  <form enctype="multipart/form-data" method="post" name="FormCostumGame" onsubmit="return myarcade_chkImportCostum(this.FormCostumGame)">
+  <form enctype="multipart/form-data" method="post" name="FormCustomGame" onsubmit="return myarcade_chkImportCustom(this.FormCustomGame)">
   <input type="hidden" name="impcostgame" value="import">
   <table>
     <tr>
@@ -1450,13 +1450,13 @@ function add_cssstyle() {
   border: 1px dashed #00D4FF;
 }
 
-.imp_costum {
+.imp_custom {
   margin-top:3px;
   padding:10px;
   border: 1px dashed #FFB32F;
 }
 
-#costumg {
+#customg {
   border: 1px dashed #FFB32F;
   margin-top:
   3px;padding:10px;
