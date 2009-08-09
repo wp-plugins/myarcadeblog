@@ -1174,32 +1174,32 @@ function myarcade_import_games() {
     <tr>
       <td>Name:</td>
       <td><input name="gamename" type="text" /></td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>  
     <tr>
       <td>Select a game file:</td>
       <td><input name="gamefile" type="file" /></td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>
     <tr>
       <td>Game width:</td>
       <td><input name="gamewidth" type="text"  size="5" /> px</td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>
     <tr>
       <td>Game height:</td>
       <td><input name="gameheight" type="text" size="5" /> px</td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>  
     <tr>
       <td>Select a thumbnail:</td>
       <td><input name="thumbfile" type="file" /></td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>  
     <tr valign="top">
       <td>Game description:</td>
       <td><textarea rows="4" cols="30" name="gamedescr"></textarea></td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>
     <tr valign="top">
       <td>Instructions:</td>
@@ -1221,7 +1221,7 @@ function myarcade_import_games() {
         }
       ?>
       </td>
-      <td><strong>(requried)</strong></td>
+      <td><strong>(required)</strong></td>
     </tr>
   </table>
   
