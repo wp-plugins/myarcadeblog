@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadeBlog
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      1.7
+Version:      1.7.1
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.7');
+define (MYARCADE_VERSION, '1.7.1');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -679,7 +679,13 @@ function myarcade_feed_games() {
       // Check game categories and add game if it's category has been selected
       $add_game   = false;
       $categories = '';
+      
       foreach($game->categories as $gamecat) {
+        // Fix: Board Games to Board Game
+        if ( !strcmp($gamecat,'Board Game') ) {
+          $gamecat = 'Board Games';
+        }
+                
         foreach ($myarcade_categories as $cat) {
           if ($cat == $gamecat) {
             $add_game = true;
@@ -822,6 +828,9 @@ function myarcade_add_games_to_blog() {
   // Get Settings
   $myarcade_settings = $wpdb->get_row("SELECT * FROM $settings_table");
   
+  // Get Game Kategories
+  $myarcade_categories = explode (', ', $myarcade_settings->game_categories);  
+  
   $unpublished_games  = $wpdb->get_var("SELECT COUNT(*) FROM ".$game_table." WHERE status = 'new'");
 
   if (intval($myarcade_settings->publish_games) <= $unpublished_games) {
@@ -886,11 +895,21 @@ function myarcade_add_games_to_blog() {
             
       <?php 
 
-      $categs = explode(",",$game->categories);
+      // Check game categories..
+      $categs = explode(",", $game->categories);
 
-      for($x=0; $x < count($categs); $x++) {
-        $categs[$x] = str_replace("-"," ",$categs[$x]);
-        array_push ($cat_id, get_cat_id($categs[$x])); 
+      foreach ($categs as $feed_game_cat) {
+        // Fix: Board Games to Board Game
+        if ( !strcmp($feed_game_cat,'Board Game') ) {
+          $feed_game_cat = 'Board Games';  
+        }        
+        
+        foreach ($myarcade_categories as $settings_cat) {
+          if ($settings_cat == $feed_game_cat) {
+            // Get the blog cat ID
+            array_push ($cat_id, get_cat_id($feed_game_cat));
+          }            
+        }        
       }
 
       // Download Thumbs?

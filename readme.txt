@@ -3,8 +3,8 @@ Contributors: NetReview
 Donate link: http://netreview.de
 Tags: Arcade, Flash Games, Mochiads, Auto Post, Games, Individual, Costum Games, Wordpress
 Requires at least: 2.0.2
-Tested up to: 2.8.2
-Stable tag: 1.7
+Tested up to: 2.8.3
+Stable tag: 1.7.1
 
 MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net 
 
