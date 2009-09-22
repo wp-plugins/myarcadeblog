@@ -1,3 +1,9 @@
+v1.8 - 2009-09-22
+  - Added new categories: Education, Rhythm, Strategy
+  - Removed category: Highscore
+  - Added new check for duplicate games
+  - Added new custom field for content rating ("rating")
+  
 v1.7.1 - 2009-08-09
   - Fixed Board Games and Dress-Up problem
 

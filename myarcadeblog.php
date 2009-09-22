@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadeBlog
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      1.7.1
+Version:      1.8
 Author:       Daniel B.
 Author URI:   http://netreview.de
 */
@@ -22,13 +22,12 @@ Author URI:   http://netreview.de
     GNU General Public License for more details.
 */
 
-
 /**
  *******************************************************************************
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.7.1');
+define (MYARCADE_VERSION, '1.8');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -195,12 +194,15 @@ function myarcade_edit_settings() {
   $cat_Customize      = '';
   $cat_DressUp        = '';
   $cat_Driving        = '';
+  $cat_Education	  = '';       // Since 1.8
   $cat_Fighting       = '';
-  $cat_HighScores     = '';
+  //$cat_HighScores     = '';     // Removed since 1.8
   $cat_Other          = '';
   $cat_Puzzles        = '';
+  $cat_Rhythm		  = '';       // Since 1.8
   $cat_Shooting       = '';
   $cat_Sports         = '';
+  $cat_Strategy       = '';       // Since 1.8
   
   $game_table     = $wpdb->prefix . "myarcadegames";
   $settings_table = $wpdb->prefix . "myarcadesettings";
@@ -375,24 +377,36 @@ function myarcade_edit_settings() {
         case 'Driving':
           $cat_Driving = 'checked';
           break;
+        case 'Education':
+          $cat_Education = 'checked';
+          break;          
         case 'Fighting':
           $cat_Fighting = 'checked';
           break;
+        // Outdated
+        /*
         case 'HighScores':
           $cat_HighScores = 'checked';
           break;
+        */
         case 'Other':
           $cat_Other = 'checked';
           break;
         case 'Puzzles':
           $cat_Puzzles = 'checked';
           break;
+        case 'Rhythm':
+          $cat_Rhythm = 'checked';
+          break;          
         case 'Shooting':
           $cat_Shooting = 'checked';
           break;
         case 'Sports':
           $cat_Sports = 'checked';
           break;
+        case 'Strategy':
+          $cat_Strategy = 'checked';
+          break;          
       }
     }
   }
@@ -475,11 +489,14 @@ function myarcade_edit_settings() {
           <input type="checkbox" name="gamecats[]" value="DressUp"    <?php echo $cat_DressUp; ?>>&nbsp;Dress-Up<br />
           <input type="checkbox" name="gamecats[]" value="Driving"    <?php echo $cat_Driving; ?>>&nbsp;Driving<br />
           <input type="checkbox" name="gamecats[]" value="Fighting"   <?php echo $cat_Fighting; ?>>&nbsp;Fighting<br />
-          <input type="checkbox" name="gamecats[]" value="HighScores" <?php echo $cat_HighScores; ?>>&nbsp;High Scores<br />
+          <input type="checkbox" name="gamecats[]" value="Education"   <?php echo $cat_Education; ?>>&nbsp;Education<br />
+     <!-- <input type="checkbox" name="gamecats[]" value="HighScores" <?php //echo $cat_HighScores; ?>>&nbsp;High Scores<br /> -->
           <input type="checkbox" name="gamecats[]" value="Other"      <?php echo $cat_Other; ?>>&nbsp;Other<br />
           <input type="checkbox" name="gamecats[]" value="Puzzles"    <?php echo $cat_Puzzles; ?>>&nbsp;Puzzles<br />
+          <input type="checkbox" name="gamecats[]" value="Rhythm"     <?php echo $cat_Rhythm; ?>>&nbsp;Rhythm<br />
           <input type="checkbox" name="gamecats[]" value="Shooting"   <?php echo $cat_Shooting; ?>>&nbsp;Shooting<br />
-          <input type="checkbox" name="gamecats[]" value="Sports"     <?php echo $cat_Sports; ?>>&nbsp;Sports
+          <input type="checkbox" name="gamecats[]" value="Sports"     <?php echo $cat_Sports; ?>>&nbsp;Sports<br />
+          <input type="checkbox" name="gamecats[]" value="Strategy"   <?php echo $cat_Strategy; ?>>&nbsp;Strategy
         </td>
         <td>
           Choose mochiads game categories which should be published.
@@ -674,12 +691,14 @@ function myarcade_feed_games() {
     
     // Check, if this game is present in the games table
     $game_uuid = $wpdb->get_var("SELECT uuid FROM ".$game_table." WHERE uuid = '$game->uuid'");
+    $game_tag  = $wpdb->get_var("SELECT game_tag FROM ".$game_table." WHERE game_tag = '$game->game_tag'");
 
-    if ($game_uuid != $game->uuid) {
+    if (!$game_uuid && !$game_tag) {
       // Check game categories and add game if it's category has been selected
       $add_game   = false;
       $categories = '';
       
+      // Category-Check
       foreach($game->categories as $gamecat) {
         // Fix: Board Games to Board Game
         if ( !strcmp($gamecat,'Board Game') ) {
@@ -694,7 +713,7 @@ function myarcade_feed_games() {
         }
 
         if ($add_game == true) break;
-      }
+      } // END - Category-Check
 
       if ($add_game == true) {
         $categories = implode(",", $game->categories);
@@ -711,16 +730,27 @@ function myarcade_feed_games() {
         $game_control .= implode(" = ", $control) . ";";
       }
 
-      $game->name         = str_replace("'", "\\'", $game->name);
-      $game->description  = str_replace("'", "\\'", $game->description);
-      $game->instructions = str_replace("'", "\\'", $game->instructions);
+      /*
+      $game->name         = str_replace("'", "\\'",  $game->name);
+      $game->description  = str_replace("'", "\\'",  $game->description);
+      $game->instructions = str_replace("'", "\\'",  $game->instructions);
+      $game->rating       = str_replace("'", "\\'",  $game->rating);
       $game->thumbnail_url = str_replace("'", "\\'", $game->thumbnail_url);
-      $game->swf_url      = str_replace("'", "\\'", $game->swf_url);
-      $tags               = str_replace("'", "\\'", $tags);
+      $game->swf_url      = str_replace("'", "\\'",  $game->swf_url);
+      $tags               = str_replace("'", "\\'",  $tags);
+      */
+      $game->name         = mysql_escape_string($game->name);
+      $game->description  = mysql_escape_string($game->description);
+      $game->instructions = mysql_escape_string($game->instructions);
+      $game->rating       = mysql_escape_string($game->rating);
+      $game->thumbnail_url = mysql_escape_string($game->thumbnail_url);
+      $game->swf_url      = mysql_escape_string($game->swf_url);
+      $tags               = mysql_escape_string($tags);      
 
       // Put this game into games table
       $query = "INSERT INTO ".$game_table." (
                 uuid,
+                game_tag,
                 name,
                 slug,
                 categories,
@@ -728,6 +758,7 @@ function myarcade_feed_games() {
                 tags,
                 instructions,
                 controls,
+                rating,
                 height,
                 width,
                 thumbnail_url,
@@ -737,6 +768,7 @@ function myarcade_feed_games() {
                 status
               ) values (
                 '$game->uuid',
+                '$game->game_tag',
                 '$game->name',
                 '$game->slug',
                 '$categories',
@@ -744,6 +776,7 @@ function myarcade_feed_games() {
                 '$tags',
                 '$game->instructions',
                 '$game_control',
+                '$game->rating',
                 '$game->height',
                 '$game->width',
                 '$game->thumbnail_url',
@@ -791,7 +824,7 @@ function myarcade_add_game_post($game) {
       $post['post_category']  = $game['categories']; // Category IDs
       $post['post_date']      = $game['date'];
       $post['tags_input']     = $game['tags'];
-
+      
       $post_id = wp_insert_post($post); 
 
       add_post_meta($post_id, 'description',    $game['description']);
@@ -800,6 +833,7 @@ function myarcade_add_game_post($game) {
       add_post_meta($post_id, 'width',          $game['width']);
       add_post_meta($post_id, 'swf_url',        $game['file']);
       add_post_meta($post_id, 'thumbnail_url',  $game['thumb']);  
+      add_post_meta($post_id, 'rating',         $game['rating']);
 }
 
 
@@ -1009,6 +1043,7 @@ function myarcade_add_games_to_blog() {
       $mochi_game['description']    = $game->description;
       $mochi_game['instructions']   = $game->instructions;
       $mochi_game['tags']           = $game->tags;
+      $mochi_game['rating']         = $game->rating;
       $mochi_game['categories']     = $cat_id;   
       $mochi_game['date']           = $publish_date;
       
@@ -1288,6 +1323,7 @@ function myarcade_install() {
     $sql = "CREATE TABLE `$game_table` (
       `id` int(11) NOT NULL auto_increment,
       `uuid` text collate utf8_unicode_ci NOT NULL,
+      `game_tag` text collate utf8_unicode_ci NOT NULL,
       `name` text collate utf8_unicode_ci NOT NULL,
       `slug` text collate utf8_unicode_ci NOT NULL,
       `categories` text collate utf8_unicode_ci NOT NULL,
@@ -1295,6 +1331,7 @@ function myarcade_install() {
       `tags` text collate utf8_unicode_ci NOT NULL,
       `instructions` text collate utf8_unicode_ci NOT NULL,
       `controls` text collate utf8_unicode_ci NOT NULL,
+      `rating` text collate utf8_unicode_ci NOT NULL,
       `height` text collate utf8_unicode_ci NOT NULL,
       `width` text collate utf8_unicode_ci NOT NULL,
       `thumbnail_url` text collate utf8_unicode_ci NOT NULL,
@@ -1378,7 +1415,10 @@ function myarcade_upgrade() {
   global $wpdb;
   
   $settings_table = $wpdb->prefix . "myarcadesettings";  
-  $settings_cols  = $wpdb->get_col("SHOW COLUMNS FROM $settings_table ");
+  $game_table =     $wpdb->prefix . "myarcadegames";
+    
+  $settings_cols  = $wpdb->get_col("SHOW COLUMNS FROM $settings_table");
+  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM $game_table");
   
   // Upgrade from 1.5 to 1.6
   if (!in_array('maxwidth', $settings_cols)) {
@@ -1388,6 +1428,23 @@ function myarcade_upgrade() {
       AFTER `create_categories`
     ");
   }
+  
+  // Upgrade to 1.8
+  if (!in_array('rating', $gametable_cols)) {
+    $wpdb->query("
+      ALTER TABLE `$game_table`
+      ADD `rating` text collate utf8_unicode_ci NOT NULL
+      AFTER `controls`
+    ");
+  } 
+
+  if (!in_array('game_tag', $gametable_cols)) {
+    $wpdb->query("
+      ALTER TABLE `$game_table`
+      ADD `game_tag` text collate utf8_unicode_ci NOT NULL
+      AFTER `uuid`
+    ");
+  }    
 }
 
 

@@ -3,8 +3,8 @@ Contributors: NetReview
 Donate link: http://netreview.de
 Tags: Arcade, Flash Games, Mochiads, Auto Post, Games, Individual, Costum Games, Wordpress
 Requires at least: 2.0.2
-Tested up to: 2.8.3
-Stable tag: 1.7.1
+Tested up to: 2.8.4
+Stable tag: 1.8
 
 MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net 
 
@@ -19,11 +19,12 @@ Make this with only TWO clicks:
 
 How it works?
 
-I've created a WordPress Plugin named "MyArcadeBlog" that puts your WordPress blog into an arcade games web site. "MyArcadeBlog" can publish and download flash games from Mochiads automatically for you. Get over 7000 games from Mochiads only with a few clicks.
+I've created a WordPress Plugin named "MyArcadeBlog" that puts your WordPress blog into an arcade games web site. "MyArcadeBlog" can publish and download flash games from Mochiads automatically for you. Get over 11.000 games from Mochiads only with a few clicks.
 
 Now, you are able to import individual games to your blog!
 
 == CHANGELOG ==
+[Changelog v1.8](http://netreview.de/wordpress/myarcadeblog-1-8/ "Changelog v1.8")
 
 [Changelog v1.7](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "Changelog v1.7")
 
