@@ -3,9 +3,9 @@
 Plugin Name:  MyArcadeBlog
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      1.8
+Version:      1.8.1
 Author:       Daniel B.
-Author URI:   http://netreview.de
+Author URI:   http://netreview.de/myarcadeblogpro/
 */
 
 /*
@@ -27,7 +27,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.8');
+define (MYARCADE_VERSION, '1.8.1');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -81,25 +81,28 @@ function myarcade_footer() {
   
   ?>
     <table class='form-table'>
-    <tr><td>
-    <p>
-      <div class="mg_paypal">
-        <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513813" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="USD" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $dollar; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
-        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513268" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="EUR" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $euro; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
-        <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513917" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="GBP" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $pound; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
-      </div>
-      Does this plugin make you happy? Do you find it useful? 
-      <br />If you think this plugin helps you, please consider donating. 
-      <br /><strong>Thank you for your support!</strong>
-    </p>
-    </td></tr>
-    <tr><td>
-      <strong>MyArcadeBlog v<?php echo MYARCADE_VERSION;?></strong> | <strong><a href="http://netreview.de" target="_blank">NetReview.de</a> </strong> 
-    </td></tr>    
-    
+      <tr>
+        <td>
+          <p>
+            <div class="mg_paypal">
+              <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513813" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="USD" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $dollar; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+              <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513268" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="EUR" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $euro; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+              <form style="display:inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_new"><input name="cmd" value="_s-xclick" type="hidden"><input name="hosted_button_id" value="6513917" type="hidden"><input name="item_name" value="MyArcadeBlog Plugin Donation" type="hidden"><input name="no_note" value="1" type="hidden"><input name="currency_code" value="GBP" type="hidden"><input name="tax" value="0" type="hidden"><input name="bn" value="PP-DonationsBF" type="hidden"><input src="<?php echo $pound; ?>" name="submit" alt="Donation via PayPal : fast, simple and secure!" border="0" type="image"></form>
+            </div>
+            Does this plugin make you happy? Do you find it useful? 
+            <br />If you think this plugin helps you, please consider donating. 
+            <br /><strong>Thank you for your support!</strong>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>MyArcadeBlog v<?php echo MYARCADE_VERSION;?></strong> | Do you need more features and a great support? Check <strong>MyArcadeBlog Pro</strong> at <strong><a href="http://netreview.de/myarcadeblogpro/" title="MyArcadeBlog Pro" target="_blank">NetReview.de</a> </strong>
+        </td>
+      </tr>
     </table>
-    </div>     
-  <?php   
+  </div> <?php // end wrap ?>
+  <?php
 }
 
 
@@ -178,7 +181,6 @@ function myarcade_edit_settings() {
   $games_dir  = ABSPATH .'wp-content/games/';
   $thumbs_dir = ABSPATH .'wp-content/thumbs/';
   
-  
   $publishposts       = '';
   $pendingreview      = '';
   $scheduled          = '';
@@ -194,12 +196,11 @@ function myarcade_edit_settings() {
   $cat_Customize      = '';
   $cat_DressUp        = '';
   $cat_Driving        = '';
-  $cat_Education	  = '';       // Since 1.8
+  $cat_Education      = '';       // Since 1.8
   $cat_Fighting       = '';
-  //$cat_HighScores     = '';     // Removed since 1.8
   $cat_Other          = '';
   $cat_Puzzles        = '';
-  $cat_Rhythm		  = '';       // Since 1.8
+  $cat_Rhythm         = '';       // Since 1.8
   $cat_Shooting       = '';
   $cat_Sports         = '';
   $cat_Strategy       = '';       // Since 1.8
@@ -383,12 +384,6 @@ function myarcade_edit_settings() {
         case 'Fighting':
           $cat_Fighting = 'checked';
           break;
-        // Outdated
-        /*
-        case 'HighScores':
-          $cat_HighScores = 'checked';
-          break;
-        */
         case 'Other':
           $cat_Other = 'checked';
           break;
@@ -406,7 +401,7 @@ function myarcade_edit_settings() {
           break;
         case 'Strategy':
           $cat_Strategy = 'checked';
-          break;          
+          break;
       }
     }
   }
@@ -490,7 +485,6 @@ function myarcade_edit_settings() {
           <input type="checkbox" name="gamecats[]" value="Driving"    <?php echo $cat_Driving; ?>>&nbsp;Driving<br />
           <input type="checkbox" name="gamecats[]" value="Fighting"   <?php echo $cat_Fighting; ?>>&nbsp;Fighting<br />
           <input type="checkbox" name="gamecats[]" value="Education"   <?php echo $cat_Education; ?>>&nbsp;Education<br />
-     <!-- <input type="checkbox" name="gamecats[]" value="HighScores" <?php //echo $cat_HighScores; ?>>&nbsp;High Scores<br /> -->
           <input type="checkbox" name="gamecats[]" value="Other"      <?php echo $cat_Other; ?>>&nbsp;Other<br />
           <input type="checkbox" name="gamecats[]" value="Puzzles"    <?php echo $cat_Puzzles; ?>>&nbsp;Puzzles<br />
           <input type="checkbox" name="gamecats[]" value="Rhythm"     <?php echo $cat_Rhythm; ?>>&nbsp;Rhythm<br />
@@ -564,7 +558,7 @@ function myarcade_get_file_curl($url, $binary = false) {
 function myarcade_get_file($url, $binary = false) {
         
   // Check for allow_url_open
-  if (ini_get('allow_url_fopen')) {
+  if ( (ini_get('allow_url_fopen') == 1) || (strtolower (ini_get('allow_url_fopen')) == 'on') ) {
     // Using file_get_contents
     if ($binary == true) {
       $file_data = file_get_contents($url, FILE_BINARY);
@@ -730,15 +724,6 @@ function myarcade_feed_games() {
         $game_control .= implode(" = ", $control) . ";";
       }
 
-      /*
-      $game->name         = str_replace("'", "\\'",  $game->name);
-      $game->description  = str_replace("'", "\\'",  $game->description);
-      $game->instructions = str_replace("'", "\\'",  $game->instructions);
-      $game->rating       = str_replace("'", "\\'",  $game->rating);
-      $game->thumbnail_url = str_replace("'", "\\'", $game->thumbnail_url);
-      $game->swf_url      = str_replace("'", "\\'",  $game->swf_url);
-      $tags               = str_replace("'", "\\'",  $tags);
-      */
       $game->name         = mysql_escape_string($game->name);
       $game->description  = mysql_escape_string($game->description);
       $game->instructions = mysql_escape_string($game->instructions);
@@ -1281,7 +1266,6 @@ function myarcade_import_games() {
 function myarcade_prepare_environment() {
   
   $max_execution_time_l     = 60*5;   // 5 min
-  $default_socket_timeout_l = 60*5;   // 5 min
   $memory_limit_l           = "64M";  // Should be enough
   $set_time_limit_l         = 60*5;   // 5 min
 
@@ -1294,10 +1278,6 @@ function myarcade_prepare_environment() {
   // Check max_execution_time
   if ( !(ini_set("max_execution_time", $max_execution_time_l)) )
     echo $cant.'max_execution_time'.$contact_1.'max_execution_time'.$contact_2.$max_execution_time_l.$contact_3;
-  
-  // Check default_socket_timeout
-  //if ( !(ini_set("default_socket_timeout", $default_socket_timeout_l)) )
-    //echo $cant.'memory_limit'.$contact_1.'memory_limit'.$contact_2.$default_socket_timeout_l.$contact_3;
 
   // Check memory limit
     if ( !(ini_set("memory_limit", $memory_limit_l)) )
@@ -1385,7 +1365,7 @@ function myarcade_install() {
               `maxwidth`
               ) VALUES (
                   NULL , 
-                  'http://www.mochiads.com/feeds/games/',
+                  'http://www.mochimedia.com/feeds/games/',
                   '',
                   '100',
                   '20',
@@ -1444,7 +1424,10 @@ function myarcade_upgrade() {
       ADD `game_tag` text collate utf8_unicode_ci NOT NULL
       AFTER `uuid`
     ");
-  }    
+  }
+
+  // Upgrade to 1.8.1
+  $wpdb->query("UPDATE ".$settings_table." SET mochiads_url = 'http://www.mochimedia.com/feeds/games/' WHERE ID = 1");   
 }
 
 

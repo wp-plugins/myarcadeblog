@@ -1,3 +1,7 @@
+v1.8.1 - 2009-12-08
+  - Added second check for allow_url_open setting
+  - Fixed Mochimedia Feed URL (mochiads -> mochimedia)
+  
 v1.8 - 2009-09-22
   - Added new categories: Education, Rhythm, Strategy
   - Removed category: Highscore

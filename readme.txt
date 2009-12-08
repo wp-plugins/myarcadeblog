@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: NetReview
 Donate link: http://netreview.de
-Tags: Arcade, Flash Games, Mochiads, Auto Post, Games, Individual, Costum Games, Wordpress
+Tags: Arcade, Flash Games, Mochiads, Auto Post, Games, Individual, Costum Games, Wordpress, Game Script
 Requires at least: 2.0.2
-Tested up to: 2.8.4
-Stable tag: 1.8
+Tested up to: 2.8.6
+Stable tag: 1.8.1
 
 MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net 
 
@@ -23,16 +23,54 @@ I've created a WordPress Plugin named "MyArcadeBlog" that puts your WordPress bl
 
 Now, you are able to import individual games to your blog!
 
+Do you need more features and a great support? Check <a href="http://netreview.de/myarcadeblogpro/" title="MyArcadeBlog Pro">MyArcadeBlog Pro</a>!
+
 == CHANGELOG ==
-[Changelog v1.8](http://netreview.de/wordpress/myarcadeblog-1-8/ "Changelog v1.8")
 
-[Changelog v1.7](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "Changelog v1.7")
+v1.8.1 - 2009-12-08
+  - Added second check for allow_url_open setting
+  - Fixed Mochimedia Feed URL (mochiads -> mochimedia)
+  
+v1.8 - 2009-09-22
+  - Added new categories: Education, Rhythm, Strategy
+  - Removed category: Highscore
+  - Added new check for duplicate games
+  - Added new custom field for content rating ("rating")
+  
+v1.7.1 - 2009-08-09
+  - Fixed Board Games and Dress-Up problem
 
-[Changelog v1.6](http://netreview.de/wordpress/get-myarcadeblog-1-6/ "Changelog v1.6")
+v1.7  - 2009-07-26
+  - Added option to reset feeded games
+  - Added an import function for custom/individual games
 
-[Changelog v1.5](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "Changelog v1.5")
+v1.6  - 2009-07-15
+  - Bug fixing 
+  - Added max. allowed game width
+  
+v1.5  - 2009-07-01
+  - Game thumbnails will be shown when adding games to blog
+  - Check, if Feed has been downloaded successfully
+  - SWF file names will be decoded before storing (%20-problem)
+  - White spaces will be automatically removed from MochiadsURL and MochiadsID
 
-[Changelog v1.0](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "Changelog v1.0")
+v1.4  - 2009-06-20
+  - Added routines to check PHP Version and PHP Settings (JSON Support)
+
+v1.3  - 2009-06-17
+  - Fixes
+
+v1.2  - 2009-06-16
+  - Fixed some error messages.
+  
+v1.1  - 2009-06-15
+
+  - Added new download method for feed, games and thumbs. if allow_url_fopen is 
+    set to 0 the plugin will use cURL for downloading files.
+    
+v1.0  - 2009-06-14 
+  Initial Version  
+
 
 
 == Installation ==
@@ -54,3 +92,5 @@ Now, you are able to import individual games to your blog!
 
 == Screenshots ==
 [MyArcadeBlog Screenshots](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "MyArcadeBlog Screenshots")
+
+[MyArcadeBlog Pro Screenshots](http://netreview.de/myarcadeblogpro/ "MyArcadeBlog Pro Screenshots")
