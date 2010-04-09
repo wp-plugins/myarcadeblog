@@ -88,9 +88,18 @@ v1.0  - 2009-06-14
 1. Add Games To Blog
     
 == Frequently Asked Questions ==
-[Tutorial & FAQ](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "Tutorial & FAQ")
+[v1](http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/ "v1")
+[v1.5](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "v1.5")
+[v1.6](http://netreview.de/wordpress/get-myarcadeblog-1-6/ "v1.6")
+[v1.7](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "v1.7")
+[v1.8](http://netreview.de/wordpress/myarcadeblog-1-8/ "v1.8")
+
 
 == Screenshots ==
-[MyArcadeBlog Screenshots](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "MyArcadeBlog Screenshots")
+[v1](http://netreview.de/wordpress/myarcadeblog-create-your-own-wordpress-arcade-blog-like-fungames24net/ "v1")
+[v1.5](http://netreview.de/wordpress/plugins/myarcadeblog-15-released/ "v1.5")
+[v1.6](http://netreview.de/wordpress/get-myarcadeblog-1-6/ "v1.6")
+[v1.7](http://netreview.de/wordpress/myarcadeblog-1-7-with-import-function/ "v1.7")
+[v1.8](http://netreview.de/wordpress/myarcadeblog-1-8/ "v1.8")
 
 [MyArcadeBlog Pro Screenshots](http://netreview.de/myarcadeblogpro/ "MyArcadeBlog Pro Screenshots")
