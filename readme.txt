@@ -6,7 +6,7 @@ Requires at least: 2.0.2
 Tested up to: 2.9.2
 Stable tag: 1.8.1
 
-Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and Custom games. Check this example created with <a href="http://netreview.de/myarcadeblogpro/">MyArcadeBlog Pro</a>: http://fungames24.net 
+Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and Custom games like on http://fungames24.net 
 
 
 == Description ==
