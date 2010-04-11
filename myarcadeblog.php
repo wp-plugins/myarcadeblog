@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadeBlog
 Plugin URI:   http://netreview.de/wordpress/create-your-own-wordpress-arcade-blog-like-fungames24net
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      1.8.1
+Version:      1.8.2
 Author:       Daniel B.
 Author URI:   http://netreview.de/myarcadeblogpro/
 */
@@ -27,7 +27,7 @@ Author URI:   http://netreview.de/myarcadeblogpro/
  *   G L O B A L S
  *******************************************************************************
  */
-define (MYARCADE_VERSION, '1.8.1');
+define (MYARCADE_VERSION, '1.8.2');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define (MYARCADE_PHP_VERSION, '5.2.0');
@@ -1273,19 +1273,23 @@ function myarcade_prepare_environment() {
   $contact_1  = '. If MyArcadeBlog doesn\'t work properly please contact your administrator to increase the value of ';
   $contact_2  = ' to ';
   $contact_3  = '</p>';
+  
+  if( !ini_get('safe_mode') ) {
+    // Check max_execution_time
+    if ( !(ini_set("max_execution_time", $max_execution_time_l)) )
+      echo $cant.'max_execution_time'.$contact_1.'max_execution_time'.$contact_2.$max_execution_time_l.$contact_3;
 
-
-  // Check max_execution_time
-  if ( !(ini_set("max_execution_time", $max_execution_time_l)) )
-    echo $cant.'max_execution_time'.$contact_1.'max_execution_time'.$contact_2.$max_execution_time_l.$contact_3;
-
-  // Check memory limit
+    // Check memory limit
     if ( !(ini_set("memory_limit", $memory_limit_l)) )
       echo $cant.'memory_limit'.$contact_1.'memory_limit'.$contact_2.$memory_limit_l.$contact_3;
 
-  if ( !(set_time_limit($set_time_limit_l)) )
-    echo $cant.'time_limit'.$contact_1.'time_limit'.$contact_2.$set_time_limit_l.$contact_3;
-
+    if ( !(set_time_limit($set_time_limit_l)) )
+      echo $cant.'time_limit'.$contact_1.'time_limit'.$contact_2.$set_time_limit_l.$contact_3;
+  }
+  else {
+    // save mode is set
+    echo '<p class="error fade"><strong>Can\'t make needed settins, because you have Safe Mode active.</p>';
+  }  
 } // END - myarcade_prepare_environment
 
 

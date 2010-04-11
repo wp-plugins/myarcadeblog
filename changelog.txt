@@ -1,3 +1,6 @@
+v1.8.2 - 2010-04-11
+  - Added Safe Mod check before changing settings
+  
 v1.8.1 - 2009-12-08
   - Added second check for allow_url_open setting
   - Fixed Mochimedia Feed URL (mochiads -> mochimedia)

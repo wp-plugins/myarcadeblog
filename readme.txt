@@ -3,10 +3,11 @@ Contributors: NetReview
 Donate link: http://netreview.de
 Tags: Arcade, Flash Games, Mochiads, Auto Post, Games, Individual, Costum Games, Wordpress, Game Script
 Requires at least: 2.0.2
-Tested up to: 2.8.6
+Tested up to: 2.9.2
 Stable tag: 1.8.1
 
-MyArcadeBlog transforms your WordPress Blog into an arcade games site like http://fungames24.net 
+Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and Custom games. Check this example created with <a href="http://netreview.de/myarcadeblogpro/">MyArcadeBlog Pro</a>: http://fungames24.net 
+
 
 == Description ==
 You love games and you want your own flash game site but you don't know how to make this? 
@@ -16,17 +17,21 @@ Make this with only TWO clicks:
 
    1. Feed Games
    2. Add Games To Blog
+   
+Once installed, you’ll find a control panel in your WordPress admin menu. There you can change your settings, feed, publish and import games.
+With a click on MyArcade you will get an overview of your arcade blog. At the overview page you will see all important settings. 
 
-How it works?
+= How it works? =
+MyArcadeBlog is able to downlaod and publish flash games from Mochi automatically for you. Get over 14.000 Mochi games available!
 
-I've created a WordPress Plugin named "MyArcadeBlog" that puts your WordPress blog into an arcade games web site. "MyArcadeBlog" can publish and download flash games from Mochiads automatically for you. Get over 11.000 games from Mochiads only with a few clicks.
-
-Now, you are able to import individual games to your blog!
+NEW! Now you are able to import individual games to your blog! NEW!
 
 Do you need more features and a great support? Check <a href="http://netreview.de/myarcadeblogpro/" title="MyArcadeBlog Pro">MyArcadeBlog Pro</a>!
 
 == CHANGELOG ==
-
+v1.8.2 - 2010-04-11
+  - Added Safe Mod check before changing settings
+  
 v1.8.1 - 2009-12-08
   - Added second check for allow_url_open setting
   - Fixed Mochimedia Feed URL (mochiads -> mochimedia)
