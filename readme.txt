@@ -6,7 +6,7 @@ Requires at least: 3.1
 Tested up to: 3.2 beta
 Stable tag: 2.0
 
-Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: <a href="http://myarcadeplugin.com/showcase" title="Wordpress Arcade Showcase">MyArcadePlugin Showcase</a>
+Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: <a href='http://myarcadeplugin.com/showcase'>MyArcadePlugin Showcase</a>
 
 == Description ==
 
