@@ -101,14 +101,16 @@ Yes, the plugin doesn't require any theme changes when you use a standard coded 
 
 = How MyArcadePlugin saves game data? =
 The plugin adds the following custom fields to each game post:
-* mabp_description - holds the description of a game
-* mabp_instructions - holds game instructions
-* mabp_thumbnail_url - holds the complete url of the game thumb
-* mabp_swf_url - holds the url of the game embed file
-* mabp_screen1_url - screenshot 1 url
-* mabp_screen2_url - screenshot 2 url
-* mabp_screen3_url - screenshot 3 url
-* mabp_screen4_url - screenshot 4 url
+<ul>
+<li>mabp_description - holds the description of a game</li>
+<li>mabp_instructions - holds game instructions</li>
+<li>mabp_thumbnail_url - holds the complete url of the game thumb</li>
+<li>mabp_swf_url - holds the url of the game embed file</li>
+<li>mabp_screen1_url - screenshot 1 url</li>
+<li>mabp_screen2_url - screenshot 2 url</li>
+<li>mabp_screen3_url - screenshot 3 url</li>
+<li>mabp_screen4_url - screenshot 4 url</li>
+</ul>
 
 = How can I display game stored game data? =
 The most game data are handles automatically by the plugin but you are also able to display them separately to fit your theme. For example, to display the game description within the loop use:
