@@ -1,10 +1,27 @@
+- MyArcadePlugin Lite -
+
+v2.00 - 2011-05-28
+  - New: Plugin renamed to MyArcadePlugin Lite
+  - New: Mochi Publisher ID will be added to the game code to get credits
+  - New: New look & feel of the settings page. Now, the setup will be more comfortable.
+  - New: Ajaxed game import module
+  - New: Pagination on manage games. Ability to browse the entire game cataloque
+  - New: Option to embed flash code automatically (Makes the plugin compatible with all standard WordPress themes)
+  - New: Template to style the game posts and to generate unique content
+  - New: Alternative file_put_contents function
+  - New: Memory limit check before trying to change the value
+  - New: Gettext support to make translations easy
+  - New: Delete downloaded game files when deleting a game post 
+  - New: Game management system (delete, publish, destroy)
+  - Fixed: Renamed post metas to avoid conflicts with other plugins (All In One Seo)
+    
 v1.8.2 - 2010-04-11
   - Added Safe Mod check before changing settings
   
 v1.8.1 - 2009-12-08
   - Added second check for allow_url_open setting
-  - Fixed Mochimedia Feed URL (mochiads -> mochimedia)
-  
+  - Fixed Mochimedia Feed URL (mochiads -> mochimedia)  
+
 v1.8 - 2009-09-22
   - Added new categories: Education, Rhythm, Strategy
   - Removed category: Highscore
@@ -41,6 +58,6 @@ v1.1  - 2009-06-15
 
   - Added new download method for feed, games and thumbs. if allow_url_fopen is 
     set to 0 the plugin will use cURL for downloading files.
-    
-v1.0  - 2009-06-14 
-  Initial Version  
+
+v1.0  - 2009-06-14
+  Initial Version

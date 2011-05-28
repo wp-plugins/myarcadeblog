@@ -1,0 +1,947 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MyArcadePlugin Lite\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-28 10:49+0100\n"
+"PO-Revision-Date: 2011-05-28 10:49+0100\n"
+"Last-Translator: MyArcadePlugin <contact@myarcadeplugin.com>\n"
+"Language-Team: MyArcadePlugin <contact@myarcadeplugin.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: E:\\xampp\\htdocs\\lite\\wp-content\\plugins\\myarcadeblog\n"
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:143
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:144
+msgid "Feed Mochi Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:148
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:149
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1258
+msgid "Feed HeyZap Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:153
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:154
+msgid "Add Games To Blog"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:158
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:159
+msgid "Import Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:164
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:165
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2010
+msgid "Manage Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:170
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:171
+msgid "Settings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:272
+msgid "Add Games to Blog"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:277
+msgid "You have <strong>NO</strong> unpublished games!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:278
+msgid "Feed games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:283
+msgid "Overview"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:288
+msgid "Unpublished Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:289
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:785
+msgid "Publish Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:290
+msgid "Publish Status"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:291
+msgid "Download Thumbs"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:292
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:814
+msgid "Download Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:293
+msgid "Download Screens"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:294
+msgid "Cron Active"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:295
+msgid "Leaderboard Active"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:314
+msgid "Additional Informations"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:477
+msgid "Failed to create category:"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:491
+msgid "You did not select any game categories!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:536
+msgid "Your settings have been updated!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:549
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1567
+#, php-format
+msgid "The games directory '%s' must be writeable (chmod 777) in order to download games."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:558
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1577
+#, php-format
+msgid "The thumbails directory '%s' must be writeable (chmod 777) in order to download thumbnails."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:582
+msgid "You have selected a special category but not entered your Mochi Publisher ID!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:603
+msgid "Mochi Settings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:610
+msgid "To be able to use all of the Mochi Media's features, a Mochi account is requred."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:616
+msgid "Mochi Media Feed URL"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:622
+msgid "Edit this field only if Mochi Media Feed URL has been changed!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:625
+msgid "Mochi Publisher ID"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:631
+msgid "Paste here your Mochi 'Publisher ID'. You will find the 'Publisher ID' on the Mochi's site under settings."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:634
+msgid "Publisher Secret Key"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:640
+msgid "Paste here your Mochi's Publisher Secret Key. This is required if you want to use the leaderboard feature. You'll find your Secret Key on the Mochi's site under settings."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:649
+msgid "How many Mochi games should be fetched when clicking 'Feed Mochi Games'? Leave blank if you want to feed all games (not recommended). This option only affects the manual game fetching. It is recommended to use values between 100 and 2000 to avoid server overload."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:652
+msgid "Filter by Tag"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:658
+msgid "You may choose to include games that include or exclude a tag. To exclude a tag you must preface it with a minus sign (-). For example: '-zh-cn' will exclude all chinese games or 'snow' will include only games tagged to snow."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:661
+msgid "Mochi Auto Game Feeding (Cron)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:665
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:686
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:754
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:771
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:780
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:809
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:818
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:827
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:838
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:876
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:902
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:922
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:972
+msgid "Yes"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:667
+msgid "Enable this if you want to fetch Mochi Media games automatically. Go to 'General Settings' to select a cron interval."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:670
+msgid "Special Categories"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:675
+msgid "All Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:678
+msgid "Select a special category if you want to feed only featured, coin enabled, leaderboeard or premium games. If you use this feature, you have to enter a valid Publisher ID."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:682
+msgid "Enable Global Mochi Scores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:688
+msgid "Check this if you want to display global scores of a game and not just those submitted to your site."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:692
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:979
+msgid "Save Settings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:697
+msgid "HeyZap Settings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:704
+msgid "To be able to use all of the HeyZap's features, a HeyZap account is requred."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:711
+msgid "Site Key"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:717
+msgid "Enter your HeyZap 'Site Key' that will identify your site. This is required if you want to feed more than 10 games at once."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:720
+msgid "Secret Key"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:726
+msgid "Enter your HeyZap 'Secret Key'. This is required if you want to feed more than 10 games at once."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:729
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1301
+msgid "Feed Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:735
+msgid "How many HeyZap games should be fetched when clicking \"Feed HeyZap Games\"? Enter a value between 0 and 1000."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:737
+msgid "Game Variants"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:745
+msgid "HeyZap offers two kinds of games that you can add to your site: SWF and Embed-Code games. Select what game kinds do you want to fetch."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:750
+msgid "HeyZap Auto Game Feeding (Cron)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:756
+msgid "Enable this if you want to fetch HeyZap games automatically. Go to 'General Settings' to select a cron interval."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:763
+msgid "General Settings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:768
+msgid "Save User Scores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:773
+msgid "Check this if you want to show and store user scores. Only scores from Mochi and IBPArcade games will be saved."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:776
+msgid "Save Only Highscores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:782
+msgid "Check this if you want to save only the highest score that an user has achieved per game. Otherwise all submitted scores will be saved."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:790
+msgid "How many games should be published when clicking on \"Add Games To Blog\"?"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:793
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:301
+msgid "Post Status"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:797
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1924
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:305
+msgid "Publish"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:798
+msgid "Scheduled"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:800
+msgid "Schedule Time"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:802
+msgid "Choose how the games should be added as new posts. If you whish to schedule game publishing, then set a time between two posts in minutes."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:805
+msgid "Download Thumbnails"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:811
+msgid "Should the game thumnails be downloaded to your web server? Make sure that the thumb directory (wp-content/thumbs/) is writeable."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:820
+msgid "Should the games be downloaded to your web server? Make sure that the games directory (wp-content/games/) is writeable."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:823
+msgid "Download Screenshots"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:829
+msgid "Should the game screenshots be downloaded to your web server? Make sure that the thumb directory (wp-content/thumbs/) is writeable."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:834
+msgid "Delete Game Files"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:840
+msgid "This option will delete downloaded game files after deleting a game post from your blog. Make sure that the games and thumbs directories are writeable! Keep in mind that deleted games can not be re-published!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:843
+msgid "Auto Game Feeding (Cron)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:848
+msgid "Hourly"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:849
+msgid "Twice Daily"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:850
+msgid "Daily"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:853
+msgid "Choose a time interval, how often new games should be fetched. The fetching will trigger when someone visits your site, if the scheduled time has passed. On each trigger MyArcadePlugin Pro will get the latest game (one game per trigger)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:856
+msgid "Game Categories To Feed"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:869
+msgid "Choose Mochi and HeyZap game categories that should be fetched."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:872
+msgid "Create Categories"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:878
+msgid "Check this if you want to create selected categories on your blog."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:882
+msgid "Parent Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:886
+msgid "No Parent Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:889
+msgid "This option will create game categories as subcategories in the selected category."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:889
+msgid " This option is usefull if you have a mixed site and not only a pure arcade site."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:897
+msgid "Use Only The First Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:904
+msgid "Many Mochi and HeyZap games are tagged to more than one category. Activate this option to avoid game publishing in more than one category."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:909
+msgid "Max. Game Width (optional)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:915
+msgid "Max. allowed game width in px. If set the function get_game will create an output code with adjusted game dimensions."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:918
+msgid "Publish In A Single Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:927
+msgid "This option will publish all games only in the selected category."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:927
+msgid "This option is usefull if you have a mixed site and not only a pure arcade site."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:932
+msgid "Embedd Flash Code"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:937
+msgid "Manually"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:938
+msgid "At The Top Of A Game Post"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:939
+msgid "At The Bottom Of A Game Post"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:942
+msgid "Select if MyArcadePlugin Pro should auto embed the flash code in your game posts (only if you don't use FunGames theme)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:945
+msgid "Game Post Template"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:949
+msgid "Activate Post Template"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:954
+msgid "Use this template to style the output of MyArcadePlugin Pro when creating game posts (only if you don't use FunGames theme)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:956
+msgid "Available Variables"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:957
+msgid "Show the game thumbnail"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:958
+msgid "Show game description"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:959
+msgid "Show game instructions if available"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:967
+msgid "Allow Users To Post Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:974
+msgid "Activate this if you want to give your users access to import games. WordPress supports following user roles: Contributor, Author and Editor. Games added by Contributors will be saved as drafts! Authors and Editors will be able to publish games."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:984
+msgid "Category Mapping"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:991
+msgid "Map Mochi or HeyZap categories to your own category names. This feature allows you to publish games in translated or summarized categories instead of using the predefined category names. (optional)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:999
+msgid "Feed Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1000
+msgid "Blog Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1001
+msgid "Add Mapping"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1002
+msgid "Current Mappings"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1038
+msgid "The changes in this section are saved automatically."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1050
+msgid "Advanced Features"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1057
+msgid "Please, use this only if you know what you do!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1063
+msgid "Delete All Feeded Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1068
+msgid "Reset Feeded Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1072
+msgid "Attention! All feeded or imported games will be deleted from the games database! Published posts will not be touched. After this score submitting of publiished games will stop working!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1075
+msgid "Delete Blank / Zero Scores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1080
+msgid "Delete Zero Scores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1084
+msgid "Clean your scores table. This will delete all zero and empty scores if present in your database."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1088
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1093
+msgid "Delete All Scores"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1097
+msgid "Attention! All saved scores will be deleted!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1235
+#, php-format
+msgid "You need at least PHP %s to run this plugin."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1237
+#, php-format
+msgid "You have %s installed."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1239
+msgid "Contact your administrator to update your PHP version."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1243
+msgid "JSON Support is disabeld in your PHP configuration. Please contact your administrator to activate JSON Support."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1339
+msgid "Your Feed URL:"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1344
+msgid "Downloading feed: "
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1352
+msgid "Feed not found. Please check Mochi Feed URL and your Publisher ID!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1361
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1381
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1702
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1745
+msgid "OK"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1365
+msgid "Can't download feed!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1375
+msgid "Decode feed: "
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1385
+msgid "Failed to decode the downloaded feed!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1469
+#, php-format
+msgid "Found %s new game(s)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1470
+msgid "Now, you can add new games to your blog."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1473
+msgid "No new games found!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1473
+msgid "You can try to increase the number of 'Feed Games' at the settings page or wait until Mochi updates the feed."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1600
+msgid "Games To Blog"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1625
+msgid "Hmmm, there are no games that can be added to your blog..."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1648
+msgid "Categories: "
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1676
+msgid "Downloading Thumbnail.."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1698
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1706
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1733
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1752
+msgid "Failed"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1698
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1706
+msgid "Using the thumbnail from the Mochi-URL.."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1733
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1745
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1752
+msgid "Game download:"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1733
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1752
+msgid "Ignore this game.."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1814
+msgid "No new games to add. Feed Games first!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1911
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1912
+msgid "Leaderboard enabled"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1916
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1917
+msgid "Coin revenue share enabled"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1925
+msgid "Delete"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1927
+msgid "Remove this game from the database"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1934
+msgid "Edit"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:1971
+msgid "Play"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2041
+#, php-format
+msgid "Nothing found for %s"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2051
+msgid "Search for a game name, keyword or status (new, published, deleted)..."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2054
+msgid "Search"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2063
+#, php-format
+msgid "Search results for %s"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2119
+msgid "Browser Your Game Catalog"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2165
+msgid "10 Last Deleted Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2221
+#, php-format
+msgid "Import of '%s' was succsessful."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2224
+msgid "Can't import that game..."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2233
+msgid "Import Individual Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2239
+msgid "Import Method"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2244
+msgid "Upload SWF game"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2245
+msgid "Upload IBPArcade game"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2246
+msgid "Import Embed / Iframe game"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2249
+msgid "Choose a desired import method."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2280
+msgid "<strong>WARNING!</strong> Can't set value for: "
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2281
+msgid "If MyArcadePlugin Pro doesn't work properly, please contact your administrator to increase the value of "
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2282
+msgid "to"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2302
+msgid "WARNING!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/myarcadeblog.php:2302
+msgid "Can't make needed settins, because you have Safe Mode active."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:3
+msgid "Upload SWF Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:4
+msgid "Game Files"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:12
+msgid "Game File"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:12
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:78
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:209
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:250
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:318
+msgid "required"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:15
+msgid "Important: add a game file first before you do anything else."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:19
+msgid "Select a game file from your local computer (swf)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:20
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:83
+msgid "Local File:"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:25
+msgid "<strong>OR</strong> paste an url to a game file that should be grabbed from the net (swf)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:26
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:89
+msgid "URL:"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:32
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:95
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:179
+msgid "Start Upload"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:51
+msgid "Upload / Grab IBPArcade Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:61
+msgid "Embed / Iframe Games"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:78
+msgid "Game Thumbnail"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:82
+msgid "Select a thumbnail from your local computer."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:88
+msgid "<strong>OR</strong> paste an url to a thumbnail that should be grabbed from the net."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:116
+msgid "Game Screenshots"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:120
+msgid "Select image files from your local computer"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:124
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:130
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:136
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:142
+msgid "Screenshot"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:148
+msgid "<strong>OR</strong> paste image URL's that should be grabbed from the net."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:154
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:160
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:166
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:172
+msgid "Screenshot URL"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:191
+msgid "Game Informations"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:209
+msgid "Name"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:215
+msgid "Enter the name of a game that should be imported!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:226
+msgid "Game Dimensions"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:230
+msgid "Game width (px)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:233
+msgid "Game height (px)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:239
+msgid "MyArcadePlugin Pro is able to detect dimensions automatically for many flash files..."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:250
+msgid "Game Description"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:256
+msgid "Describe this game with your own words. An unique description can improve your ranking on search engines."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:267
+msgid "Game Instructions"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:273
+msgid "Write a short how to play this game."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:284
+msgid "Tags"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:290
+msgid "Enter some describing tags. Separate the tags with comma (,)."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:307
+msgid "Add to the games database (don't publish)"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:318
+msgid "Category"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:334
+msgid "Select one or more categories for this game."
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/form-swfdcr.php:343
+msgid "Import Game"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/myarcadeblog_js.php:5
+msgid "No game file added!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/myarcadeblog_js.php:9
+msgid "No thumbnail added!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/myarcadeblog_js.php:13
+msgid "Game name not set!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/myarcadeblog_js.php:18
+msgid "There is no game description!"
+msgstr ""
+
+#: E:\xampp\htdocs\lite\wp-content\plugins\myarcadeblog/modules/myarcadeblog_js.php:32
+msgid "Select at least one category!"
+msgstr ""
+
