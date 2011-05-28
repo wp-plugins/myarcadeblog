@@ -62,7 +62,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Save Games as drafts
 * Allow Users To Import Games 
 * Single Category Publishing 
-* and more ...
+* and a lot of more features..
 
 MyArcadePlugin Pro is able to download and publish flash games from Mochi Media and HeyZap automatically. You do not need to lift a finger. 
 There are over 40.000 games available that you can add to your site instantly!
