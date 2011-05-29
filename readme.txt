@@ -96,7 +96,7 @@ After the installation you have to setup the plugin. You can find a <a href='htt
 
 == Frequently Asked Questions ==
 
-= Will MyArcadePlugin work with a "standard" WordPress theme? =
+= Will MyArcadePlugin work with a 'standard' WordPress theme? =
 Yes, the plugin doesn't require any theme changes when you use a standard coded theme.
 
 = How MyArcadePlugin saves game data? =
@@ -119,12 +119,14 @@ The most game data are handles automatically by the plugin but you are also able
 <?php echo get_post_meta($post->ID, "mabp_description", true); ?>
 </code>
 
+
 = How can I embed the game code manually? =
 To embed the flash code of a game manually, you can use this inside your WordPress loop:
 
 <code>
 <?php echo get_game($post->ID); ?>
 </code>
+
 
 = Can I use MyArcadePlugin on an existing WordPress Blog? =
 Yes, but only with the Pro version. MyArcadePlugin Pro is able to add a gaming section on your existing blog within minutes. Take a look to our demonstration video:
