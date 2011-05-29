@@ -27,8 +27,8 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 * Publish games immediately
 * Publish games time shifted - scheduled with individual time interval!
 * Game Management (search, publish, delete) with pagination
-* !! Option to embed games automatically !!
-* !! Post templates with several placeholders to generate unique game descriptions !!
+* Option to embed games automatically
+* Post templates with several placeholders to generate unique game descriptions
 * Download Mochi Games automatically to your server
 * Download Mochi Thumbs automatically to your server
 * Delete game files when deleting a game post
