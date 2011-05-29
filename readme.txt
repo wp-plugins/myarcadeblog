@@ -2,7 +2,7 @@
 Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script
-Requires at least: 3.1
+Requires at least: 3.0
 Tested up to: 3.1.3
 Stable tag: 2.0
 
