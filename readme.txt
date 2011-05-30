@@ -1,7 +1,7 @@
 === MyArcadePlugin Lite - WordPress Arcade ===
 Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
-Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script
+Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
 Tested up to: 3.1.3
 Stable tag: 2.0
@@ -91,7 +91,6 @@ After the installation you have to setup the plugin. You can find a <a href='htt
 1. Deactivate MyArcadePlugin
 2. Upload the version
 3. Activate MyArcadePlugin
-
 
 == Frequently Asked Questions ==
 
