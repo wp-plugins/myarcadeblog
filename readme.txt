@@ -10,9 +10,9 @@ Transform a boring WordPress Blog into an amazing arcade games portal using Moch
 
 == Description ==
 
-INFO: If you are upgrading from an older version, then you will need to change the custom field names in your theme. Check FAQ!
+INFO: If you are upgrading from an older version, then you will need to change the custom field names in your theme. Check the FAQ!
 
-MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin is able to embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game posts!
+MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin will embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game posts!
 
 Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 
@@ -64,8 +64,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Single Category Publishing 
 * and a lot of more features..
 
-MyArcadePlugin Pro is able to download and publish flash games from Mochi Media and HeyZap automatically. You do not need to lift a finger. 
-There are over 40.000 games available that you can add to your site instantly!
+MyArcadePlugin Pro is able to download and publish flash games from Mochi Media and HeyZap automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
