@@ -3,7 +3,7 @@ Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
-Tested up to: 3.1.3
+Tested up to: 3.2 beta
 Stable tag: 2.0
 
 Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
@@ -66,7 +66,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 
 MyArcadePlugin Pro is able to download and publish flash games from Mochi Media and HeyZap automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
 
-<a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
+<a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
 == Installation ==
 = To Install: =
