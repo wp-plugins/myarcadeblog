@@ -3,14 +3,14 @@ Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
-Tested up to: 3.2 beta
-Stable tag: 2.0
+Tested up to: 3.2
+Stable tag: 2.10
 
 Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
 
 == Description ==
 
-INFO: If you are upgrading from an older version, then you will need to change the custom field names in your theme. Check the FAQ!
+INFO: When you are upgrading from an older version, then you will need to change the custom field names in your theme. Check FAQ!
 
 MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin will embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game posts!
 
@@ -150,6 +150,12 @@ Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+= Version: 2.10 - 2011-06-23 =
+* Fixed: Can't create categories
+* Fixed: PHP Notices in WP Debug mode
+* Fixed: Reset Feeded Games button
+* Fixed: Can't add game screenshots
+
 = Version: 2.00 - 2011-05-28 =
 * New: Plugin renamed to MyArcadePlugin Lite
 * New: Mochi Publisher ID will be added to the game code to get credits

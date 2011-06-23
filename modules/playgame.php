@@ -28,6 +28,13 @@ else {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body style = "margin:0px !important;text-align:center;background-color: #222222;">
-    <?php echo get_game($_GET[gameid], false, true); ?>
+    <?php 
+      if ( isset($_GET['gameid']) ) {
+        echo get_game($_GET['gameid'], false, true); 
+      }
+      else {
+        echo "No Game Selected!";
+      }
+    ?>
   </body>
 </html>

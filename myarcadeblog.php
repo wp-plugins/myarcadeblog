@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.00
+Version:      2.10
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.00');
+define('MYARCADE_VERSION', '2.10');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -65,6 +65,7 @@ add_action('admin_menu', 'arcadelite_load_ajax', 1);
 add_action('wp_ajax_arcadelite_handler', 'arcadelite_handler');
   /* Add Content Filter For Auto Embed Flash */
 add_filter('the_content', 'arcadelite_embed_handler', 99);
+//add_action('wp_head', 'arcadelite_meta');
   /* Extend the WP Bar */
 //add_action( 'admin_bar_menu', 'arcadelite_bar_menu', 1000 );
   
@@ -389,8 +390,12 @@ function arcadelite_edit_settings() {
   $publishposts       = '';
   $pendingreview      = '';
   $scheduled          = '';
+  $embed_manually     = '';
+  $embed_top          = '';
+  $embed_bottom       = '';
 
-  $action = $_POST['feedaction'];
+  
+  if ( isset($_POST['feedaction']) ) $action = $_POST['feedaction']; else $action = '';
 
   if ($action == 'save') { 
     // Get POST data
@@ -406,7 +411,7 @@ function arcadelite_edit_settings() {
     $downloadgames    = $_POST['downloadgames'];
     $downloadscreens  = '';
     $categories_post  = $_POST['gamecats'];
-    $create_game_cats = '';
+    $create_game_cats = $_POST['createcats'];
     $delete_gamefiles = $_POST['deletefiles'];
     $maxwidth         = trim($_POST['maxwidth']);
 		$cronenable       = '';
@@ -861,7 +866,7 @@ function arcadelite_edit_settings() {
                   $feedcategories = unserialize($arcadelite_settings->game_categories);
                   
                   foreach ($feedcategories as $feedcat) {
-                    echo '<input type="checkbox" name="gamecats[]" value="'.$feedcat[Slug].'" '.$feedcat[Status].' /><label class="opt">&nbsp;'.$feedcat[Name].' '.$feedcat[Info].'</label><br />';
+                    echo '<input type="checkbox" name="gamecats[]" value="'.$feedcat['Slug'].'" '.$feedcat['Status'].' /><label class="opt">&nbsp;'.$feedcat['Name'].' '.$feedcat['Info'].'</label><br />';
                   }
                 
                 ?>
@@ -1009,10 +1014,10 @@ function arcadelite_edit_settings() {
               foreach ($feedcategories as $feedcat) : 
             ?>
               <tr>
-                <td><?php echo $feedcat[Name]; ?></td>
+                <td><?php echo $feedcat['Name']; ?></td>
                 <td>
                   <?php
-                  $output  = '<select id="bcat_'.$feedcat[Slug].'">';
+                  $output  = '<select id="bcat_'.$feedcat['Slug'].'">';
                   $output .=  '<option value="0">---Select---</option>';
                   foreach ($categs_tmp as $cat_tmp_id) {
                     $output .= '<option value="'.$cat_tmp_id.'" />'.get_cat_name($cat_tmp_id).'</option>';
@@ -1226,7 +1231,7 @@ function arcadelite_check_json($echo) {
 
   $result = true;
 
-  if (!function_exists(json_decode)) {
+  if (!function_exists('json_decode')) {
      $phpversion = phpversion();
     
     if ($echo) {
@@ -1706,6 +1711,14 @@ function arcadelite_add_games_to_blog($gameID = 0, $publish_status = 'publish', 
               echo " <strong>".__("Failed", MYARCADE_TEXT_DOMAIN)."</strong>! ".__("Using the thumbnail from the Mochi-URL..", MYARCADE_TEXT_DOMAIN)."<br />";
         }
       }
+      
+      // Screens?
+      for ($screenNr = 1; $screenNr <= 4; $screenNr++) {
+        $screenshot_url = 'screen'.$screenNr."_url";
+
+        // Put the screen urls into the post array
+        $game_to_add->$screenshot_url = $game->$screenshot_url;
+      } // END for - screens      
 
       // Download Games?
       if ($download_games == true) {
@@ -1833,7 +1846,7 @@ function arcadelite_handler() {
     wp_die('You do not have permissions access this site!');
   }
       
-  $gameID = $_POST['gameid'];
+  if ( isset($_POST['gameid']) ) $gameID = $_POST['gameid']; else $gameID = '';
     
   switch ($_POST['func']) {
     /* Manage Games */
@@ -2009,7 +2022,9 @@ function arcadelite_manage_games() {
   
   echo "<h3>".__("Manage Games", MYARCADE_TEXT_DOMAIN)."</h3>";
   
-  $action   = $_POST['action'];
+  if ( isset($_POST['action']) ) $action = $_POST['action']; else $action = '';
+  
+  $keyword = '';
   
   if ($action == 'search') {
     $keyword = mysql_escape_string($_POST['q']);
@@ -2059,7 +2074,7 @@ function arcadelite_manage_games() {
   
  <?php
   
-  if ($results) {
+  if ( isset($results) ) {
     echo '<h3>'.sprintf(__("Search results for %s", MYARCADE_TEXT_DOMAIN), $keyword).'"</h3>';
     foreach ($results as $game) {
       arcadelite_show_game($game);
@@ -2077,7 +2092,7 @@ function arcadelite_manage_games() {
       $last = ceil($count / $page_rows); 
       
       // This makes sure the page number isn't below one, or more than our maximum pages
-      $pagenum = $_GET['pagenum'];
+      if (isset($_GET['pagenum']) ) $pagenum = $_GET['pagenum']; else $pagenum = 1;
       
       if ($pagenum < 1)  {
         $pagenum = 1;
@@ -2839,6 +2854,10 @@ function arcadelite_upgrade_post_metas() {
 /*******************************************************************************
  * O U T P U T  F U N C T I O N S
  ******************************************************************************/
+
+/*function arcadelite_meta() {
+  echo '<meta name="myarcadeplugin" content="lite '.MYARCADE_VERSION. '" />'."\n";
+}*/
 
 /**
  * @brief Shows a game swf

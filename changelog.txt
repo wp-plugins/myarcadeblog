@@ -1,5 +1,11 @@
 - MyArcadePlugin Lite -
 
+v2.10 - 2011-06-23
+  - Fixed: Can't create categories
+  - Fixed: PHP Notices in WP Debug mode
+  - Fixed: Reset Feeded Games button
+  - Fixed: Can't add game screenshots
+
 v2.00 - 2011-05-28
   - New: Plugin renamed to MyArcadePlugin Lite
   - New: Mochi Publisher ID will be added to the game code to get credits
