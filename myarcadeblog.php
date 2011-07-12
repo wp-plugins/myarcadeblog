@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.10
+Version:      2.11
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.10');
+define('MYARCADE_VERSION', '2.11');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -2196,7 +2196,7 @@ function arcadelite_import_games() {
     
   arcadelite_header();  
   
-  if ($_POST['impcostgame'] == 'import') {
+  if ( isset($_POST['impcostgame']) && $_POST['impcostgame'] == 'import') {
     $game->swf_url        = $_POST['importgame'];
     $game->width          = $_POST['gamewidth'];
     $game->height         = $_POST['gameheight'];
@@ -2218,6 +2218,7 @@ function arcadelite_import_games() {
     $game->highscore_type = $_POST['highscoretype'];
     $game->coins_enabled  = '';
     $game->status         = 'new';
+    $game->video_url      = '';
     $game->screen1_url    = $_POST['importscreen1'];
     $game->screen2_url    = $_POST['importscreen2'];
     $game->screen3_url    = $_POST['importscreen3'];

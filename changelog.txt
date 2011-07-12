@@ -1,5 +1,9 @@
 - MyArcadePlugin Lite -
 
+v2.11 - 2011-07-12
+  - Fixed: PHP Notices when WP is in debug mode
+  - Checked: WP 3.2 compatibility
+
 v2.10 - 2011-06-23
   - Fixed: Can't create categories
   - Fixed: PHP Notices in WP Debug mode

@@ -4,7 +4,7 @@ Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
 Tested up to: 3.2
-Stable tag: 2.10
+Stable tag: 2.11
 
 Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
 
@@ -150,6 +150,11 @@ Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version: 2.11 - 2011-07-12 =
+* Fixed: PHP Notices when WP is in debug mode
+* Checked: WP 3.2 compatibility
+
 = Version: 2.10 - 2011-06-23 =
 * Fixed: Can't create categories
 * Fixed: PHP Notices in WP Debug mode
