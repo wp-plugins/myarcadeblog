@@ -3,8 +3,8 @@ Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
-Tested up to: 3.2
-Stable tag: 2.11
+Tested up to: 3.3
+Stable tag: 2.20
 
 Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
 
@@ -12,11 +12,11 @@ Transform a boring WordPress Blog into an amazing arcade games portal using Moch
 
 INFO: When you are upgrading from an older version, then you will need to change the custom field names in your theme. Check FAQ!
 
-MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin will embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game posts!
+MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin will embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game descriptions automatically!
 
 Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 
-1. Feed Games
+1. Fetch Games
 2. Publish Games
 
 [youtube http://www.youtube.com/watch?feature=player_embedded&v=eBx9mYEmPyQ] 
@@ -35,36 +35,39 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 * Import Flash Games (SWF Format)
 * Option to reset the games database
 * Multilingual Support - Easy translation to every language
+* Compatible with Premium <a href='myarcadeblogthemes.com' title='WP Arcade Themes'>WP Arcade Themes</a>
 
 = Additional MyArcadePlugin Pro Features: =
 MyArcadePlugin Lite is a fully functional but limited version of <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
 
-* One-Click Feeding for HeyZap Games
-* Offset Game Feeding for Mochi and HeyZap Games
-* Download Mochi game screen shots automatically to your server
-* Feed special Mochi Media categories: Premium, Coin Enabled, Featured, Leaderboard
-* Auto Post from Mochi Media 
-* Automated Game Feeding (Cron) for Mochi and HeyZap
-* Leaderboard Support for Mochi Games 
-* Tag filter
-* HeyZap Download: Games and Thumbnails
-* Import DCR Games 
+* Fetch Games from Playtomic
+* Fetch Games from Kongregate
+* Fetch Games from FlashGameDistribution
+* Fetch Games from HeyZap
+* Automated Game Fetching (WP Cron)
 * Import IBPArcade Games 
-* Import Games With Embed Codes 
-* Import Games With Iframe Codes 
+* Import PHPBB Games
+* Import ZIP Games
+* Import SWF Games
+* Import DCR Games
+* Import Embed Codes Games
+* Import Iframe Games
 * Detect Game Dimensions Automatically (SWF, IBPArcade) 
-* Grab Game Files From Net 
+* Grab Game Files From URL
 * Edit Games Before Publishing 
 * Save Mochi Scores 
 * Save IBPArcade Scores 
+* Leaderboard
 * Save Highest Score Only 
 * Ajaxed Category-Mapping 
 * Save Games as drafts
 * Allow Users To Import Games 
 * Single Category Publishing 
+* Automated Game Translation in 36 Languages
+* CubePoints Support
 * and a lot of more features..
 
-MyArcadePlugin Pro is able to download and publish flash games from Mochi Media and HeyZap automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
+MyArcadePlugin Pro is able to download and publish flash games from Mochi Media, Playtomich, Kongregate, FlashGameDistribution and HeyZap automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
@@ -84,7 +87,7 @@ MyArcadePlugin Pro is able to download and publish flash games from Mochi Media 
   * CHMOD directory `/wp-content/thumbs/` to 777 
 
 = Usage =
-After the installation you have to setup the plugin. You can find a <a href='http://myarcadeplugin.com/features/myarcadeplugin-pro/'>MyArcadePlugin setup and usage instructions with screenshots and video here »</a>
+After the installation you have to setup the plugin. You can find a <a href='http://myarcadeplugin.com/documentation/' title='WP Arcade Plugin Documentation'>MyArcadePlugin setup and usage instructions with screenshots and video here »</a>
 
 == Upgrade Notice == 
 
@@ -150,6 +153,11 @@ Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version 2.20 - 2011-11-01 =
+ * New: Menu structure updated
+ * Fix: Compatibility with Arcade Themes from MyArcadeBlogThemes.com
+ * Checked: WP 3.3 compatibility
 
 = Version: 2.11 - 2011-07-12 =
 * Fixed: PHP Notices when WP is in debug mode

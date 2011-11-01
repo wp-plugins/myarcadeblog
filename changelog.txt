@@ -1,5 +1,10 @@
 - MyArcadePlugin Lite -
 
+v2.20 - 2011-11-01
+  - New: Menu structure updated
+  - Fix: Compatibility with Arcade Themes from MyArcadeBlogThemes.com
+  - Checked: WP 3.3 compatibility
+
 v2.11 - 2011-07-12
   - Fixed: PHP Notices when WP is in debug mode
   - Checked: WP 3.2 compatibility

@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.11
+Version:      2.20
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.11');
+define('MYARCADE_VERSION', '2.20');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -90,14 +90,19 @@ function arcadelite_bar_menu() {
 
   // Add the main siteadmin menu item
   $wp_admin_bar->add_menu( array( 'id'      => $id, 'title' => 'MyArcade',            'href' => FALSE ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Feed Mochi Games',    'href' => $url.'arcadelite-feed-games' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Feed HeyZap Games',   'href' => $url.'arcadelite-feed-heyzap' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Add Games To Blog',   'href' => $url.'arcadelite-add-games-to-blog' ) );
+  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch Mochi Games',    'href' => $url.'arcadelite-feed-games' ) );
+  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch HeyZap Games',   'href' => $url.'arcadelite-feed-heyzap' ) );
+  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Publish Games',       'href' => $url.'arcadelite-add-games-to-blog' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Import Games',        'href' => $url.'arcadelite-import-games' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Manage Games',        'href' => $url.'arcadelite-manage-games' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Settings',            'href' => $url.'arcadelite-edit-settings' ) );  
 }
 */
+
+function myarcade_get_leaderboard_code() {
+  return false;
+}
+
 
 if (function_exists('load_plugin_textdomain')) {
   load_plugin_textdomain(MYARCADE_TEXT_DOMAIN, WP_PLUGIN_DIR.'/myarcadeblog/lang', '/myarcadeblog/lang');
@@ -141,18 +146,18 @@ function arcadelite_admin_menu() {
     add_menu_page('MyArcade', 'MyArcade', 'edit_posts' , __FILE__, 'arcadelite_show_stats', WP_CONTENT_URL . '/plugins/myarcadeblog/images/arcade.png');
                
     add_submenu_page( __FILE__,
-                      __("Feed Mochi Games", MYARCADE_TEXT_DOMAIN),
-                      __("Feed Mochi Games", MYARCADE_TEXT_DOMAIN),
+                      __("Fetch Mochi Games", MYARCADE_TEXT_DOMAIN),
+                      __("Fetch Mochi Games", MYARCADE_TEXT_DOMAIN),
                       'manage_options', 'arcadelite-feed-games', 'arcadelite_feed_games');
                       
     add_submenu_page( __FILE__,
-                      __("Feed HeyZap Games"),
-                      __("Feed HeyZap Games"),
+                      __("Fetch HeyZap Games"),
+                      __("Fetch HeyZap Games"),
                       'manage_options', 'arcadelite-feed-heyzap', 'arcadelite_feed_heyzap');
                       
     add_submenu_page( __FILE__,
-                      __("Add Games To Blog", MYARCADE_TEXT_DOMAIN),
-                      __("Add Games To Blog", MYARCADE_TEXT_DOMAIN),
+                      __("Publish Games", MYARCADE_TEXT_DOMAIN),
+                      __("Publish Games", MYARCADE_TEXT_DOMAIN),
                       'manage_options', 'arcadelite-add-games-to-blog',  'arcadelite_add_games_to_blog');
                       
     add_submenu_page( __FILE__,
@@ -1260,7 +1265,7 @@ function arcadelite_check_json($echo) {
  */
 function arcadelite_feed_heyzap($cronfeeding = false) {
     arcadelite_header();
-    echo '<h3>'.__("Feed HeyZap Games", MYARCADE_TEXT_DOMAIN).'</h3>';
+    echo '<h3>'.__("Fetch HeyZap Games", MYARCADE_TEXT_DOMAIN).'</h3>';
     ?>
     <br />
     <br />
@@ -1303,7 +1308,7 @@ function arcadelite_feed_games($MochiGameTag = '', $cronfeeding = false) {
   } else $limit = '';
    
     
-  if ($echo) { echo '<h3>'.__("Feed Games", MYARCADE_TEXT_DOMAIN).'</h3>'; }
+  if ($echo) { echo '<h3>'.__("Fetch Mochi Games", MYARCADE_TEXT_DOMAIN).'</h3>'; }
   
   
   // Show the form for offset feeding
