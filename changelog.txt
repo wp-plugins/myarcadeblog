@@ -1,5 +1,10 @@
 - MyArcadePlugin Lite -
 
+v2.30 - 2011-11-13
+  - New: Dashboard
+  - New: Admin Bar Menu
+  - Removed HeyZap menu because HeyZap closed down his game distribution API
+
 v2.20 - 2011-11-01
   - New: Menu structure updated
   - Fix: Compatibility with Arcade Themes from MyArcadeBlogThemes.com

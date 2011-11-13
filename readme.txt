@@ -1,18 +1,18 @@
 === MyArcadePlugin Lite - WordPress Arcade ===
 Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
-Tags: WordPress Arcade, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
+Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade, Playtomic, Kongregate, FGD, FlashGameDistribution, HeyZap
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.20
+Stable tag: 2.30
 
-Transform a boring WordPress Blog into an amazing arcade games portal using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
+Transform a boring WordPress Blog into an amazing WP Arcade Site using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
 
 == Description ==
 
-INFO: When you are upgrading from an older version, then you will need to change the custom field names in your theme. Check FAQ!
+INFO: When you are upgrading from an older version, then you will need to change the custom field names in your theme. Check the FAQ!
 
-MyArcadePlugin transforms a WordPress Blog into an arcade site and brings you all the features an Arcade Script needs. MyArcadePlugin will embed games automatically, without theme editing! In addition, this WordPress Arcade Plugin is able to generate unique game descriptions automatically!
+MyArcadePlugin is able to transform a WordPress Blog into an Online Games Portal or just to enchance your existing Blog wiht an Acade Section. MyArcadePlugin brings you all the features an Arcade Script needs. This WP Arcade Plugin will embed games automatically, without theme editing! In addition, it is able to generate unique game descriptions automatically!
 
 Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 
@@ -20,8 +20,11 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 2. Publish Games
 
 [youtube http://www.youtube.com/watch?feature=player_embedded&v=eBx9mYEmPyQ] 
+
+= Do you want a free WP Arcade Theme? =
+Here you can download it for free and start right now buildung your WordPress Arcade: <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='Free WP Arcade Theme'>WP Arcade Theme</a>!
    
-= MyArcadePlugin Features: =
+= MyArcadePlugin Features =
 * One-Click Game Feeding
 * One-Click Game Publishing
 * Publish games immediately
@@ -153,6 +156,11 @@ Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version 2.30 - 2011-11-13 =
+  * New: Dashboard
+  * New: Admin Bar Menu
+  * Removed HeyZap menu because HeyZap closed down his game distribution API
 
 = Version 2.20 - 2011-11-01 =
  * New: Menu structure updated

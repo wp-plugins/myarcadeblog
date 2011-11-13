@@ -176,6 +176,40 @@ text-shadow:0 1px 0 #FFFFFF;
  width: 16px;
 }
 
+.show_game { 
+  margin: 0px 0px 10px 0px; 
+  padding: 0; 
+  border: 1px solid #d6d6d6; 
+  background-color: #f0f0f0; 
+  overflow: hidden; 
+  font-size: 1.2em; 
+  width: 700px; 
+  clear: both; 
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+.show_game .block  { padding: 5px 5px 0 5px; background-color: #f0f0f0; }
+.show_game .block p { padding: 5px 0; margin: 5px 0; }
+.show_game h3       { 
+  font: 2.0em normal Georgia, "Times New Roman", Times, serif; 
+  margin: 5px 0px; 
+  padding: 0 0 0 0; 
+  border-bottom: 1px dashed #ccc; 
+}
+
+.show_game img {
+  border: 1px solid #d6d6d6;
+  padding: 5px;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+.show_game small    { font-style: italic; font-weight: normal; font-size: 0.5em; }
+
 
 .myhelp {
   float:left;
@@ -200,15 +234,26 @@ text-shadow:0 1px 0 #FFFFFF;
   z-index: 10;
 }
 
-.offset {
-  border: 1px solid #D7D7D7; 
+.myhelp img { border:none; }
+
+.myarcade_border {
   padding: 10px;  
-  margin-bottom: 10px;
+  margin-bottom: 10px;  
+  border: 1px solid #D7D7D7;
   border-radius:5px; 
   -moz-border-radius:5px; 
   -webkit-border-radius:5px; 
-  background: #F9F9F9;
 }
+
+.grey { background: #F9F9F9; }
+.white {background: #FFFFFF;}
+
+
+.myarcade_form input, .myarcade_form select { margin-bottom: 0px !important; padding: 5px !important; height:auto !important; }
+.myarcade_form textarea { margin-bottom: 0px !important; padding: 6px; }
+.myarcade_form input:focus, .myarcade_form textarea:focus {border:1px solid #CCCCCC; background-color: #F9F9F9;}
+.myarcade_form input:focus[readonly], .myarcade_form select:focus[readonly], .myarcade_form select:focus[disabled], .myarcade_form textarea:focus[readonly] {color:#AAAAAA; background-color:#EEEEEE; }
+.myarcade_form input:focus, .myarcade_form textarea:focus {border:1px solid #CCCCCC; background-color: #F9F9F9;}
 
 /* Settings Page */
 #myarcade_settings { width: 800px; }
@@ -228,6 +273,10 @@ text-shadow:0 1px 0 #FFFFFF;
 .remove_map { float: left; margin-right: 10px; }
 
 .remove_map img { cursor: pointer; }
+
+#myabp_import {
+  margin-left: 5px;
+}
 
 #myabp_import .container { 
   margin: 0px 0px 10px 0px; 
@@ -265,23 +314,14 @@ text-shadow:0 1px 0 #FFFFFF;
  }
  
 
-.show_game { 
-  margin: 0px 0px 10px 0px; 
-  padding: 0; 
-  border: 1px solid #d6d6d6; 
-  background-color: #f0f0f0; 
-  overflow: hidden; 
-  font-size: 1.2em; 
-  width: 700px; 
-  clear: both; 
-}
-.show_game .block  { padding: 5px 5px 0 5px; background-color: #f0f0f0; }
-.show_game .block p { padding: 5px 0; margin: 5px 0; }
-.show_game h3       { 
-  font: 2.0em normal Georgia, "Times New Roman", Times, serif; 
-  margin: 5px 0px; 
-  padding: 0 0 0 0; 
-  border-bottom: 1px dashed #ccc; 
-}
+.myarcade_hr { height:2px; border-top:1px solid #D7D7D7; }
 
-.show_game small    { font-style: italic; font-weight: normal; font-size: 0.5em; }
+/* admin dashboard section */
+.dash-left {float:left;width:49%;padding-right: 1%;}
+.dash-right {float:left;width:49%;padding-right: 0.5%;}
+.postbox .statsico{float:left; height:25px; width:30px; background: url('images/chart.png') transparent no-repeat scroll 6px 4px}
+.postbox .newsico{float:left; height:25px; width:30px; background: url('images/news.png') transparent no-repeat scroll 6px 4px}
+.postbox .facebookico{float:left; height:25px; width:30px; background: url('images/facebook.png') transparent no-repeat scroll 6px 4px}
+.postbox .dollarico{float:left; height:25px; width:30px; background: url('images/dollar.png') transparent no-repeat scroll 6px 4px}
+.postbox .joystickico{float:left; height:25px; width:30px; background: url('images/joystick.png') transparent no-repeat scroll 6px 4px}
+#boxy {margin: 10px;}

@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.20
+Version:      2.30
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.20');
+define('MYARCADE_VERSION', '2.30');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -67,17 +67,13 @@ add_action('wp_ajax_arcadelite_handler', 'arcadelite_handler');
 add_filter('the_content', 'arcadelite_embed_handler', 99);
 //add_action('wp_head', 'arcadelite_meta');
   /* Extend the WP Bar */
-//add_action( 'admin_bar_menu', 'arcadelite_bar_menu', 1000 );
+add_action( 'admin_bar_menu', 'arcadelite_bar_menu', 1000 );
   
   
   /* Register install function */
 register_activation_hook( __FILE__, 'arcadelite_install' ); 
 
 
-/**
-@todo - bug !
-*/
-/*
 function arcadelite_bar_menu() {
   global $wp_admin_bar, $wpdb;
 
@@ -90,14 +86,13 @@ function arcadelite_bar_menu() {
 
   // Add the main siteadmin menu item
   $wp_admin_bar->add_menu( array( 'id'      => $id, 'title' => 'MyArcade',            'href' => FALSE ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch Mochi Games',    'href' => $url.'arcadelite-feed-games' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch HeyZap Games',   'href' => $url.'arcadelite-feed-heyzap' ) );
+  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch Games',         'href' => $url.'arcadelite-feed-games' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Publish Games',       'href' => $url.'arcadelite-add-games-to-blog' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Import Games',        'href' => $url.'arcadelite-import-games' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Manage Games',        'href' => $url.'arcadelite-manage-games' ) );
   $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Settings',            'href' => $url.'arcadelite-edit-settings' ) );  
 }
-*/
+
 
 function myarcade_get_leaderboard_code() {
   return false;
@@ -144,16 +139,12 @@ if (!function_exists('check_user_privilegs')) {
 function arcadelite_admin_menu() {
 
     add_menu_page('MyArcade', 'MyArcade', 'edit_posts' , __FILE__, 'arcadelite_show_stats', WP_CONTENT_URL . '/plugins/myarcadeblog/images/arcade.png');
+      add_submenu_page(__FILE__, __('Dashboard', MYARCADE_TEXT_DOMAIN), __('Dashboard', MYARCADE_TEXT_DOMAIN), 'edit_posts', __FILE__, 'myarcade_show_stats');
                
     add_submenu_page( __FILE__,
-                      __("Fetch Mochi Games", MYARCADE_TEXT_DOMAIN),
-                      __("Fetch Mochi Games", MYARCADE_TEXT_DOMAIN),
+                      __("Fetch Games", MYARCADE_TEXT_DOMAIN),
+                      __("Fetch Games", MYARCADE_TEXT_DOMAIN),
                       'manage_options', 'arcadelite-feed-games', 'arcadelite_feed_games');
-                      
-    add_submenu_page( __FILE__,
-                      __("Fetch HeyZap Games"),
-                      __("Fetch HeyZap Games"),
-                      'manage_options', 'arcadelite-feed-heyzap', 'arcadelite_feed_heyzap');
                       
     add_submenu_page( __FILE__,
                       __("Publish Games", MYARCADE_TEXT_DOMAIN),
@@ -238,7 +229,8 @@ function arcadelite_header() {
 ?>  
   <script type="text/javascript">
     jQuery(document).ready(function(){
-      jQuery("#advanced_settings").hide();
+      jQuery(".toggle_container").hide();
+      //jQuery("#advanced_settings").hide();
       jQuery("h2.trigger").click(function(){
         jQuery(this).toggleClass("active").next().slideToggle("slow");
       });
@@ -268,116 +260,102 @@ function arcadelite_show_stats() {
 
   arcadelite_header();
   
-
-  $new_games = 0;
-
-  $unpublished_games  = $wpdb->get_var("SELECT COUNT(*) FROM ".MYARCADE_GAME_TABLE." WHERE status = 'new'");
-  $arcadelite_settings  = $wpdb->get_row("SELECT * FROM ".MYARCADE_SETTINGS_TABLE);
-  
-  if ($unpublished_games > 0) {
-    $publish_games = __("Add Games to Blog", MYARCADE_TEXT_DOMAIN);
-    $my_message =  '<br /><a href="?page=arcadelite-add-games-to-blog" class="button-primary">'.$publish_games.'</a>';
-  }
-  else {
-    $unpublished_games = 0;
-    $my_message  =  '<p class="mabp_error">'.__("You have <strong>NO</strong> unpublished games!", MYARCADE_TEXT_DOMAIN).'</p>';
-    $my_message .=  '<a href="?page=arcadelite-feed-games" title='.__("Feed games", MYARCADE_TEXT_DOMAIN).'" class="button-primary">'.__("Feed games", MYARCADE_TEXT_DOMAIN).'</a></p>';
-  }
-  
   ?>
+  <div id="icon-index" class="icon32"><br /></div>
+  <h2><?php _e("Dashboard"); ?></h2>
+  <?php  
+          
+  ?>
+  
+    <div class="dash-left metabox-holder">
+      <div class="postbox">
+        <div class="newsico"></div>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Lastest MyArcadePlugin News', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+            <?php
+               wp_widget_rss_output('http://myarcadeplugin.com/feed', array('items' => 10, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
+            ?>
+            </div> <!-- inside end -->
+          </div>
+      </div><!-- postbox end -->
+              
+      <div class="postbox">
+        <div class="joystickico"></div>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Premium Arcade Themes', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+              <p>
+              <?php              
+              $rss = fetch_feed('http://myarcadeblogthemes.com/special-offer/feed/?withoutcomments=1');       
+              if ( is_wp_error( $rss ) ) { 
+                echo '<p>'; _e('Sorry, can not download the feed', MYARCADE_TEXT_DOMAIN); echo '</p>'; 
+              } else {
+                $rss_item = $rss->get_item(0);
+                echo $rss_item->get_content();
+              }
+              ?>
+              </p>
+              <div class="clear">&nbsp;</div>
+            </div> <!-- inside end -->
+          </div>
+        </div> <!-- postbox end -->        
+        
+      <div class="postbox">
+        <div class="statsico"></div>
+          <!-- <a target="_new" href="#"><div class="joystickico"></div></a> -->
+          <h3 class="hndle" id="poststuff"><span><?php _e('MyArcade Traffic Exchange Network', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+              <p>Join our Banner / Traffic Exchange Network to boost your traffic and to increase the popularity of your site. You will receive 10.000 banner impressions on register for FREE!</p>
+               <center><a href="http://exchange.myarcadeplugin.com" target="_blank" title="MyArcade Traffic Exchange Network"> MyArcade Traffic / Banner Exchange Network</a></center>
+            </div> <!-- inside end -->
+          </div>
+        </div> <!-- postbox end -->          
+
+      
+    </div><!-- end dash-left -->  
     
-    <h2><?php _e("Overview", MYARCADE_TEXT_DOMAIN); ?></h2>  
-                 
-      <table class="widefat">
-      <thead>
-        <tr> 
-          <th scope="col" class="manage-column column-title"><?php _e("Unpublished Games", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Publish Games", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Publish Status", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Download Thumbs", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Download Games", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Download Screens", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Cron Active", MYARCADE_TEXT_DOMAIN); ?></th>
-          <th scope="col" class="manage-column column-title"><?php _e("Leaderboard Active", MYARCADE_TEXT_DOMAIN); ?></th>
-        </tr>
-      </thead>
-      <tr>
-        <td scope="col"><?php echo $unpublished_games; ?></td>
-        <td scope="col"><?php echo $arcadelite_settings->publish_games;?></td>
-        <td scope="col"><?php echo $arcadelite_settings->publish_status;?></td>
-        <td scope="col"><?php echo $arcadelite_settings->download_thumbs;?></td>
-        <td scope="col"><?php echo $arcadelite_settings->download_games;?></td>
-        <td scope="col"><?php echo MYARCADE_LOCKED_IMG; ?></td>
-        <td scope="col"><?php echo MYARCADE_LOCKED_IMG; ?></td>
-        <td scope="col"><?php echo MYARCADE_LOCKED_IMG; ?></td>
-    </tr>
-     
-    </table>
-  <?php
-  echo $my_message;
-  ?>
-    <br /><br /><br />
-    <h2 class="box"><?php _e("Additional Informations", MYARCADE_TEXT_DOMAIN); ?></h2>  
-    <div id="myabp_import">
-    <div class="container">
-      <div class="block">
-        <table class="optiontable" width="100%">
-          <tr>
-            <td colspan="2">
-              <h3>MyArcadePlugin Pro Affiliate Program</h3>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              With MyArcadePlugin Pro affiliate program you can be a part of our success. You will earn up to <strong>30%</strong> commission on any sale you refer!<br /><br /><a href="https://www.e-junkie.com/affiliates/?cl=110247&ev=8e59cd720b" title="MyArcadePlugin Addiliate Programm">Join the MyArcadePlugin affiliate program</a>, promote MyArcadePlugin Pro and earn extra money!
-            </td>
-          </tr> 
-                 
-          <tr>
-            <td colspan="2"><h3 style="margin-top: 15px">Support Us</h3></td>
-          </tr>
-          <tr>
-            <td colspan="2">If you like MyArcadePlugin, please check the Facebook like button: 
-            <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FMyArcadePlugin%2F178161832232562&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;font=verdana&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe></td>
-          </tr>
-          
-          <tr>
-            <td colspan="2"><h3 style="margin-top: 15px">Support</h3></td>
-          </tr>
-          <tr>
-            <td colspan="2">For support and feature request please visit our support forums: <a href="http://myarcadeplugin.com/support/" title="Support Forum">Support Forums</a></td>
-          </tr>          
-          
-          <tr>
-            <td colspan="2">
-              <h3 style="margin-top: 15px">Premium Arcade Themes</h3>
-            </td>
-          </tr>
-          <tr>
-          <td>
-            <img src="<?php echo WP_PLUGIN_URL; ?>/myarcadeblog/images/myarcadeblogthemes.png"" alt="MyArcadeBlogThemes" />
-          </td>
-          <td>
-            Need more themes for your Arcade Site? Check <a href="http://myarcadeblogthemes.com" target="_blank" title="Themes For MyArcadePlugin Pro">MyArcadeBlogThemes</a> by <a href="http://powerfusion.net" title="Powerfusion Internet Services">Powerfusion</a> to get premium arcade themes for MyArcadePlugin Pro. 
-            </td>
-          </tr>
-          
-          <tr>
-            <td colspan="2">
-              <h3 style="margin-top: 15px">MyArcade Traffic Exchange Network</h3>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              Join our Banner / Traffic Exchange Network to boost your traffic and to increase the popularity of your site. You will receive 10.000 banner impressions on register for FREE!  
-              <br /><br />
-              <center><a href="http://exchange.myarcadeplugin.com" target="_blank" title="MyArcade Traffic Exchange Network"> MyArcade Traffic / Banner Exchange Network</a></center> 
-            </td>
-          </tr>          
-        </table>            
-      </div>
-    </div>  
-    </div>
+    <div class="dash-right metabox-holder">
+      <div class="postbox">
+        <div class="dollarico"></div>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Make Extra Money', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+               <p>With MyArcadePlugin Pro affiliate program you can be a part of our success.</p><p>You will earn up to <strong>30%</strong> commission on any sale you refer! <a href="http://myarcadeplugin.com/affiliate-program/" title="MyArcadePlugin Affiliate Programm">Join our affiliate program</a>, promote MyArcadePlugin Pro and earn extra money!</p>
+            </div> <!-- inside end -->
+          </div>
+        </div> <!-- postbox end -->   
+       
+        
+      <div class="postbox">
+        <div class="newsico"></div>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Lastest MyArcadeBlogThemes.com News', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+            <?php
+               wp_widget_rss_output('http://myarcadeblogthemes.com/feed', array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
+            ?>
+            </div> <!-- inside end -->
+          </div>
+        </div> <!-- postbox end -->  
+        
+      <div class="postbox">
+        <div class="facebookico"></div>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Be Our Friend!', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <div class="preloader-container">
+            <div class="insider" id="boxy">
+              <p style="text-align:center"><strong><?php _e('If you like MyArcadePlugin, become our friend on Facebook', MYARCADE_TEXT_DOMAIN); ?></strong></p>
+              <p style="text-align:center;">
+                <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FMyArcadePlugin%2F178161832232562&amp;width=300&amp;colorscheme=light&amp;show_faces=true&amp;stream=false&amp;header=false&amp;height=400" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:400px;" allowTransparency="true"></iframe> 
+              </p>            
+            </div> <!-- inside end -->
+          </div>
+        </div> <!-- postbox end -->         
+    </div><!-- end dash-right -->    
+    
+    <div class="clear"></div>
+     <strong>MyArcadePlugin Pro v<?php echo MYARCADE_VERSION;?></strong> | <strong><a href="http://myarcadeplugin.com/" target="_blank">MyArcadePlugin.com</a> </strong>
     
   <?php 
   arcadelite_footer();
@@ -437,8 +415,8 @@ function arcadelite_edit_settings() {
     $allow_user       = '';
     
     // HeyZap Settings
-    $heyzap = array();
-    $heyzap_settings      = serialize($heyzap);    
+    //$heyzap = array();
+    //$heyzap_settings      = serialize($heyzap);    
     
     // checkbox-check
     if (empty($downloadgames))      { $downloadgames      = 'No';     }
@@ -538,7 +516,7 @@ function arcadelite_edit_settings() {
           embed_flashcode   ='$embed_flashcode',
           use_template      ='$use_template',
           template          ='$post_template',
-          heyzap            ='$heyzap_settings',
+          heyzap            ='',
           tag               ='$tag',
           allow_user_post   ='$allow_user'
     ");
@@ -704,47 +682,48 @@ function arcadelite_edit_settings() {
         </div>
 
         <?php // HeyZap settings ?>
-        <h2 class="trigger"><?php _e("HeyZap Settings", MYARCADE_TEXT_DOMAIN); ?></h2>
+        <!--
+        <h2 class="trigger"><?php //_e("HeyZap Settings", MYARCADE_TEXT_DOMAIN); ?></h2>
         <div class="toggle_container">
           <div class="block">
             <table class="optiontable" width="100%">
              <tr>
                 <td colspan="3">
                   <i>
-                    <?php _e("To be able to use all of the HeyZap's features, a HeyZap account is requred.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="http://www.heyzap.com/" title="Register On HeyZap">here</a> to create a new account.
+                    <?php //_e("To be able to use all of the HeyZap's features, a HeyZap account is requred.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="http://www.heyzap.com/" title="Register On HeyZap">here</a> to create a new account.
                   </i>
                   <br /><br />
-                  <p class="mabp_info" style="padding:5px"><?php echo MYARCADE_LOCKED_IMG; ?> HeyZap Features are available on MyArcadePlugin Pro</p>
+                  <p class="mabp_info" style="padding:5px"><?php //echo MYARCADE_LOCKED_IMG; ?> HeyZap Features are available on MyArcadePlugin Pro</p>
                 </td>
               </tr>
 
-              <tr><td colspan="3"><h3><?php _e("Site Key", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr><td colspan="3"><h3><?php //_e("Site Key", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>
                 <td>
                   <input type="text" size="40"  name="premium3" value="" disabled />
                 </td>
-                <td><i><?php _e("Enter your HeyZap 'Site Key' that will identify your site. This is required if you want to feed more than 10 games at once.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php //_e("Enter your HeyZap 'Site Key' that will identify your site. This is required if you want to feed more than 10 games at once.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
-              <tr><td colspan="3"><h3><?php _e("Secret Key", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr><td colspan="3"><h3><?php //_e("Secret Key", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>
                 <td>
                   <input type="text" size="40"  name="premium4" value="" disabled />
                 </td>
-                <td><i><?php _e("Enter your HeyZap 'Secret Key'. This is required if you want to feed more than 10 games at once.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php //_e("Enter your HeyZap 'Secret Key'. This is required if you want to feed more than 10 games at once.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
-              <tr><td colspan="3"><h3><?php _e("Feed Games", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr><td colspan="3"><h3><?php //_e("Feed Games", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>
                 <td>
                   <input type="text" size="40"  name="premium5" value="" disabled />
                 </td>
-                <td><i><?php _e('How many HeyZap games should be fetched when clicking "Feed HeyZap Games"? Enter a value between 0 and 1000.', MYARCADE_TEXT_DOMAIN); ?></i></tr>
+                <td><i><?php //_e('How many HeyZap games should be fetched when clicking "Feed HeyZap Games"? Enter a value between 0 and 1000.', MYARCADE_TEXT_DOMAIN); ?></i></tr>
               
-              <tr><td colspan="3"><h3><?php _e("Game Variants", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr><td colspan="3"><h3><?php //_e("Game Variants", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>
                 <td>
@@ -752,22 +731,23 @@ function arcadelite_edit_settings() {
                     <option value="-">-- Premium --</option>
                   </select>
                 </td>
-                <td><i><?php _e("HeyZap offers two kinds of games that you can add to your site: SWF and Embed-Code games. Select what game kinds do you want to fetch.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php //_e("HeyZap offers two kinds of games that you can add to your site: SWF and Embed-Code games. Select what game kinds do you want to fetch.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
               
               
 
-              <tr><td colspan="3"><h3><?php _e("HeyZap Auto Game Feeding (Cron)", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr><td colspan="3"><h3><?php //_e("HeyZap Auto Game Feeding (Cron)", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>
                 <td>
-                  <input type="checkbox" name="premium7" value="" disabled /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
+                  <input type="checkbox" name="premium7" value="" disabled /><label class="opt">&nbsp;<?php //_e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
                 </td>
-                <td><i><?php _e("Enable this if you want to fetch HeyZap games automatically. Go to 'General Settings' to select a cron interval.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php //_e("Enable this if you want to fetch HeyZap games automatically. Go to 'General Settings' to select a cron interval.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>          
             </table>
           </div>
         </div>
+        -->
 
         <?php // General Settings ?>
         <h2 class="trigger"><?php _e("General Settings", MYARCADE_TEXT_DOMAIN); ?></h2>
@@ -876,7 +856,7 @@ function arcadelite_edit_settings() {
                 
                 ?>
                 </td>
-                <td><i><?php _e("Choose Mochi and HeyZap game categories that should be fetched.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php _e("Choose Mochi game categories that should be fetched.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
               <tr><td colspan="3"><h3><?php _e("Create Categories", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
@@ -911,7 +891,7 @@ function arcadelite_edit_settings() {
                   <td>
                     <input type="checkbox" name="premium12" value="" disabled />&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?>
                   </td>
-                  <td><i><?php _e("Many Mochi and HeyZap games are tagged to more than one category. Activate this option to avoid game publishing in more than one category.", MYARCADE_TEXT_DOMAIN); ?></i>
+                  <td><i><?php _e("Many Mochi games are tagged to more than one category. Activate this option to avoid game publishing in more than one category.", MYARCADE_TEXT_DOMAIN); ?></i>
                   <br />
                   <strong><?php echo MYARCADE_LOCKED_IMG; ?> Premium Feature</strong></td>
                 </tr>
@@ -998,7 +978,7 @@ function arcadelite_edit_settings() {
               <tr>
                 <td colspan="4">
                   <i>
-                    <?php _e("Map Mochi or HeyZap categories to your own category names. This feature allows you to publish games in translated or summarized categories instead of using the predefined category names. (optional)", MYARCADE_TEXT_DOMAIN); ?>
+                    <?php _e("Map Mochi categories to your own category names. This feature allows you to publish games in translated or summarized categories instead of using the predefined category names. (optional)", MYARCADE_TEXT_DOMAIN); ?>
                   </i>
                   <br /><br />
                   <p class="mabp_info" style="padding:5px"><?php echo MYARCADE_LOCKED_IMG; ?> Category Mapping is available on MyArcadePlugin Pro</p>
@@ -1263,6 +1243,7 @@ function arcadelite_check_json($echo) {
 /**
  * @brief Feeds HeyZap games
  */
+/*
 function arcadelite_feed_heyzap($cronfeeding = false) {
     arcadelite_header();
     echo '<h3>'.__("Fetch HeyZap Games", MYARCADE_TEXT_DOMAIN).'</h3>';
@@ -1272,7 +1253,7 @@ function arcadelite_feed_heyzap($cronfeeding = false) {
     <?php   
     arcadelite_footer();
 } // END arcadelite_feed_heyzap
-
+*/
 
 /**
  * @brief Gets a feed from mochiads and adds new games into the games table 
@@ -2388,8 +2369,8 @@ function arcadelite_install() {
 </p>');
 
     // HeyZap Settings
-    $heyzap = array();
-    $heyzap_settings      = serialize($heyzap);
+    //$heyzap = array();
+    //$heyzap_settings      = serialize($heyzap);
     
     // Include the feed game categories
     @include('modules/myabp_feedcats.php');
@@ -2491,7 +2472,7 @@ function arcadelite_install() {
                   'manually',
                   'No',
                   '$default_theme',
-                  '$heyzap_settings',
+                  '',
                   ''
               )";
 
@@ -2888,8 +2869,8 @@ function get_game($gameID, $fullsize = false, $preview = false) {
   $arcadelite_settings  = $wpdb->get_row("SELECT * FROM ".MYARCADE_SETTINGS_TABLE);
   $maxwidth   = intval($arcadelite_settings->maxwidth);
   
-  $heyzap = array();
-  $heyzap = unserialize($arcadelite_settings->heyzap);
+  //$heyzap = array();
+  //$heyzap = unserialize($arcadelite_settings->heyzap);
   
       
   // Check if we have a Mochimedia ID
