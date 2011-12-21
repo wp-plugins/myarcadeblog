@@ -4,13 +4,11 @@ Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade, Playtomic, Kongregate, FGD, FlashGameDistribution, HeyZap
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.30
+Stable tag: 2.40
 
 Transform a boring WordPress Blog into an amazing WP Arcade Site using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
 
 == Description ==
-
-INFO: When you are upgrading from an older version, then you will need to change the custom field names in your theme. Check the FAQ!
 
 MyArcadePlugin is able to transform a WordPress Blog into an Online Games Portal or just to enchance your existing Blog wiht an Acade Section. MyArcadePlugin brings you all the features an Arcade Script needs. This WP Arcade Plugin will embed games automatically, without theme editing! In addition, it is able to generate unique game descriptions automatically!
 
@@ -25,6 +23,7 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 Here you can download it for free and start right now buildung your WordPress Arcade: <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='Free WP Arcade Theme'>WP Arcade Theme</a>!
    
 = MyArcadePlugin Features =
+* Embed Flash Code into posts without code editing
 * One-Click Game Feeding
 * One-Click Game Publishing
 * Publish games immediately
@@ -46,7 +45,6 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Fetch Games from Playtomic
 * Fetch Games from Kongregate
 * Fetch Games from FlashGameDistribution
-* Fetch Games from HeyZap
 * Automated Game Fetching (WP Cron)
 * Import IBPArcade Games 
 * Import PHPBB Games
@@ -70,7 +68,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * CubePoints Support
 * and a lot of more features..
 
-MyArcadePlugin Pro is able to download and publish flash games from Mochi Media, Playtomich, Kongregate, FlashGameDistribution and HeyZap automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
+MyArcadePlugin Pro is able to download and publish flash games from Mochi Media, Playtomich, Kongregate and FlashGameDistribution automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
@@ -156,6 +154,10 @@ Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version 2.40 - 2011-12-21 =
+  * Fix: Admin bar fix for WP 3.3
+  * Fix: News url
 
 = Version 2.30 - 2011-11-13 =
   * New: Dashboard

@@ -1,5 +1,9 @@
 - MyArcadePlugin Lite -
 
+v2.40 - 2011-12-21
+  - Fix: Admin bar fix for WP 3.3
+  - Fix: News url
+
 v2.30 - 2011-11-13
   - New: Dashboard
   - New: Admin Bar Menu

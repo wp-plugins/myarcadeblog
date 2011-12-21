@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.30
+Version:      2.40
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Author URI:   http://netreview.de
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.30');
+define('MYARCADE_VERSION', '2.40');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -75,22 +75,21 @@ register_activation_hook( __FILE__, 'arcadelite_install' );
 
 
 function arcadelite_bar_menu() {
-  global $wp_admin_bar, $wpdb;
+  global $wp_admin_bar;
 
   if ( !is_super_admin() || !is_admin_bar_showing() ) {
     return;
   }
   
   $id = 'arcadelite_bar';
-  $url =  get_option('siteurl').'/wp-admin/admin.php?page=';
-
-  // Add the main siteadmin menu item
-  $wp_admin_bar->add_menu( array( 'id'      => $id, 'title' => 'MyArcade',            'href' => FALSE ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Fetch Games',         'href' => $url.'arcadelite-feed-games' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Publish Games',       'href' => $url.'arcadelite-add-games-to-blog' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Import Games',        'href' => $url.'arcadelite-import-games' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Manage Games',        'href' => $url.'arcadelite-manage-games' ) );
-  $wp_admin_bar->add_menu( array( 'parent'  => $id, 'title' => 'Settings',            'href' => $url.'arcadelite-edit-settings' ) );  
+  
+    /* Add the main siteadmin menu item */
+    $wp_admin_bar->add_menu( array('id' => $id, 'title' => 'MyArcade',      'href' => admin_url( 'admin.php?page=arcadelite-dashboard') ) );
+    $wp_admin_bar->add_menu( array('id' => 'fetch-games',  'parent'  => $id, 'title' => 'Fetch Games',   'href' => admin_url('admin.php?page=arcadelite-fetch') ) );
+    $wp_admin_bar->add_menu( array('id' => 'import-games', 'parent'  => $id, 'title' => 'Import Games',  'href' => admin_url('admin.php?page=arcadelite-import-games') ) );
+    $wp_admin_bar->add_menu( array('id' => 'publish-games', 'parent'  => $id, 'title' => 'Publish Games', 'href' => admin_url('admin.php?page=arcadelite-add-games-to-blog') ) );    
+    $wp_admin_bar->add_menu( array('id' => 'manage-games', 'parent'  => $id, 'title' => 'Manage Games',  'href' => admin_url('admin.php?page=arcadelite-manage-games') ) );
+    $wp_admin_bar->add_menu( array('id' => 'myarcade-settings', 'parent'  => $id, 'title' => 'Settings',      'href' => admin_url('admin.php?page=arcadelite-edit-settings') ) );
 }
 
 
@@ -139,7 +138,7 @@ if (!function_exists('check_user_privilegs')) {
 function arcadelite_admin_menu() {
 
     add_menu_page('MyArcade', 'MyArcade', 'edit_posts' , __FILE__, 'arcadelite_show_stats', WP_CONTENT_URL . '/plugins/myarcadeblog/images/arcade.png');
-      add_submenu_page(__FILE__, __('Dashboard', MYARCADE_TEXT_DOMAIN), __('Dashboard', MYARCADE_TEXT_DOMAIN), 'edit_posts', __FILE__, 'myarcade_show_stats');
+      add_submenu_page(__FILE__, __('Dashboard', MYARCADE_TEXT_DOMAIN), __('Dashboard', MYARCADE_TEXT_DOMAIN), 'edit_posts', __FILE__, 'arcadelite_show_stats');
                
     add_submenu_page( __FILE__,
                       __("Fetch Games", MYARCADE_TEXT_DOMAIN),
@@ -287,7 +286,7 @@ function arcadelite_show_stats() {
             <div class="insider" id="boxy">
               <p>
               <?php              
-              $rss = fetch_feed('http://myarcadeblogthemes.com/special-offer/feed/?withoutcomments=1');       
+              $rss = fetch_feed('http://exells.com/special-offer/feed/?withoutcomments=1');       
               if ( is_wp_error( $rss ) ) { 
                 echo '<p>'; _e('Sorry, can not download the feed', MYARCADE_TEXT_DOMAIN); echo '</p>'; 
               } else {
@@ -330,11 +329,11 @@ function arcadelite_show_stats() {
         
       <div class="postbox">
         <div class="newsico"></div>
-          <h3 class="hndle" id="poststuff"><span><?php _e('Lastest MyArcadeBlogThemes.com News', MYARCADE_TEXT_DOMAIN) ?></span></h3>
+          <h3 class="hndle" id="poststuff"><span><?php _e('Lastest exells.com News', MYARCADE_TEXT_DOMAIN) ?></span></h3>
           <div class="preloader-container">
             <div class="insider" id="boxy">
             <?php
-               wp_widget_rss_output('http://myarcadeblogthemes.com/feed', array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
+               wp_widget_rss_output('http://exells.com/feed', array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
             ?>
             </div> <!-- inside end -->
           </div>
