@@ -3,7 +3,7 @@ Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade, Playtomic, Kongregate, FGD, FlashGameDistribution, HeyZap
 Requires at least: 3.0
-Tested up to: 3.3
+Tested up to: 3.3.1
 Stable tag: 2.40
 
 Transform a boring WordPress Blog into an amazing WP Arcade Site using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
@@ -17,10 +17,17 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 1. Fetch Games
 2. Publish Games
 
-[youtube http://www.youtube.com/watch?feature=player_embedded&v=eBx9mYEmPyQ] 
+[youtube http://www.youtube.com/watch?v=d_6IFfI6V1Y]
 
 = Do you want a free WP Arcade Theme? =
-Here you can download it for free and start right now buildung your WordPress Arcade: <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='Free WP Arcade Theme'>WP Arcade Theme</a>!
+Here are some WP Arcade Themes that you can use to start right now to build your WordPress Arcade Portal: 
+
+* <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='WP Arcade Theme - GallerGane'>WP Arcade Theme - GalleryGames</a>
+* <a href='http://myarcadeplugin.com/free-wp-arcade-theme-triqui//' title='WP Arcade Theme - Triqui'>WP Arcade Theme - Triqui</a>
+
+FunGames Theme in Action
+
+[youtube http://www.youtube.com/watch?v=wVBKTB-F_1A]
    
 = MyArcadePlugin Features =
 * Embed Flash Code into posts without code editing
@@ -40,7 +47,7 @@ Here you can download it for free and start right now buildung your WordPress Ar
 * Compatible with Premium <a href='myarcadeblogthemes.com' title='WP Arcade Themes'>WP Arcade Themes</a>
 
 = Additional MyArcadePlugin Pro Features: =
-MyArcadePlugin Lite is a fully functional but limited version of <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
+MyArcadePlugin Lite is a fully functional but limited version of <a href='http://exells.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
 
 * Fetch Games from Playtomic
 * Fetch Games from Kongregate
@@ -136,7 +143,7 @@ Yes, but only with the Pro version. MyArcadePlugin Pro is able to add a gaming s
 [youtube http://www.youtube.com/watch?v=lN1Cb7VrS_o]
 
 = Where can I buy Arcade Themes for MyArcadePlugin? =
-Check <a href='http://myarcadeblogthemes.com'>MyArcadePlugin Theme Directory</a>
+Check <a href='http://exells.com'>MyArcadePlugin Theme Directory</a>
 
 = Is MyArcadePlugin Lite compatible with MyArcadePlugin Pro? =
 Yes, you can upgrade to the PRO version without any modifications! 
