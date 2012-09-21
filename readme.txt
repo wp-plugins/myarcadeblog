@@ -1,4 +1,4 @@
-=== MyArcadePlugin Lite - WP Arcade ===
+=== MyArcadePlugin Lite ===
 Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Playtomic, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
