@@ -1,16 +1,18 @@
-=== MyArcadePlugin Lite - WordPress Arcade ===
+=== MyArcadePlugin Lite - Arcade Plugin ===
 Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
-Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade, Playtomic, Kongregate, FGD, FlashGameDistribution, HeyZap
+Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Playtomic, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 2.40
+Tested up to: 3.4
+Stable tag: 2.50
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Transform a boring WordPress Blog into an amazing WP Arcade Site using Mochi Media and other free flash games: http://myarcadeplugin.com/showcase/
+Transform a boring WordPress Blog into an amazing WP Arcade Site with over 50.000 free games: http://myarcadeplugin.com/showcase/
 
 == Description ==
 
-MyArcadePlugin is able to transform a WordPress Blog into an Online Games Portal or just to enchance your existing Blog wiht an Acade Section. MyArcadePlugin brings you all the features an Arcade Script needs. This WP Arcade Plugin will embed games automatically, without theme editing! In addition, it is able to generate unique game descriptions automatically!
+MyArcadePlugin is a powerful WordPress Arcade Plugin which is able to transform a WordPress Blog into an Online Games Portal or just to enchance your existing Blog with an Arcade Feature. MyArcadePlugin brings you all the features an Arcade Script needs. This  Arcade Plugin will embed games automatically, without theme editing! In addition, it is able to generate unique game descriptions!
 
 Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 
@@ -22,21 +24,21 @@ Add thousands of free flash games provided by Mochi Media with just TWO clicks:
 = Do you want a free WP Arcade Theme? =
 Here are some WP Arcade Themes that you can use to start right now to build your WordPress Arcade Portal: 
 
+* <a href='http://myarcadeplugin.com/free-wp-arcade-theme-buddypress-arcade/' title='BuddyPress Arcade Theme'>BuddyPress Arcade Theme</a>
 * <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='WP Arcade Theme - GallerGane'>WP Arcade Theme - GalleryGames</a>
 * <a href='http://myarcadeplugin.com/free-wp-arcade-theme-triqui//' title='WP Arcade Theme - Triqui'>WP Arcade Theme - Triqui</a>
 
 FunGames Theme in Action
 
-[youtube http://www.youtube.com/watch?v=wVBKTB-F_1A]
+[youtube http://www.youtube.com/watch?v=ndMNmaHI830]
    
-= MyArcadePlugin Features =
-* Embed Flash Code into posts without code editing
-* One-Click Game Feeding
+= MyArcadePlugin Lite Features =
+* One-Click Game Feeding (Mochi Media)
 * One-Click Game Publishing
 * Publish games immediately
 * Publish games time shifted - scheduled with individual time interval!
 * Game Management (search, publish, delete) with pagination
-* Option to embed games automatically
+* Option to embed games automatically (No Theme Editing Needed)
 * Post templates with several placeholders to generate unique game descriptions
 * Download Mochi Games automatically to your server
 * Download Mochi Thumbs automatically to your server
@@ -44,14 +46,20 @@ FunGames Theme in Action
 * Import Flash Games (SWF Format)
 * Option to reset the games database
 * Multilingual Support - Easy translation to every language
-* Compatible with Premium <a href='myarcadeblogthemes.com' title='WP Arcade Themes'>WP Arcade Themes</a>
+* Compatible with Premium <a href='http://exells.com' title='WP Arcade Themes'>WP Arcade Themes</a>
 
-= Additional MyArcadePlugin Pro Features: =
-MyArcadePlugin Lite is a fully functional but limited version of <a href='http://exells.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
+= Additional MyArcadePlugin Pro Features =
+MyArcadePlugin Lite is a fully functional but limited version of <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
 
-* Fetch Games from Playtomic
-* Fetch Games from Kongregate
+* Fetch Games from Big Fish Games
 * Fetch Games from FlashGameDistribution
+* Fetch Games from FreeGamesForYourWebsite
+* Fetch Games from Kongregate
+* Fetch Games from Mochi Media
+* Fetch Games from MyArcadeFeed
+* Fetch Games from Playtomic
+* Fetch Games from Scirra
+* Fetch Games from Spilgames
 * Automated Game Fetching (WP Cron)
 * Import IBPArcade Games 
 * Import PHPBB Games
@@ -65,24 +73,26 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Edit Games Before Publishing 
 * Save Mochi Scores 
 * Save IBPArcade Scores 
-* Leaderboard
+* Leaderboards
 * Save Highest Score Only 
 * Ajaxed Category-Mapping 
 * Save Games as drafts
 * Allow Users To Import Games 
 * Single Category Publishing 
-* Automated Game Translation in 36 Languages
+* Microsoft Translation API (34 Languages)
+* Google Tranlator v2 API (64 Languages)
 * CubePoints Support
-* and a lot of more features..
+* BuddyPress integration
+* and a lot of more..
 
-MyArcadePlugin Pro is able to download and publish flash games from Mochi Media, Playtomich, Kongregate and FlashGameDistribution automatically. You do not need to lift a finger. There are over 40.000 games available that you can add to your site instantly!
+With MyArcadePlugin you can automatically fetch games from 9 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, Mochi Media, MyArcadeFeed, Playtomic, Scirra and Spil Games. Additionally you can import 7 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Embed Codes and Iframe Codes. There are over 50.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
 == Installation ==
 = To Install: =
 
-1. Download MyArcadePlugin 
+1. Download MyArcadePlugin Lite
 2. Unzip the file into a folder on your hard drive
 3. Upload `/myarcadeblog/` folder to the `/wp-content/plugins/` folder on your site
 4. Visit your WordPress admin panel -> Plugins and activate MyArcadePlugin
@@ -100,7 +110,7 @@ After the installation you have to setup the plugin. You can find a <a href='htt
 == Upgrade Notice == 
 
 1. Deactivate MyArcadePlugin
-2. Upload the version
+2. Upload a new version
 3. Activate MyArcadePlugin
 
 == Frequently Asked Questions ==
@@ -149,6 +159,9 @@ Check <a href='http://exells.com'>MyArcadePlugin Theme Directory</a>
 Yes, you can upgrade to the PRO version without any modifications! 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
+= How to Upgrade from Lite to Pro? =
+Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro and activate it.
+
 == Screenshots ==
 
 1. MyArcadePlugin Settings Panel
@@ -157,10 +170,30 @@ Yes, you can upgrade to the PRO version without any modifications!
 4. Game Management
 5. Game Import Form
 6. Example Site
+7. BuddyPress Arcade - Free WP Arcade Theme
+8. Triqui - Free WP Arcade Theme
+9. GalleryGames - Free WP Arcade Theme
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version 2.50 - 2012-09-21 =
+  * New: Improved feed download
+  * New: Placeholder %THUMB_URL% for game post template
+  * New: Placeholder %SWF_URL% for game post template
+  * New: Placeholders %WIDTH% and %HEIGHT% for game post template (Game dimensions)
+  * New: Image alt tag in default post template
+  * New: Improved duplicate games check
+  * New: Fetch Mochi's special categories (Premium Games, Leaderboard Games ...)
+  * New: Filter Mochi games by tag
+  * New: Option to create game categories as subcategories of a parent category
+  * New: Option to use only the fist category on game publishing
+  * New: Option to publish all games in a single category
+  * New: Compatibility with WP 3.4.x
+  * New: Compatibility with PHP 5.4
+  * New: Updated settings handling like on MyArcadePlugin Pro
+  * New: is_game function to check if the displayed post is a game post
 
 = Version 2.40 - 2011-12-21 =
   * Fix: Admin bar fix for WP 3.3

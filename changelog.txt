@@ -1,5 +1,22 @@
 - MyArcadePlugin Lite -
 
+v2.50 - 2012-09-21
+  - New: Improved feed download
+  - New: Placeholder %THUMB_URL% for game post template
+  - New: Placeholder %SWF_URL% for game post template
+  - New: Placeholders %WIDTH% and %HEIGHT% for game post template (Game dimensions)
+  - New: Image alt tag in default post template
+  - New: Improved duplicate games check
+  - New: Fetch Mochi's special categories (Premium Games, Leaderboard Games ...)
+  - New: Filter Mochi games by tag
+  - New: Option to create game categories as subcategories of a parent category
+  - New: Option to use only the fist category on game publishing
+  - New: Option to publish all games in a single category
+  - New: Compatibility with WP 3.4.x
+  - New: Compatibility with PHP 5.4
+  - New: Updated settings handling like on MyArcadePlugin Pro
+  - New: is_game function to check if the displayed post is a game post
+
 v2.40 - 2011-12-21
   - Fix: Admin bar fix for WP 3.3
   - Fix: News url
