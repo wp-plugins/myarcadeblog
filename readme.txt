@@ -3,8 +3,8 @@ Contributors: MyArcadePlugin
 Donate link: http://myarcadeplugin.com/
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Playtomic, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.0
-Tested up to: 3.4
-Stable tag: 2.50
+Tested up to: 3.6
+Stable tag: 2.60
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,9 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Fetch Games from Playtomic
 * Fetch Games from Scirra
 * Fetch Games from Spilgames
+* Fetch Games from TalkArcades
 * Automated Game Fetching (WP Cron)
+* Import Unity 3D Games
 * Import IBPArcade Games 
 * Import PHPBB Games
 * Import ZIP Games
@@ -68,6 +70,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Import DCR Games
 * Import Embed Codes Games
 * Import Iframe Games
+* Import Games Uploaded via FTP
 * Detect Game Dimensions Automatically (SWF, IBPArcade) 
 * Grab Game Files From URL
 * Edit Games Before Publishing 
@@ -79,13 +82,13 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Save Games as drafts
 * Allow Users To Import Games 
 * Single Category Publishing 
-* Microsoft Translation API (34 Languages)
+* Microsoft Translation API (36 Languages)
 * Google Tranlator v2 API (64 Languages)
 * CubePoints Support
 * BuddyPress integration
 * and a lot of more..
 
-With MyArcadePlugin you can automatically fetch games from 9 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, Mochi Media, MyArcadeFeed, Playtomic, Scirra and Spil Games. Additionally you can import 7 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Embed Codes and Iframe Codes. There are over 50.000 games available that you can add to your site instantly!
+With MyArcadePlugin you can automatically fetch games from 10 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, Mochi Media, MyArcadeFeed, Playtomic, Scirra, TalkArcades and Spil Games. Additionally you can import 8 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Unity 3D Games, Embed Codes and Iframe Codes. There are over 70.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
@@ -177,6 +180,10 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 == CHANGELOG ==
+
+= Version 2.60 - 2013-04-21 =
+  * New: Compatibility with WordPress 3.6
+  * Fix: Fetch games link in the admin bar
 
 = Version 2.50 - 2012-09-21 =
   * New: Improved feed download

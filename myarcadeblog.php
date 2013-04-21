@@ -3,7 +3,7 @@
 Plugin Name:  MyArcadePlugin Lite
 Plugin URI:   http://myarcadeplugin.com
 Description:  Turn your wordpress blog into an arcade game portal.
-Version:      2.50
+Version:      2.60
 Author:       Daniel Bakovic
 Author URI:   http://netreview.de
 */
@@ -28,7 +28,7 @@ Copyright 2009-2012  @ Daniel Bakovic (email : contact@myarcadeplugin.com)
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '2.50');
+define('MYARCADE_VERSION', '2.60');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');

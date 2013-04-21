@@ -11,13 +11,25 @@ defined('MYARCADE_VERSION') or die();
  * @brief Plugin installation. Adds needed tables
  */
 function myarcade_install() {
-  global $wpdb;
+  global $wpdb, $wp_version;
   
   $collate = '';
-  
-  if( $wpdb->supports_collation() ) {
-    if( !empty($wpdb->charset) ) $collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
-    if( !empty($wpdb->collate) ) $collate.= " COLLATE ".$wpdb->collate;
+
+  if (version_compare($wp_version, '3.5', '>=') ) {
+    if ( $wpdb->has_cap( 'collation' ) ) {
+      if( ! empty($wpdb->charset ) )
+        $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
+      if( ! empty($wpdb->collate ) )
+        $collate .= " COLLATE $wpdb->collate";
+    }
+  }
+  else {
+    if( $wpdb->supports_collation() ) {
+      if( !empty($wpdb->charset) )
+        $collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
+      if( !empty($wpdb->collate) )
+        $collate.= " COLLATE ".$wpdb->collate;
+    }
   }
 
   // Check if games table exisits
@@ -214,6 +226,9 @@ function myarcade_install() {
     
     update_option('myarcade_version', MYARCADE_VERSION, '', 'no');    
   }  
+  else {
+    update_option('myarcade_version', MYARCADE_VERSION, '', 'no');
+  }
 
   // Make also an update of post meta
   myarcade_upgrade_post_metas();      

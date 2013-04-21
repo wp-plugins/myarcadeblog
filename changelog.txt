@@ -1,5 +1,9 @@
 - MyArcadePlugin Lite -
 
+v2.60 - 2013-04-21
+  - New: Compatibility with WordPress 3.6
+  - Fix: Fetch games link in the admin bar
+
 v2.50 - 2012-09-21
   - New: Improved feed download
   - New: Placeholder %THUMB_URL% for game post template
