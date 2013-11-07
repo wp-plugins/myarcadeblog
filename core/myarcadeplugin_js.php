@@ -1,73 +1,81 @@
 <script type="text/javascript">
 function showLoader(id) { jQuery(id).show(); }
-function hideLoader(id) { jQuery(id).hide(); }  
+function hideLoader(id) { jQuery(id).hide(); }
 
-// wait for the DOM to be loaded 
+// wait for the DOM to be loaded
 jQuery(document).ready(function() {
     // SWF handler
-    jQuery('#uploadFormSWF').submit(function() { 
-      var options = { 
-      dataType: 'json',
-      beforeSubmit: function() { showLoader('#loadimgswf'); },
-      success: showResponseSWF       
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
+    jQuery('#uploadFormSWF').submit(function(e) {
+      e.preventDefault();
+
+      var options = {
+        type: 'POST',
+        url: ajaxurl,
+        data: { action: "myarcade_import_handler" },
+        dataType: 'json',
+        beforeSubmit: function() { showLoader('#loadimgswf'); },
+        success: showResponseSWF
+      };
+      jQuery(this).ajaxSubmit(options);
+      return false;
     });
     // Thumbnail handler
-    jQuery('#uploadFormTHUMB').submit(function() { 
-      var options = { 
+    jQuery('#uploadFormTHUMB').submit(function(e) {
+      e.preventDefault();
+
+      var options = {
+      type: 'POST',
+      url: ajaxurl,
+      data: { action: "myarcade_import_handler" },
       dataType: 'json',
       beforeSubmit: function() { showLoader('#loadimgthumb'); },
-      success: showResponseTHUMB       
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
+      success: showResponseTHUMB
+      };
+      jQuery(this).ajaxSubmit(options);
+      return false;
     });
     // Screenshot handler
-    jQuery('#uploadFormSCREEN').submit(function() { 
-      var options = { 
+    jQuery('#uploadFormSCREEN').submit(function(e) {
+      e.preventDefault();
+
+      var options = {
+      type: 'POST',
+      url: ajaxurl,
+      data: { action: "myarcade_import_handler" },
       dataType: 'json',
       beforeSubmit: function() { showLoader('#loadimgscreen'); },
-      success: showResponseSCREEN       
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
-    });
-    // TAR handler
-    jQuery('#uploadFormTAR').submit(function() { 
-      var options = { 
-      dataType: 'json',
-      beforeSubmit: function() { showLoader('#loadimgtar'); },
-      success: showResponseTAR
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
-    });
-    // ZIP handler
-    jQuery('#uploadFormZIP').submit(function() { 
-      var options = { 
-      dataType: 'json',
-      beforeSubmit: function() { showLoader('#loadimgzip'); },
-      success: showResponseZIP
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
+      success: showResponseSCREEN
+      };
+      jQuery(this).ajaxSubmit(options);
+      return false;
     });
     // Embed handler
-    jQuery('#uploadFormEMIF').submit(function() { 
-      var options = { 
+    jQuery('#uploadFormEMIF').submit(function(e) {
+      e.preventDefault();
+      var options = {
+      type: 'POST',
+      url: ajaxurl,
+      data: { action: "myarcade_import_handler" },
       dataType: 'json',
       beforeSubmit: function() { showLoader('#loadimgemif'); },
       success: showResponseEMIF
-      };       
-      jQuery(this).ajaxSubmit(options); 
-      return false; 
-    });    
-    
+      };
+      jQuery(this).ajaxSubmit(options);
+      return false;
+    });
+
+    // File Size check
+    jQuery("#gamefile").change(function ()  {
+      myarcade_check_file_size("#gamefile", "#lblgamefile");
+    });
+
+    // Folder selection
+    jQuery(".fileselection").click( function() {
+      alert("Please consider upgrading to MyArcadePlugin Pro if you want to use this feature.");
+    });
 });
 
-function showResponseSWF(data, statusText, xhr, $form)  { 
+function showResponseSWF(data, statusText, xhr, $form)  {
   hideLoader('#loadimgswf');
 
   // Check the status
@@ -86,16 +94,16 @@ function showResponseSWF(data, statusText, xhr, $form)  {
     else {
       alert('Error: ' + data.error);
     }
-  }  
+  }
 }
 
-function showResponseTHUMB(data, statusText, xhr, $form)  { 
+function showResponseTHUMB(data, statusText, xhr, $form)  {
   hideLoader('#loadimgthumb');
 
   // Check the status
   if (statusText == 'success' && data.error == '') {
     jQuery('#filenamethumb').html('<img src="' + data.thumb_url + '" alt=""  />');
-    jQuery('#importthumb').val(data.thumb_url);    
+    jQuery('#importthumb').val(data.thumb_url);
   }
   else {
     if ( statusText != 'success' ) {
@@ -104,12 +112,12 @@ function showResponseTHUMB(data, statusText, xhr, $form)  {
     else {
       alert('Error: ' + data.error);
     }
-  }  
+  }
 }
 
-function showResponseSCREEN(data, statusText, xhr, $form)  { 
+function showResponseSCREEN(data, statusText, xhr, $form)  {
   var output_string = '';
-  
+
   hideLoader('#loadimgscreen');
 
   // Check the status
@@ -123,7 +131,7 @@ function showResponseSCREEN(data, statusText, xhr, $form)  {
       else {
         output_string += data.screen_error[i] + '<br />';
       }
-    }              
+    }
     jQuery('#filenamescreen').html(output_string);
   }
   else {
@@ -133,71 +141,17 @@ function showResponseSCREEN(data, statusText, xhr, $form)  {
     else {
       alert('Error: ' + data.error);
     }
-  }  
-}
-
-function showResponseTAR(data, statusText, xhr, $form)  { 
-  hideLoader('#loadimgtar');
-
-  // Check the status
-  if (statusText == 'success' && data.error == '') {   
-    var thumb = '<img src="'+data.thumbnail_url+'" alt="" />'; 
-    jQuery('#filenametar').html('<strong>' + data.name + '</strong> - <i>' + data.info_dim + '</i><br />' + thumb);
-    jQuery('#gamewidth').val(data.width);
-    jQuery('#gameheight').val(data.height);
-    jQuery('#gamename').val(data.realname);
-    jQuery('#importgame').val(data.location_url);
-    jQuery('#importthumb').val(data.thumbnail_url);
-    jQuery('#importtype').val(data.type);
-    jQuery('#gamedescr').val(data.description);
-    jQuery('#gameinstr').val(data.instructions);
-    jQuery('#lbenabled').val(data.leaderboard_enabled);
-    jQuery('#highscoretype').val(data.highscore_type);
-    jQuery('#slug').val(data.slug);     
   }
-  else {
-    if ( statusText != 'success' ) {
-      alert('Error: ' + statusText);
-    }
-    else {
-      alert('Error: ' + data.error);
-    }
-  }  
 }
 
-function showResponseZIP(data, statusText, xhr, $form)  { 
-  hideLoader('#loadimgzip');
-
-  // Check the status
-  if (statusText == 'success' && data.error == '') {  
-    var thumb = '<img src="'+data.thumbnail_url+'" alt="" />'; 
-    jQuery('#filenamezip').html('<strong>' + data.name + '</strong> - <i>' + data.info_dim + '</i><br />' + thumb);
-    jQuery('#gamewidth').val(data.width);
-    jQuery('#gameheight').val(data.height);
-    jQuery('#gamename').val(data.realname);
-    jQuery('#importgame').val(data.location_url);
-    jQuery('#importthumb').val(data.thumbnail_url);
-    jQuery('#importtype').val(data.type);
-    jQuery('#slug').val(data.slug);      
-  }
-  else {
-    if ( statusText != 'success' ) {
-      alert('Error: ' + statusText);
-    }
-    else {
-      alert('Error: ' + data.error);
-    }
-  }  
-}
-
-function showResponseEMIF(data, statusText, xhr, $form)  { 
+function showResponseEMIF(data, statusText, xhr, $form)  {
   hideLoader('#loadimgemif');
 
   // Check the status
-  if (statusText == 'success' && data.error == '') {  
+  if (statusText == 'success' && data.error == '') {
     jQuery('#importtype').val(data.type);
     jQuery('#importgame').val(data.importgame);
-    jQuery('#filenameemif').html('<strong>' + data.result + '</strong>');    
+    jQuery('#filenameemif').html('<strong>' + data.result + '</strong>');
   }
   else {
     if ( statusText != 'success' ) {
@@ -206,20 +160,20 @@ function showResponseEMIF(data, statusText, xhr, $form)  {
     else {
       alert('Error: ' + data.error);
     }
-  }  
+  }
 }
 /** Ende Upload Test **/
-  
+
 
 function myarcade_chkImportCustom() {
   if (document.FormCustomGame.importgame.value == "") {
     alert("<?php _e("No game file added!", MYARCADE_TEXT_DOMAIN); ?>");
     return false;
-  }  
+  }
   if (document.FormCustomGame.importthumb.value == "") {
     alert("<?php _e("No thumbnail added!", MYARCADE_TEXT_DOMAIN); ?>");
     return false;
-  }   
+  }
   if (document.FormCustomGame.gamename.value == "") {
     alert("<?php _e("Game name not set!", MYARCADE_TEXT_DOMAIN); ?>");
     document.FormCustomGame.gamename.focus();
@@ -247,11 +201,39 @@ function myarcade_chkImportCustom() {
   return true;
 } // END - myarcade_chkImportCustom
 
+function myarcade_check_file_size( fileID, targetID ) {
+
+  var iSizeBit  = jQuery(fileID)[0].files[0].size;
+  var iSize     = ( iSizeBit / 1024 );
+  var allowedSize = <?php echo myarcade_get_max_post_size_bytes(); ?>;
+  var unit      = "kB";
+
+  if (iSize / 1024 > 1) {
+    if (((iSize / 1024) / 1024) > 1) {
+      iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
+      unit = "GB";
+    }
+    else {
+      iSize = (Math.round((iSize / 1024) * 100) / 100)
+      unit = "MB";
+    }
+  }
+  else {
+    iSize = (Math.round(iSize * 100) / 100)
+  }
+
+  jQuery(targetID).html("File Size: " + iSize  + unit);
+
+  if ( iSizeBit >allowedSize ) {
+    alert( '<?php _e("ERROR: Max allowed file size exceeded!", MYARCADE_TEXT_DOMAIN); ?>' );
+  }
+}
 
 /* Import method selection */
 jQuery(document).ready(function() {
   jQuery('#importibparcade').hide();
   jQuery('#importphpbb').hide();
+  jQuery('#importunity').hide();
   jQuery('#importembedif').hide();
   jQuery('#importmethod').change( function() {
     jQuery('#filename').html('');
@@ -260,54 +242,67 @@ jQuery(document).ready(function() {
     jQuery('#gameheight').val('');
     jQuery('#gamename').val('');
     jQuery('#importgame').val('');
-    jQuery('#importtype').val(''); 
+    jQuery('#importtype').val('');
     jQuery('#importscreen1').val('');
     jQuery('#importscreen2').val('');
     jQuery('#importscreen3').val('');
     jQuery('#importscreen4').val('');
     jQuery('#lbenabled').val('');
     jQuery('#highscoretype').val('');
-    jQuery('#slug').val('');   
-    
+    jQuery('#slug').val('');
+
     switch (this.value) {
       case 'importibparcade': {
         jQuery('#importswfdcr').hide();
         jQuery('#importembedif').hide();
         jQuery('#thumbform').hide();
         jQuery('#importphpbb').hide();
-        jQuery('#importibparcade').fadeIn('slow');        
+        jQuery('#importunity').hide();
+        jQuery('#importibparcade').fadeIn('slow');
       }
       break;
-      
+
       case 'importphpbb': {
         jQuery('#importswfdcr').hide();
         jQuery('#importembedif').hide();
         jQuery('#thumbform').hide();
         jQuery('#importphpbb').fadeIn('slow');
-        jQuery('#importibparcade').hide();        
+        jQuery('#importunity').hide();
+        jQuery('#importibparcade').hide();
       }
-      break;      
-      
+      break;
+
       case 'importswfdcr': {
         jQuery('#importibparcade').hide();
         jQuery('#importembedif').hide();
         jQuery('#importphpbb').hide();
+        jQuery('#importunity').hide();
         jQuery('#importswfdcr').fadeIn('slow');
         jQuery('#thumbform').fadeIn('slow');
       }
       break;
-      
+
       case 'importembedif': {
         jQuery('#importibparcade').hide();
         jQuery('#importswfdcr').hide();
         jQuery('#importphpbb').hide();
-        jQuery('#importembedif').fadeIn('slow'); 
+        jQuery('#importunity').hide();
+        jQuery('#importembedif').fadeIn('slow');
         jQuery('#thumbform').fadeIn('slow');
-               
+      }
+      break;
+
+      case 'importunity': {
+        jQuery('#importibparcade').hide();
+        jQuery('#importswfdcr').hide();
+        jQuery('#importphpbb').hide();
+        jQuery('#importunity').fadeIn('slow');
+        jQuery('#importembedif').hide();
+        jQuery('#thumbform').fadeIn('slow');
       }
       break;
     }
   });
   jQuery('#importmethod').change();
 });
-</script>  
+</script>

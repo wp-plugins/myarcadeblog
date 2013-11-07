@@ -1,7 +1,9 @@
 <?php
-// 34
+// 37
 $languages_bing = array (
 'ar' => 'Arabic',
+'bg' => 'Bulgarian',
+'ca' => 'Catalan',
 'zh-CHT' => 'Chinese Traditional',
 'zh-CHS' => 'Chinese Simplified',
 'cs' => 'Czech',
@@ -23,14 +25,15 @@ $languages_bing = array (
 'lv' => 'Latvian',
 'lt' => 'Lithuanian',
 'no' => 'Norwegian',
+'fa' => 'Persian (Farsi)',
 'pl' => 'Polish',
 'pt' => 'Portuguese',
 'ro' => 'Romanian',
 'ru' => 'Russian',
-'sv' => 'Swedish',
 'sk' => 'Slovak',
 'sl' => 'Slovenian',
 'es' => 'Spanish',
+'sv' => 'Swedish',
 'th' => 'Thai',
 'tr' => 'Turkish',
 'uk' => 'Ukrainian',
@@ -104,4 +107,3 @@ $languages_google = array (
 'cy' => 'Welsh',
 'yi' => 'Yiddish'
 );
-?>

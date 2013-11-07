@@ -1,13 +1,11 @@
 <?php
-/*
-Module:       This modul contains MyArcadePlugin import games functions
-Author:       Daniel Bakovic
-Author URI:   http://myarcadeplugin.com
-Version:      1.00
-*/
+/**
+ * Module:       This modul contains MyArcadePlugin import games functions
+ * Author:       Daniel Bakovic
+ * Author URI:   http://myarcadeplugin.com
+ */
 
 defined('MYARCADE_VERSION') or die();
-
 
 /**
  * Shows the import form and handles imported games
@@ -17,13 +15,13 @@ defined('MYARCADE_VERSION') or die();
 function myarcade_import_games() {
 
   myarcade_header();
-  
+
   // Crete an empty game class
   $game = new stdClass();
-  
+
   if ( isset($_POST['impcostgame']) && ($_POST['impcostgame'] == 'import') ) {
     if ( $_POST['importtype'] == 'embed' ) {
-      $game->swf_url = mysql_escape_string(urldecode($_POST['importgame']));
+      $game->swf_url = mysql_real_escape_string(urldecode($_POST['importgame']));
       $game->width  = '';
       $game->height = '';
     }
@@ -33,13 +31,8 @@ function myarcade_import_games() {
       $game->height         = $_POST['gameheight'];
     }
 
-    if ( ($_POST['importtype'] == 'ibparcade') OR ($_POST['importtype'] == 'phpbb') ) {
-      $game->slug = $_POST['slug'];
-    }
-    else {
-      $game->slug           = preg_replace("/[^a-zA-Z0-9 ]/", "", strtolower($_POST['gamename']));
-      $game->slug           = str_replace(" ", "-", $game->slug);
-    }
+    $game->slug           = preg_replace("/[^a-zA-Z0-9 ]/", "", strtolower($_POST['gamename']));
+    $game->slug           = str_replace(" ", "-", $game->slug);
 
     if ( empty($_POST['highscoretype'])) { $_POST['highscoretype'] = 'high';}
 
@@ -81,6 +74,9 @@ function myarcade_import_games() {
         echo '<div class="mabp_error mabp_680"><p>'.__("Can't import that game...", MYARCADE_TEXT_DOMAIN).'</p></div>';
       }
     }
+    else {
+      echo '<div class="mabp_info mabp_680"><p>'. sprintf(__("Game added successfully: %s", MYARCADE_TEXT_DOMAIN), $game->name).'</p></div>';
+    }
   }
 
   $categs = get_all_category_ids();
@@ -99,9 +95,10 @@ function myarcade_import_games() {
           <td>
             <select size="1" name="importmethod" id="importmethod">
               <option value="importswfdcr"><?php _e("Upload / Grab SWF or DCR game", MYARCADE_TEXT_DOMAIN); ?>&nbsp;</option>
-              <option value="importibparcade"><?php _e("Upload IBPArcade game", MYARCADE_TEXT_DOMAIN); ?></option>
-              <option value="importphpbb"><?php _e("Upload PHPBB / ZIP game", MYARCADE_TEXT_DOMAIN); ?></option>
               <option value="importembedif"><?php _e("Import Embed / Iframe game", MYARCADE_TEXT_DOMAIN); ?></option>
+              <option value="importibparcade"><?php _e("- PRO - Upload IBPArcade game", MYARCADE_TEXT_DOMAIN); ?></option>
+              <option value="importphpbb"><?php _e("- PRO - Upload PHPBB / ZIP game", MYARCADE_TEXT_DOMAIN); ?></option>
+              <option value="importunity"><?php _e("- PRO - Import Unity game", MYARCADE_TEXT_DOMAIN); ?></option>
             </select>
             <br />
             <i><?php _e("Choose a desired import method.", MYARCADE_TEXT_DOMAIN); ?></i>
@@ -111,6 +108,8 @@ function myarcade_import_games() {
     </div>
   </div>
 
+  <?php myarcade_get_max_post_size_message(); ?>
+
   <?php @include_once('form-swfdcr.php'); ?>
 </div><?php // end #myabp_import ?>
 <div class="clear"></div>
@@ -119,4 +118,3 @@ function myarcade_import_games() {
 
   myarcade_footer();
 } // END - Import Games
-?>

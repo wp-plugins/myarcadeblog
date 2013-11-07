@@ -2,25 +2,25 @@
 	margin: 30px 0;
 	text-align:right;
 }
-	
+
 .mabp_error {
-  background-color: #FEEDE9; 
-  border: 1px solid #DD897F;  
+  background-color: #FEEDE9;
+  border: 1px solid #DD897F;
   margin: 10px 0 5px 0;
-  padding: 5px 5px 5px 10px; 
-  text-align: left; 
-  border-radius:5px; 
-  -moz-border-radius:5px; 
+  padding: 5px 5px 5px 10px;
+  text-align: left;
+  border-radius:5px;
+  -moz-border-radius:5px;
   -webkit-border-radius:5px;
 }
 
 .mabp_info {
-  background: #FFFFE0; 
-  border: 1px solid #E6DB55;  
-  padding: 5px 5px 5px 10px; 
-  text-align: left; 
-  border-radius:5px; 
-  -moz-border-radius:5px; 
+  background: #FFFFE0;
+  border: 1px solid #E6DB55;
+  padding: 5px 5px 5px 10px;
+  text-align: left;
+  border-radius:5px;
+  -moz-border-radius:5px;
   -webkit-border-radius:5px;
   margin: 5px 0 5px 0;
 }
@@ -64,12 +64,12 @@
 .reset_table:hover span.info{
   display:block;
   position:absolute;
-  margin-top: 5px; 
+  margin-top: 5px;
   margin-left: -3px;
-  width:250px; 
+  width:250px;
   background-color: #ffebe8;
   border: 2px groove #c00;
-  z-index: 9999 !important;   
+  z-index: 9999 !important;
 }
 
 .importmethod {
@@ -102,11 +102,9 @@ margin:0;
 text-shadow:0 1px 0 #FFFFFF;
 }
 
-
 .clear {
   clear:both;
 }
-
 
 .game {
 	clear:both;
@@ -163,7 +161,7 @@ text-shadow:0 1px 0 #FFFFFF;
 	float: right;
 	margin: 0 5px 0 0;
 }
-	
+
 .gactions {
   float:left;
 	margin: 0 0 15px 5px;
@@ -177,15 +175,15 @@ text-shadow:0 1px 0 #FFFFFF;
  width: 16px;
 }
 
-.show_game { 
-  margin: 0px 0px 10px 0px; 
-  padding: 0; 
-  border: 1px solid #d6d6d6; 
-  background-color: #f0f0f0; 
-  overflow: hidden; 
-  font-size: 1.2em; 
-  width: 700px; 
-  clear: both; 
+.show_game {
+  margin: 0px 0px 10px 0px;
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  font-size: 1.2em;
+  width: 700px;
+  clear: both;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -193,11 +191,11 @@ text-shadow:0 1px 0 #FFFFFF;
 }
 .show_game .block  { padding: 5px 5px 0 5px; background-color: #f0f0f0; }
 .show_game .block p { padding: 5px 0; margin: 5px 0; }
-.show_game h3       { 
-  font: 2.0em normal Georgia, "Times New Roman", Times, serif; 
-  margin: 5px 0px; 
-  padding: 0 0 0 0; 
-  border-bottom: 1px dashed #ccc; 
+.show_game h3       {
+  font: 2.0em normal Georgia, "Times New Roman", Times, serif;
+  margin: 5px 0px;
+  padding: 0 0 0 0;
+  border-bottom: 1px dashed #ccc;
 }
 
 .show_game img {
@@ -225,12 +223,12 @@ text-shadow:0 1px 0 #FFFFFF;
 }
 
 .myhelp:hover span.myinfo {
-  display:block; 
+  display:block;
   position:absolute;
-  margin-top: 10px; 
+  margin-top: 10px;
   margin-left: 10px;
   background-color: #ffebe8;
-  border: 2px dotted #c00;  
+  border: 2px dotted #c00;
   padding: 5px;
   z-index: 10;
 }
@@ -238,12 +236,12 @@ text-shadow:0 1px 0 #FFFFFF;
 .myhelp img { border:none; }
 
 .myarcade_border {
-  padding: 10px;  
-  margin-bottom: 10px;  
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #D7D7D7;
-  border-radius:5px; 
-  -moz-border-radius:5px; 
-  -webkit-border-radius:5px; 
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
 }
 
 .grey { background: #F9F9F9; }
@@ -279,24 +277,24 @@ text-shadow:0 1px 0 #FFFFFF;
   margin-left: 5px;
 }
 
-#myabp_import .container { 
-  margin: 0px 0px 10px 0px; 
-  padding: 0; 
-  border: 1px solid #d6d6d6; 
-  background-color: #f0f0f0; 
-  overflow: hidden; 
-  font-size: 1.2em; 
-  width: 700px; 
-  clear: both; 
+#myabp_import .container {
+  margin: 0px 0px 10px 0px;
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  font-size: 1.2em;
+  width: 700px;
+  clear: both;
 }
 
 #myabp_import .container .block 	{ padding: 20px; background-color: #f0f0f0; }
 #myabp_import .container .block p { padding: 5px 0; margin: 5px 0; }
-#myabp_import .container h3 		  { 
-  font: 2.0em normal Georgia, "Times New Roman", Times, serif; 
-  margin: 5px 0px; 
-  padding: 0 0 0 0; 
-  border-bottom: 1px dashed #ccc; 
+#myabp_import .container h3 		  {
+  font: 2.0em normal Georgia, "Times New Roman", Times, serif;
+  margin: 5px 0px;
+  padding: 0 0 0 0;
+  border-bottom: 1px dashed #ccc;
 }
 #myarcade_settings .toggle_container h4 {
   margin: 0;
@@ -304,19 +302,18 @@ text-shadow:0 1px 0 #FFFFFF;
 
 #myabp_import .container small		{ font-style: italic; font-weight: normal; font-size: 0.5em; }
 
-#myabp_import h2.box { 
-  padding: 0 0 0 10px; 
-  margin: 0 0 5px 0; 
+#myabp_import h2.box {
+  padding: 0 0 0 10px;
+  margin: 0 0 5px 0;
   background-color: #4C4C4C;
-  height: 46px; 
-  line-height: 46px; 
-  width: 692px; 
-  font-size: 2em; 
-  font-weight: normal; 
+  height: 46px;
+  line-height: 46px;
+  width: 692px;
+  font-size: 2em;
+  font-weight: normal;
   color: #fff;
-  /* float: left; */
  }
- 
+
 
 .myarcade_hr { height:2px; border-top:1px solid #D7D7D7; }
 
@@ -382,7 +379,7 @@ text-shadow:0 1px 0 #FFFFFF;
   background-image:-ms-linear-gradient(bottom, #ffffff 0%, #f8f8f8 100%);
   background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, #ffffff), color-stop(1, #f8f8f8));
  }
- 
+
 .myarcade_game_panel, .panel{padding:9px 9px 9px 9px;color:#555;}
 .myarcade_game_panel p{overflow:hidden;zoom:1;margin:0 0 9px;font-size:12px;padding:5px 9px;line-height:24px;}
 .myarcade_game_panel p{margin:9px 0 9px;}
@@ -405,6 +402,6 @@ text-shadow:0 1px 0 #FFFFFF;
   border: 1px solid #ccc;
   padding: 5px;
   border-radius: 5px;
-  -moz-border-radius:5px; 
-  -webkit-border-radius:5px;  
-} 
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+}

@@ -1,81 +1,17 @@
 <?php
-/*
-Module:       This modul contains MyArcadePlugin output functions
-Author:       Daniel Bakovic
-Author URI:   http://myarcadeplugin.com
-*/
-
-if ( !function_exists('is_game') ) {
-  /**
-   * Checks if the displayed post is a game post
-   * 
-   * @global $post
-   * @return boolean
-   */
-  function is_game() {
-    global $post;
-    
-    if ( get_post_meta($post->ID, "mabp_swf_url", true) ) 
-      return true;
-    else 
-      return false;
-  }
-}
-
 /**
- * Check the game width. If the game is larger as defined max. width
- * return true, otherwise false.
+ * Game Output Functions
  *
- * @param integer $postid
- * @return boolean
+ * @author Daniel Bakovic <contact@myarcadeplugin.com>
+ * @copyright (c) 2013, Daniel Bakovic
+ * @license http://myarcadeplugin.com
+ * @package MyArcadePlugin/Core/Posts
  */
-function myarcade_check_width($postid) {
-  
-  $general = get_option('myarcade_general');
-  $maxwidth   = intval($general['max_width']);
-  $gamewidth  = intval(get_post_meta($postid, "mabp_width", true));
-  
-  return ($gamewidth > $maxwidth) ? true : false;
-}
-
-
-/**
- * @brief Embed the flash code if activated
- */
-function myarcade_embed_handler($content) {
-  global $post;
-  
-  // Do this only on single posts ...
-  if ( is_single() && !is_feed() ) {
-  
-    $general  = get_option('myarcade_general');
-    
-    // Check if this option is enabled and if this is a game
-    if ( ($general['embed'] != 'manually') && is_game($post->ID) ) {
-      
-      // Get the embed code of the game
-      $embed_code = get_game($post->ID);
-      
-      // Add the embed code to the content
-      if ( $general['embed'] == 'top' ) {
-        $embed_code = '<div style="margin: 10px 0;text-align:center;">'.$embed_code.'</div>';
-        $content = $embed_code.$content;
-      }
-      else {
-        $embed_code = '<div style="clear:both;margin: 10px 0;text-align:center;">'.$embed_code.'</div>';
-        $content = $content.$embed_code;
-      }
-    }
-  }
-
-  return $content;
-}
-
 
 /**
  * Shows a game depended on the game type.
  *
- * @global  $wpdb
+ * @global $wpdb
  * @global <type> $post
  * @param integer $gameID Post ID or Game ID (game table)
  * @param bool $fullsize
@@ -85,19 +21,19 @@ function myarcade_embed_handler($content) {
  */
 function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = false) {
   global $wpdb, $mypostid;
-  
+
   $mypostid = $gameID;
 
   if ($preview == false) {
     if ( $fullscreen == false ) {
-      $gamewidth  = intval(get_post_meta($gameID, "mabp_width", true));
-      $gameheight = intval(get_post_meta($gameID, "mabp_height", true));      
+      $gamewidth  = apply_filters('myarcade_game_width', get_post_meta($gameID, "mabp_width", true) );
+      $gameheight = apply_filters('myarcade_game_height', get_post_meta($gameID, "mabp_height", true) );
     }
     else {
-      $gamewidth = '93%';
-      $gameheight = '93%';      
+      $gamewidth  = apply_filters('myarcade_fullscreen_width',  '93%');
+      $gameheight = apply_filters('myarcade_fullscreen_height', '93%');
     }
-    
+
     $game_url   = apply_filters( 'myarcade_swf_url', get_post_meta($gameID, "mabp_swf_url", true) );
     $game_variant = get_post_meta($gameID, "mabp_game_type", true);
   }
@@ -111,7 +47,7 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
 
   $general  = get_option('myarcade_general');
   $mochi    = get_option('myarcade_mochi');
-  
+
   $maxwidth   = intval($general['max_width']);
 
   // Check if we have a Mochimedia ID
@@ -120,7 +56,7 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
   }
 
   // Should the game be resized..
-  if ( ($fullsize == false) && $maxwidth )  {
+  if ( !$fullsize && $maxwidth && $gamewidth && $gameheight )  {
     if ($gamewidth > $maxwidth) {
       // Adjust the game dimensions
       $ratio      = $maxwidth / $gamewidth;
@@ -128,17 +64,43 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
       $gameheight = $gameheight * $ratio;
     }
   }
-  
-  // Embed game code
+
   switch ($game_variant) {
     case 'embed': {
       // Embed or Iframe code
       $code = stripcslashes($game_url);
     } break;
-  
+
+    case 'dcr': {
+      // Premium
+    } break;
+
+    case 'bigfish': {
+      // Premium
+    } break;
+
+    case 'scirra': {
+      // Premium
+    } break;
+
+    case 'unity': {
+      // Premium
+    } break;
+
     default: {
-      $code = '<embed src="'.$game_url.'" wmode="direct" menu="false" quality="high" width="'.$gamewidth.'" height="'.$gameheight.'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
-    } break;      
+      $general = get_option( 'myarcade_general' );
+
+      if ( !$preview && isset( $general['swfobject'] ) && $general['swfobject'] ) {
+        $flashvars = apply_filters('myarcade_swfobject_flashvars', array(), $game_variant, $gameID );
+        $params = apply_filters( 'myarcade_swfobject_params', array( 'wmode' => 'direct' ), $game_variant, $gameID );
+        $attributes = apply_filters( 'myarcade_swfobject_attributes', array(), $game_variant, $gameID );
+        $code  = '<div id="myarcade_swfobject_content"></div>'."\n";
+        $code .= "<script type=\"text/javascript\">swfobject.embedSWF( '".$game_url."', 'myarcade_swfobject_content', '".$gamewidth."', '".$gameheight."', '9.0.0', '', '".json_encode($flashvars)."', '".json_encode($params)."', '".json_encode($attributes)."');</script>";          }
+      else {
+      $embed_parameters = apply_filters( 'myarcade_embed_parameters', 'wmode="direct" menu="false" quality="high"', $gameID );
+      $code = '<embed src="'.$game_url.'" '.$embed_parameters.' width="'.$gamewidth.'" height="'.$gameheight.'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+      }
+    } break;
   }
 
   // Show the game
@@ -146,19 +108,55 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
 } // END - get_game
 
 
-function myarcade_comment() {
-  echo "\n"."<!-- Powered by MyArcadePlugin Pro - http://myarcadeplugin.com -->"."\n";
+
+function get_game_code( $post_id = false ) {
+    global $post;
+
+    if ( !$post_id && isset($post->ID) )
+      $post_id = $post->ID;
+    else
+      return FALSE;
+
+    $game_variant  = get_post_meta($post_id, "mabp_game_type", true);
+    $gamewidth  = intval(get_post_meta($post_id, "mabp_width", true));
+    $gameheight = intval(get_post_meta($post_id, "mabp_height", true));
+    $game_url   = get_post_meta($post_id, "mabp_swf_url", true);
+
+    switch ($game_variant) {
+      case 'embed': {
+        // Embed or Iframe code
+        $code = stripcslashes($game_url);
+      } break;
+
+      case 'dcr': {
+      } break;
+
+      case 'bigfish': {
+      } break;
+
+      case 'scirra': {
+      } break;
+
+      default: {
+        $embed_parameters = apply_filters( 'myarcade_embed_parameters', 'wmode="direct" menu="false" quality="high"', $gameID );
+          $code = '<embed src="'.$game_url.'" '.$embed_parameters.' width="'.$gamewidth.'" height="'.$gameheight.'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+      } break;
+     }
+
+    return $code;
 }
 
-function myarcade_meta_output() {
-  echo "\n"."<meta ... />"."\n";
-}
-
-// Dummy functions to make MyArcadePlugin Lite compatible with premium Themes
+/**
+ * Generates the Mochi Leaderboard code
+ *
+ * @global  $wpdb
+ * @global <type> $current_user
+ * @global integer $user_ID
+ * @global integer $mypostid
+ * @global  $post
+ * @return string
+ */
 function myarcade_get_leaderboard_code() {
-  return false;
+  //premium
+  return;
 }
-function enabled_global_scores() {
-  return false;
-}
-?>
