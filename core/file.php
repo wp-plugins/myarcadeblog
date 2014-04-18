@@ -3,7 +3,7 @@
  * File handle functions
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/File
  */
@@ -13,6 +13,11 @@
  * Do not modify! Do not sell! Do not distribute! -
  * Check our license Terms!
  */
+
+// No direct access
+if( !defined( 'ABSPATH' ) ) {
+  die();
+}
 
 defined('MYARCADE_VERSION') or die();
 
@@ -47,9 +52,9 @@ if (!function_exists('file_put_contents')) {
  * @param <type> $dir_p
  * @param <type> $file_p
  */
-function myarcade_del_file($dir_p, $file_p) {
-  if ( file_exists($dir_p.$file_p) && is_writable($dir_p) ) {
-      @unlink($dir_p.$file_p);
+function myarcade_del_file( $file_abs ) {
+  if ( file_exists( $file_abs ) ) {
+      @unlink( $file_abs );
   }
 }
 
@@ -129,7 +134,7 @@ function myarcade_delete_game($post_ID) {
     if ($thumburl) {
       $thumb_abs = myarcade_get_abs_path(MYARCADE_THUMBS_DIR, $thumburl);
       if ($thumb_abs)
-        myarcade_del_file($thumb_abs, basename($thumburl));
+        myarcade_del_file($thumb_abs);
     }
 
     // Delete game screenshots if exists
@@ -139,7 +144,7 @@ function myarcade_delete_game($post_ID) {
       if ($screenshot) {
         $screen_abs = myarcade_get_abs_path(MYARCADE_THUMBS_DIR, $screenshot);
         if ($screen_abs)
-          myarcade_del_file($screen_abs, basename($screenshot));
+          myarcade_del_file($screen_abs);
       }
     } // END for screens
 
@@ -150,15 +155,9 @@ function myarcade_delete_game($post_ID) {
     if ( myarcade_is_game_deleteable($gametype) && $gameurl ) {
       $game_abs = myarcade_get_abs_path(MYARCADE_GAMES_DIR, $gameurl);
       if ($game_abs)
-        myarcade_del_file($game_abs, basename($gameurl));
+        myarcade_del_file($game_abs);
     }
   } // END if delete files
-
-  // Delete game scores
-    // Get game_tag
-  $game_tag = $wpdb->get_var("SELECT game_tag FROM `".MYARCADE_GAME_TABLE."` WHERE `postid` = '$post_ID'");
-    // Delete scores
-  $wpdb->query("DELETE FROM `".MYARCADE_SCORES_TABLE."` WHERE  `game_tag` = '$game_tag'");
 
   // Set game status to deleted
   $query = "UPDATE `".MYARCADE_GAME_TABLE."` SET

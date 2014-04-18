@@ -4,7 +4,7 @@
  * Author:       Daniel Bakovic
  * Author URI:   http://myarcadeplugin.com
  */
-$default_theme = mysql_real_escape_string('<p><div style="float:left;margin-right: 10px; margin-bottom: 10px;">%THUMB%</div>%DESCRIPTION% %INSTRUCTIONS%</p>');
+$default_theme = esc_sql('<p><div style="float:left;margin-right: 10px; margin-bottom: 10px;">%THUMB%</div>%DESCRIPTION% %INSTRUCTIONS%</p>');
 
 $myarcade_general_default = array (
     'scores'        => false,
@@ -21,6 +21,7 @@ $myarcade_general_default = array (
     'interval_fetching' => 'hourly',
     'automated_publishing' => false,
     'interval_publishing' => 'daily',
+    'cron_publish_limit' => 1,
     'create_cats'   => true,
     'parent'        => '',
     'firstcat'      => false,
@@ -50,23 +51,6 @@ $myarcade_general_default = array (
     'translate_games'  => array('mochi', 'fgd', 'fog', 'spilgames', 'kongregate', 'ibparcade')
 );
 
-$myarcade_mochi_default = array (
-    'feed'          => 'http://feedmonger.mochimedia.com/feeds/query/',
-    'feed_save'     => '',
-    'default_feed'  => 'old',
-    'publisher_id'  => '',
-    'secret_key'    => '',
-    'limit'         => '200',
-    'tag'           => '',
-    'cron_fetch'    => false,
-    'cron_fetch_limit' => '1',
-    'cron_publish'  => false,
-    'cron_publish_limit' => '1',
-    'special'       => '',
-    'global_score'  => false,
-    'status'        => 'publish'
-);
-
 $myarcade_kongregate_default = array (
     'feed'          => 'http://www.kongregate.com/games_for_your_site.xml',
     'cron_publish'  => false,
@@ -92,7 +76,7 @@ $myarcade_fog_default = array (
     'thumbsize'     => 'small',
     'screenshot'    => true,
     'tag'           => 'all',
-    /*'create_cat'    => false,*/
+    'language'      => 'en',
     'cron_fetch'    => false,
     'cron_fetch_limit' => '1',
     'cron_publish'  => false,
@@ -101,7 +85,7 @@ $myarcade_fog_default = array (
 );
 
 $myarcade_spilgames_default = array (
-    'feed'          => 'http://publishers.spilgames.com/rss-2',
+    'feed'          => 'http://publishers.spilgames.com/rss-2/',
     'limit'         => '20',
     'thumbsize'     => '1',
     'language'      => 'default',
@@ -114,10 +98,11 @@ $myarcade_spilgames_default = array (
 
 $myarcade_myarcadefeed_default = array (
     'feed1'          => 'http://games.myarcadeplugin.com/game_feed.xml',
-    'feed2'          => '',
+    'feed2'          => 'http://www.2pg.com/myarcadeplugin_feed.xml',
     'feed3'          => '',
     'feed4'          => '',
-    'feed5'          => ''
+    'feed5'          => '',
+    'all_categories' => false,
 );
 
 $myarcade_bigfish_default = array(
@@ -142,4 +127,13 @@ $myarcade_gamefeed_default = array (
     'status'        => 'publish',
     'cron_publish'  => false,
     'cron_publish_limit' => '1'
+);
+
+$myarcade_unityfeeds_default = array (
+    'feed'          => 'http://unityfeeds.com/feed/',
+    'category'      => 'all',
+    'thumbnail'     => '100x100',
+    'screenshot'    => '300x300',
+    'cron_publish'  => false,
+    'cron_publish_limit' => '1',
 );

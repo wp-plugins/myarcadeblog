@@ -304,7 +304,7 @@ function myarcade_show_stats() {
           <div class="preloader-container">
             <div class="insider" id="boxy">
             <?php
-               wp_widget_rss_output('http://exells.com/feed', array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
+               wp_widget_rss_output('http://exells.com/feed/', array('items' => 5, 'show_author' => 0, 'show_date' => 1, 'show_summary' => 0));
             ?>
             </div> <!-- inside end -->
           </div>
@@ -407,30 +407,6 @@ function myarcade_edit_settings() {
     // Update Settings
     update_option('myarcade_general', $general);
 
-    // Mochi
-    $mochi = array();
-    if ( isset($_POST['mochiurl'])) $mochi['feed'] = esc_url_raw($_POST['mochiurl']); else $mochi['feed'] = '';
-    if ( isset($_POST['feed_save'])) $mochi['feed_save'] = esc_url_raw($_POST['feed_save']); else $mochi['feed_save'] = '';
-
-    $mochi['default_feed'] = $_POST['default_feed'];
-
-    if ( isset($_POST['mochiid'])) $mochi['publisher_id'] = sanitize_text_field($_POST['mochiid']); else $mochi['publisher_id'] = '';
-    if ( isset($_POST['mochiskey'])) $mochi['secret_key'] = sanitize_text_field($_POST['mochiskey']); else $mochi['secret_key'] = '';
-    if ( isset($_POST['feed_count'])) $mochi['limit'] = intval(trim($_POST['feed_count'])); else $mochi['limit'] = '';
-    if ( isset($_POST['feedcat'])) $mochi['special'] = trim($_POST['feedcat']); else $mochi['special'] = '';
-
-
-    $mochi['cron_fetch']          = (isset($_POST['cron_fetch'])) ? true : false;
-    $mochi['cron_fetch_limit']    = (isset($_POST['cron_fetch_limit']) ) ? intval($_POST['cron_fetch_limit']) : 1;
-    $mochi['cron_publish']        = (isset($_POST['cron_publish']) ) ? true : false;
-    $mochi['cron_publish_limit']  = (isset($_POST['cron_publish_limit']) ) ? intval($_POST['cron_publish_limit']) : 1;
-
-    if ( isset($_POST['globalscores'])) $mochi['global_score'] = true; else $mochi['global_score'] = false;
-    if ( isset($_POST['tag'])) $mochi['tag'] = sanitize_text_field( trim($_POST['tag']) ); else $mochi['tag'] = '';
-    if ( isset($_POST['mochi_status'])) $mochi['status'] = $_POST['mochi_status']; else $mochi['status'] = 'publish';
-      // Update Settings
-      update_option('myarcade_mochi', $mochi);
-
     // Kongeregate Settings
     $kongregate = array();
     if ( isset($_POST['kongurl'])) $kongregate['feed'] = esc_url_raw($_POST['kongurl']); else $kongregate['feed'] = '';
@@ -459,12 +435,12 @@ function myarcade_edit_settings() {
     if ( isset($_POST['fogthumbsize'])) $fog['thumbsize'] = trim($_POST['fogthumbsize']); else $fog['thumbsize'] = 'small';
     if ( isset($_POST['fogscreen'])) $fog['screenshot'] = true; else $fog['screenshot'] = false;
     if ( isset($_POST['fogtag'])) $fog['tag'] = sanitize_text_field($_POST['fogtag']); else $fog['tag'] = 'all';
-    //if ( isset($_POST['fogcategory'])) $fog['create_cat'] = true; else $fog['create_cat'] = false;
 
     $fog['cron_fetch']          = (isset($_POST['fog_cron_fetch'])) ? true : false;
     $fog['cron_fetch_limit']    = (isset($_POST['fog_cron_fetch_limit']) ) ? intval($_POST['fog_cron_fetch_limit']) : 1;
     $fog['cron_publish']        = (isset($_POST['fog_cron_publish']) ) ? true : false;
     $fog['cron_publish_limit']  = (isset($_POST['fog_cron_publish_limit']) ) ? intval($_POST['fog_cron_publish_limit']) : 1;
+    $fog['language']            = (isset($_POST['foglanguage']) ) ? $_POST['foglanguage'] : 'en';
       // Update Settings
       update_option('myarcade_fog', $fog);
 
@@ -488,6 +464,7 @@ function myarcade_edit_settings() {
     $myarcadefeed['feed3'] = (isset($_POST['myarcadefeed3'])) ? esc_url_raw($_POST['myarcadefeed3']) : '';
     $myarcadefeed['feed4'] = (isset($_POST['myarcadefeed4'])) ? esc_url_raw($_POST['myarcadefeed4']) : '';
     $myarcadefeed['feed5'] = (isset($_POST['myarcadefeed5'])) ? esc_url_raw($_POST['myarcadefeed5']) : '';
+    $myarcadefeed['all_categories'] = (isset($_POST['myarcadefeed_all_categories'])) ? true : false;
       // Update Settings
       update_option('myarcade_myarcadefeed', $myarcadefeed);
 
@@ -521,6 +498,17 @@ function myarcade_edit_settings() {
     $gamefeed['cron_publish_limit']  = (isset($_POST['gamefeed_cron_publish_limit']) ) ? intval($_POST['gamefeed_cron_publish_limit']) : 1;
       // Update Settings
       update_option( 'myarcade_gamefeed', $gamefeed );
+
+    // UnityFeeds
+    $unityfeeds = array();
+    $unityfeeds['feed'] = (isset($_POST['unityfeeds_url'])) ? esc_url_raw($_POST['unityfeeds_url']) : '';
+    $unityfeeds['category'] = (isset($_POST['unityfeeds_category'])) ? esc_sql($_POST['unityfeeds_category']) : 'all';
+    $unityfeeds['thumbnail'] = (isset($_POST['unityfeeds_thumbnail'])) ? esc_sql($_POST['unityfeeds_thumbnail']) : '100x100';
+    $unityfeeds['screenshot'] = (isset($_POST['unityfeeds_screenshot'])) ? esc_sql($_POST['unityfeeds_screenshot']) : '300x300';
+    $unityfeeds['cron_publish']        = (isset($_POST['unityfeeds_cron_publish']) ) ? true : false;
+    $unityfeeds['cron_publish_limit']  = (isset($_POST['unityfeeds_cron_publish_limit']) ) ? intval($_POST['unityfeeds_cron_publish_limit']) : 1;
+      // Update Settings
+      update_option('myarcade_unityfeeds', $unityfeeds);
 
     // END Settings Updates
     //_________________________________________________________________________
@@ -613,7 +601,6 @@ function myarcade_edit_settings() {
 
   // Get settings
   $general    = get_option('myarcade_general');
-  $mochi      = get_option('myarcade_mochi');
   $fgd        = get_option('myarcade_fgd');
   $categories = get_option('myarcade_categories');
   $kongregate = get_option('myarcade_kongregate');
@@ -623,6 +610,7 @@ function myarcade_edit_settings() {
   $bigfish    = get_option('myarcade_bigfish');
   $scirra     = get_option('myarcade_scirra');
   $gamefeed   = get_option('myarcade_gamefeed');
+  $unityfeeds = get_option('myarcade_unityfeeds');
 
   if ( $general['down_games'] ) {
     if ( !file_exists(ABSPATH.MYARCADE_GAMES_DIR) ) {
@@ -649,11 +637,6 @@ function myarcade_edit_settings() {
     if (!is_writable(ABSPATH.MYARCADE_THUMBS_DIR)) {
       echo '<p class="mabp_error mabp_800">'.sprintf(__("The thumbails directory '%s' must be writable (chmod 777) in order to download game screenshots.", MYARCADE_TEXT_DOMAIN), ABSPATH.MYARCADE_THUMBS_DIR).'</p>';
     }
-  }
-
-  // Check ID
-  if ( !empty($mochi['special']) && empty($mochi['publisher_id']) ) {
-    echo '<p class="mabp_error mabp_800">'.__("You have selected a special category but not entered your Mochi Publisher ID!", MYARCADE_TEXT_DOMAIN).'</p>';
   }
 
   // Check Application ID for Bing Translator
@@ -795,7 +778,7 @@ function myarcade_edit_settings() {
                   <input type="text" size="40"  name="folder_structure" value="<?php echo $general['folder_structure']; ?>" />
                 </td>
                 <td><i><?php _e('Define the folder structure for file downloads. Available variables are %game_type% and %alphabetical%. You can combine those variables like this: %game_type%/%alphabetical%/.', MYARCADE_TEXT_DOMAIN); ?><br />
-                    <?php _e('That means, for each game type a new folder will be created and files will be organized in sub folders. Example: "/games/mochi/A/awesome_game.swf.', MYARCADE_TEXT_DOMAIN); ?><br />
+                    <?php _e('That means, for each game type a new folder will be created and files will be organized in sub folders. Example: "/games/fog/A/awesome_game.swf.', MYARCADE_TEXT_DOMAIN); ?><br />
                     <?php _e('Leave blank if you want to save all files in a single folder."', MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
@@ -1144,169 +1127,6 @@ function myarcade_edit_settings() {
           </div>
         </div>
 
-        <?php
-        //----------------------------------------------------------------------
-        // Mochi Settings
-        //----------------------------------------------------------------------
-        ?>
-        <h2 class="trigger"><?php _e("Mochi Media", MYARCADE_TEXT_DOMAIN); ?></h2>
-        <div class="toggle_container">
-          <div class="block">
-            <table class="optiontable" width="100%" cellpadding="5" cellspacing="5">
-              <tr>
-                <td colspan="2">
-                  <p>
-                    <i>
-                      <?php _e("A Mochi account is required to utilize the Mochi Media features.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="https://www.mochimedia.com/r/23f4b6b9ad680165" title="Register On Mochi">here</a> to create a new account.
-                    </i>
-                  </p>
-                </td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Mochi Media Feeds", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr><td colspan="2"><h4><?php _e("Regular Feed URL", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="mochiurl" value="<?php echo $mochi['feed']; ?>" />
-                </td>
-                <td><i><?php _e("Edit this field only if Mochi Media Feed URL has been changed!", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h4><?php _e("Game Catalog 2.0 Feed URL", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="feed_save" value="<?php echo $mochi['feed_save']; ?>" />
-                </td>
-                <td><i><?php _e("Optionally, you can enter a Mochi feed url (JSON FORMAT) for Game Catalog 2.0. Create this URL from the Mochi's website.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h4><?php _e("Default Feed", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
-              <tr>
-                <td>
-                  <select name="default_feed">
-                    <option value="old" <?php myarcade_selected($mochi['default_feed'], 'old'); ?>><?php _e("Regular Feed", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <option value="new" <?php myarcade_selected($mochi['default_feed'], 'new'); ?>><?php _e("Game Catelog 2.0 Feed", MYARCADE_TEXT_DOMAIN); ?></option>
-                  </select>
-                </td>
-                <td><i><?php _e("Select which feed URL do you want to use.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Mochi Publisher ID", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="mochiid" value="<?php echo $mochi['publisher_id']; ?>" />
-                </td>
-                <td><i><?php _e("Paste your Mochi 'Publisher ID' here; the 'Publisher ID' may be found under 'Settings' on the Mochi site.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Publisher Secret Key", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="mochiskey" value="<?php echo $mochi['secret_key'];  ?>" />
-                </td>
-                <td><i><?php _e("Paste your Mochi Publisher Secret Key here. This is required if the leaderboard feature is to be used. You can find your Secret Key under 'Settings' on the Mochi site.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Fetch Games", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="feed_count" value="<?php echo $mochi['limit']; ?>" />
-                </td>
-                <td><i><?php _e("How many Mochi games should be fetched when clicking 'Fetch Games'? Leave blank if you want to fetch all games (not recommended). This option only affects the manual game fetching. It is recommended to use values between 100 and 2000 to avoid server overloads.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Filter by Tag", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="tag" value="<?php echo $mochi['tag']; ?>" />
-                </td>
-                <td><i><?php _e("You may choose to include games that include or exclude a tag. To exclude a tag, prefix it with a minus(-) sign. For example '-zh-cn' will exclude all Chinese games or 'snow' will include only games tagged with snow. Add tags without quotes ('').", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Special Categories", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <select size="1" name="feedcat" id="feedcat">
-                    <option value="" <?php myarcade_selected($mochi['special'], ''); ?> ><?php _e("All Games", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <!-- <option value="premium_games" <?php myarcade_selected($mochi['special'], 'premium_games'); ?> ><?php _e("Premium Games", MYARCADE_TEXT_DOMAIN); ?></option> -->
-                    <option value="coins_enabled" <?php myarcade_selected($mochi['special'], 'coins_enabled'); ?> ><?php _e("Coin Enabled Games", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <option value="featured_games" <?php myarcade_selected($mochi['special'], 'featured_games'); ?> ><?php _e("Featured Games", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <option value="leaderboard_enabled" <?php myarcade_selected($mochi['special'], 'leaderboard_enabled'); ?> ><?php _e("Leaderboard Games", MYARCADE_TEXT_DOMAIN); ?></option>
-                  </select>
-                </td>
-                <td><i><?php _e("Select a special category if you want to fetch only featured, coin enabled, leaderboard or premium games. To use this feature a valid Publisher ID needs to be entered.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <?php // Leaderboard settings ?>
-              <tr><td colspan="2"><h3><?php _e("Enable Global Mochi Scores", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="checkbox" name="globalscores" value="true" <?php myarcade_checked($mochi['global_score'], true) ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
-                </td>
-                <td><i><?php _e("Check this if the global scores of a game (in addition to those submitted on your site) need to be displayed.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Mochi Auto Post", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <select size="1" name="mochi_status" id="mochi_status">
-                    <option value="publish" <?php myarcade_selected($mochi['status'], 'publish'); ?> ><?php _e("Publish", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <option value="draft" <?php myarcade_selected($mochi['status'], 'draft'); ?> ><?php _e("Draft", MYARCADE_TEXT_DOMAIN); ?></option>
-                    <option value="add" <?php myarcade_selected($mochi['status'], 'add'); ?> ><?php _e("Add To Database (don't publish)", MYARCADE_TEXT_DOMAIN); ?></option>
-                  </select>
-                </td>
-                <td><i><?php _e("Select a status for games added through 'Post game to my site' link from Mochi's website.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-
-              <tr><td colspan="2"><h3><?php _e("Automated Game Fetching", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="checkbox" name="cron_fetch" value="true" <?php myarcade_checked($mochi['cron_fetch'], true); ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
-                </td>
-                <td><i><?php _e("Enable this if you want to fetch Mochi Media games automatically. Go to 'General Settings' to select a cron interval.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h4><?php _e("Fetch Games", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="cron_fetch_limit" value="<?php echo $mochi['cron_fetch_limit']; ?>" />
-                </td>
-                <td><i><?php _e("How many games should be fetched on every cron trigger?", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h3><?php _e("Automated Game Publishing", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
-
-              <tr>
-                <td>
-                  <input type="checkbox" name="cron_publish" value="true" <?php myarcade_checked($mochi['cron_publish'], true); ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
-                </td>
-                <td><i><?php _e("Enable this if you want to publish Mochi Media games automatically. Go to 'General Settings' to select a cron interval.", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-              <tr><td colspan="2"><h4><?php _e("Publish Games", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
-
-              <tr>
-                <td>
-                  <input type="text" size="40"  name="cron_publish_limit" value="<?php echo $mochi['cron_publish_limit']; ?>" />
-                </td>
-                <td><i><?php _e("How many games should be published on every cron trigger?", MYARCADE_TEXT_DOMAIN); ?></i></td>
-              </tr>
-
-            </table>
-            <input class="button button-primary" id="submit" type="submit" name="submit" value="<?php _e("Save Settings", MYARCADE_TEXT_DOMAIN); ?>" />
-          </div>
-        </div>
 
         <?php
         //----------------------------------------------------------------------
@@ -1361,6 +1181,13 @@ function myarcade_edit_settings() {
                 </td>
                 <td><i><?php _e("Paste your MyArcadeFeed URL No. 5 here.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
+              <tr><td colspan="2"><h3><?php _e("Fetch All Categories", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr>
+                <td>
+                  <input type="checkbox" name="myarcadefeed_all_categories" value="true" <?php myarcade_checked($myarcadefeed['all_categories'], true); ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
+                </td>
+                <td><i><?php _e("Activate this if you want to fetch all games independent of your activated categories.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
             </table>
             <input class="button button-primary" id="submit" type="submit" name="submit" value="<?php _e("Save Settings", MYARCADE_TEXT_DOMAIN); ?>" />
           </div>
@@ -1400,7 +1227,7 @@ function myarcade_edit_settings() {
                 <td>
                   <input type="text" size="40"  name="spilgameslimit" value="<?php echo $spilgames['limit']; ?>" />
                 </td>
-                <td><i><?php _e("How many games should be fetched at once.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php _e("How many games should be fetched at once. Enter 'all' (without quotes) if you want to fetch all games. Otherwise enter an integer.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
               <tr><td colspan="2"><h3><?php _e("Thumbnail Size", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
@@ -1475,6 +1302,103 @@ function myarcade_edit_settings() {
               <tr>
                 <td>
                   <input type="text" size="40"  name="spilgames_cron_publish_limit" value="<?php echo $spilgames['cron_publish_limit']; ?>" />
+                </td>
+                <td><i><?php _e("How many games should be published on every cron trigger?", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+            </table>
+            <input class="button button-primary" id="submit" type="submit" name="submit" value="<?php _e("Save Settings", MYARCADE_TEXT_DOMAIN); ?>" />
+          </div>
+        </div>
+
+        <?php
+        //----------------------------------------------------------------------
+        // UnityFeeds Settings
+        //----------------------------------------------------------------------
+        ?>
+        <h2 class="trigger"><?php _e("UnityFeeds Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+        <div class="toggle_container">
+          <div class="block">
+            <table class="optiontable" width="100%" cellpadding="5" cellspacing="5">
+              <tr>
+                <td colspan="2">
+                  <i>
+                    <?php _e("UnityFeeds provides a game feed with exclusive Unity3D games.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="http://gamefeeds.com/">here</a> to visit the UnityFeeds site.
+                  </i>
+                </td>
+              </tr>
+
+              <tr><td colspan="2"><h3><?php _e("UnityFeeds Feed URL", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+              <tr>
+                <td>
+                  <input type="text" size="40"  name="unityfeeds_url" value="<?php echo $unityfeeds['feed']; ?>" />
+                </td>
+                <td><i><?php _e("Edit this field only if UnityFeeds Feed URL has been changed!", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+              <tr><td colspan="2"><h3><?php _e("Category", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+
+              <tr>
+                <td>
+                  <select size="1" name="unityfeeds_category" id="unityfeeds_category">
+                    <option value="all" <?php myarcade_selected($unityfeeds['category'], 'all'); ?> ><?php _e("All Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="8" <?php myarcade_selected($unityfeeds['category'], '8'); ?> ><?php _e("Action Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="9" <?php myarcade_selected($unityfeeds['category'], '9'); ?> ><?php _e("Arcade Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="7" <?php myarcade_selected($unityfeeds['category'], '7'); ?> ><?php _e("Driving Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="11" <?php myarcade_selected($unityfeeds['category'], '11'); ?> ><?php _e("Flying Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="6" <?php myarcade_selected($unityfeeds['category'], '6'); ?> ><?php _e("Girls Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="10" <?php myarcade_selected($unityfeeds['category'], '10'); ?> ><?php _e("Puzzle Games", MYARCADE_TEXT_DOMAIN); ?></option>
+                  </select>
+                </td>
+                <td><i><?php _e("Select which games you would like to fetch.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+              <tr><td colspan="2"><h3><?php _e("Thumbnail Size", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+
+              <tr>
+                <td>
+                  <select size="1" name="unityfeeds_thumbnail" id="unityfeeds_thumbnail">
+                    <option value="100x100" <?php myarcade_selected($unityfeeds['thumbnail'], '100x100'); ?> ><?php _e("100x100", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="120x90" <?php myarcade_selected($unityfeeds['thumbnail'], '120x90'); ?> ><?php _e("120x90", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="160x160" <?php myarcade_selected($unityfeeds['thumbnail'], '160x160'); ?> ><?php _e("160x160", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="180x135" <?php myarcade_selected($unityfeeds['thumbnail'], '180x135'); ?> ><?php _e("180x135", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="300x250" <?php myarcade_selected($unityfeeds['thumbnail'], '300x250'); ?> ><?php _e("300x250", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="300x300" <?php myarcade_selected($unityfeeds['thumbnail'], '300x300'); ?> ><?php _e("300x300", MYARCADE_TEXT_DOMAIN); ?></option>
+                  </select>
+                </td>
+                <td><i><?php _e("Select a thumbnail size.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+              <tr><td colspan="2"><h3><?php _e("Thumbnail Size", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+
+              <tr>
+                <td>
+                  <select size="1" name="unityfeeds_screenshot" id="unityfeeds_screenshot">
+                    <option value="100x100" <?php myarcade_selected($unityfeeds['screenshot'], '100x100'); ?> ><?php _e("100x100", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="120x90" <?php myarcade_selected($unityfeeds['screenshot'], '120x90'); ?> ><?php _e("120x90", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="160x160" <?php myarcade_selected($unityfeeds['screenshot'], '160x160'); ?> ><?php _e("160x160", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="180x135" <?php myarcade_selected($unityfeeds['screenshot'], '180x135'); ?> ><?php _e("180x135", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="300x250" <?php myarcade_selected($unityfeeds['screenshot'], '300x250'); ?> ><?php _e("300x250", MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="300x300" <?php myarcade_selected($unityfeeds['screenshot'], '300x300'); ?> ><?php _e("300x300", MYARCADE_TEXT_DOMAIN); ?></option>
+                  </select>
+                </td>
+                <td><i><?php _e("Select a screenshot size.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+              <tr><td colspan="2"><h3><?php _e("Automated Game Publishing", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
+
+              <tr>
+                <td>
+                  <input type="checkbox" name="unityfeeds_cron_publish" value="true" <?php myarcade_checked($unityfeeds['cron_publish'], true); ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
+                </td>
+                <td><i><?php _e("Enable this if you want to publish games automatically. Go to 'General Settings' to select a cron interval.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
+
+              <tr><td colspan="2"><h4><?php _e("Publish Games", MYARCADE_TEXT_DOMAIN); ?></h4></td></tr>
+
+              <tr>
+                <td>
+                  <input type="text" size="40"  name="unityfeeds_cron_publish_limit" value="<?php echo $unityfeeds['cron_publish_limit']; ?>" />
                 </td>
                 <td><i><?php _e("How many games should be published on every cron trigger?", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
@@ -1900,6 +1824,23 @@ function myarcade_edit_settings() {
                 <td><i><?php _e("Select a game category that you would like to fetch from FreeGamesForYourWebsite.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
+              <tr><td colspan="2"><h3><?php _e("Language", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
+
+              <tr>
+                <td>
+                  <select size="1" name="foglanguage" id="foglanguage">
+                    <option value="ar" <?php myarcade_selected($fog['language'], 'ar'); ?>><?php _e('Arabic', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="en" <?php myarcade_selected($fog['language'], 'en'); ?>><?php _e('English', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="fr" <?php myarcade_selected($fog['language'], 'fr'); ?>><?php _e('French', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="de" <?php myarcade_selected($fog['language'], 'de'); ?>><?php _e('German', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="el" <?php myarcade_selected($fog['language'], 'el'); ?>><?php _e('Greek', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="ro" <?php myarcade_selected($fog['language'], 'ro'); ?>><?php _e('Romanian', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="es" <?php myarcade_selected($fog['language'], 'es'); ?>><?php _e('Spanish', MYARCADE_TEXT_DOMAIN); ?></option>
+                    <option value="ur" <?php myarcade_selected($fog['language'], 'ur'); ?>><?php _e('Urdu', MYARCADE_TEXT_DOMAIN); ?></option>
+                  </select>
+                </td>
+                <td><i><?php _e("Select a game language.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+              </tr>
               <tr><td colspan="2"><h3><?php _e("Automated Game Fetching", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
 
               <tr>

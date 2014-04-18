@@ -2,14 +2,16 @@
 /**
  * Plugin Name:  MyArcadePlugin Lite
  * Plugin URI:   http://myarcadeplugin.com
- * Description:  Turn your wordpress blog into an arcade game portal.
- * Version:      3.0.0
+ * Description:  WordPress Arcade Plugin
+ * Version:      4.0.0
  * Author:       Daniel Bakovic
- * Author URI:   http://netreview.de
+ * Author URI:   http://myarcadeplugin.com
+ * Requires at least: 3.6
+ * Tested up to: 3.9
  */
 
 /**
- * Copyright 2009-2012  @ Daniel Bakovic (email : contact@myarcadeplugin.com)
+ * Copyright 2009-2014  @ Daniel Bakovic (email : contact@myarcadeplugin.com)
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +30,7 @@
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '3.0.0');
+define('MYARCADE_VERSION', '4.0.0');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -119,8 +121,8 @@ function myarcade_init() {
 
   $default_distributors = array(
       'myarcadefeed'  => 'MyArcadeFeed',
-      'mochi'         => 'Mochi Media',
       'spilgames'     => 'Spil Games',
+      'unityfeeds'    => 'UnityFeeds',
       'bigfish'       => '- PRO - Big Fish Games',
       'fgd'           => '- PRO - FlashGameDistribution',
       'fog'           => '- PRO - FreeOnlineGames',

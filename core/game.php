@@ -3,7 +3,7 @@
  * Helper Functions - Game
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Game/Helper
  */

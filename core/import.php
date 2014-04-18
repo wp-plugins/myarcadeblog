@@ -21,7 +21,7 @@ function myarcade_import_games() {
 
   if ( isset($_POST['impcostgame']) && ($_POST['impcostgame'] == 'import') ) {
     if ( $_POST['importtype'] == 'embed' ) {
-      $game->swf_url = mysql_real_escape_string(urldecode($_POST['importgame']));
+      $game->swf_url = esc_sql(urldecode($_POST['importgame']));
       $game->width  = '';
       $game->height = '';
     }
@@ -34,12 +34,10 @@ function myarcade_import_games() {
     $game->slug           = preg_replace("/[^a-zA-Z0-9 ]/", "", strtolower($_POST['gamename']));
     $game->slug           = str_replace(" ", "-", $game->slug);
 
-    if ( empty($_POST['highscoretype'])) { $_POST['highscoretype'] = 'high';}
-
     $game->name           = $_POST['gamename'];
     $game->type           = $_POST['importtype'];
     $game->uuid           = md5($game->name.'import');
-    $game->game_tag       = crc32($game->uuid);
+    $game->game_tag       = ( !empty($_POST['importgametag'])) ? $_POST['importgametag'] : crc32($game->uuid);
     $game->thumbnail_url  = $_POST['importthumb'];
     $game->description    = addslashes($_POST['gamedescr']);
     $game->instructions   = addslashes($_POST['gameinstr']);
@@ -49,7 +47,13 @@ function myarcade_import_games() {
     $game->categs         = implode(",", $_POST['gamecategs']);
     $game->created        = gmdate( 'Y-m-d H:i:s', ( time() + (get_option( 'gmt_offset' ) * 3600 ) ) );
     $game->leaderboard_enabled = $_POST['lbenabled'];
-    $game->highscore_type = $_POST['highscoretype'];
+
+if ( ! empty( $_POST['highscoretype'] ) && 'low' == $_POST['highscoretype'] ) {
+      $game->highscore_type = 'ASC';
+    }
+    else {
+      $game->highscore_type = 'DESC';
+    }
     $game->coins_enabled  = '';
     $game->status         = 'new';
     $game->screen1_url    = $_POST['importscreen1'];
@@ -97,7 +101,7 @@ function myarcade_import_games() {
               <option value="importswfdcr"><?php _e("Upload / Grab SWF or DCR game", MYARCADE_TEXT_DOMAIN); ?>&nbsp;</option>
               <option value="importembedif"><?php _e("Import Embed / Iframe game", MYARCADE_TEXT_DOMAIN); ?></option>
               <option value="importibparcade"><?php _e("- PRO - Upload IBPArcade game", MYARCADE_TEXT_DOMAIN); ?></option>
-              <option value="importphpbb"><?php _e("- PRO - Upload PHPBB / ZIP game", MYARCADE_TEXT_DOMAIN); ?></option>
+              <option value="importphpbb"><?php _e("- PRO - Upload ZIP File / PHPBB / Mochi", MYARCADE_TEXT_DOMAIN); ?></option>
               <option value="importunity"><?php _e("- PRO - Import Unity game", MYARCADE_TEXT_DOMAIN); ?></option>
             </select>
             <br />

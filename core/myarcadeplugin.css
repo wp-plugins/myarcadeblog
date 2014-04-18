@@ -248,7 +248,7 @@ text-shadow:0 1px 0 #FFFFFF;
 .white {background: #FFFFFF;}
 
 
-.myarcade_form input, .myarcade_form select { margin-bottom: 0px !important; padding: 5px !important; height:auto !important; }
+/*.myarcade_form input, .myarcade_form select { margin-bottom: 0px !important; padding: 5px !important; height:auto !important; }*/
 .myarcade_form textarea { margin-bottom: 0px !important; padding: 6px; }
 .myarcade_form input:focus, .myarcade_form textarea:focus {border:1px solid #CCCCCC; background-color: #F9F9F9;}
 .myarcade_form input:focus[readonly], .myarcade_form select:focus[readonly], .myarcade_form select:focus[disabled], .myarcade_form textarea:focus[readonly] {color:#AAAAAA; background-color:#EEEEEE; }

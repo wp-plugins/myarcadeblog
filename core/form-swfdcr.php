@@ -1,7 +1,7 @@
 <?php defined('MYARCADE_VERSION') or die(); ?>
 <?php // UPLOAD Game  ?>
 <div id="importswfdcr">
- <h2><?php _e("Upload / Grab SWF or DCR Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+ <h2><?php _e("Add SWF or DCR Game", MYARCADE_TEXT_DOMAIN); ?></h2>
  <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
 
 <form method="post" enctype="multipart/form-data" id="uploadFormSWF">
@@ -60,7 +60,7 @@
  ?>
 <div id="importibparcade">
   <?php // UPLOAD TAR Game  ?>
-     <h2><?php _e("Upload / Grab IBPArcade Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+     <h2><?php _e("Add IBPArcade Game", MYARCADE_TEXT_DOMAIN); ?></h2>
      <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
      <div class="mabp_info mabp_680">
        <?php myarcade_premium_img() ?> This import method is available on MyArcadePlugin Pro.
@@ -75,7 +75,7 @@
  ?>
 <div id="importphpbb">
   <?php // UPLOAD TAR Game  ?>
-     <h2><?php _e("Upload / Grab PHPBB Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+     <h2><?php _e("Add ZIP Game (PHPBB, Mochi) ", MYARCADE_TEXT_DOMAIN); ?></h2>
      <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
      <div class="mabp_info mabp_680">
        <?php myarcade_premium_img() ?> This import method is available on MyArcadePlugin Pro.
@@ -86,7 +86,7 @@
 
 <?php // IMPORT EMBED / IFRAME GAME ?>
 <div id="importembedif">
-<h2><?php _e("Embed / Iframe Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+<h2><?php _e("Add Embed / Iframe Game", MYARCADE_TEXT_DOMAIN); ?></h2>
 <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
 <form method="post" id="uploadFormEMIF">
   <input type="hidden" name="upload" value="emif" />
@@ -127,7 +127,7 @@
  ?>
 <div id="importunity">
   <?php // UPLOAD Unity Game  ?>
-     <h2><?php _e("Upload / Grab Unity Games", MYARCADE_TEXT_DOMAIN); ?></h2>
+     <h2><?php _e("Add Unity3D Game", MYARCADE_TEXT_DOMAIN); ?></h2>
      <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
      <div class="mabp_info mabp_680">
        <?php myarcade_premium_img() ?> This import method is available on MyArcadePlugin Pro.
@@ -260,6 +260,7 @@
   <input type="hidden" name="impcostgame"   value="import" />
   <input type="hidden" name="importgame"    id="importgame" />
   <input type="hidden" name="importtype"    id="importtype" />
+  <input type="hidden" name="importgametag" id="importgametag" />
   <input type="hidden" name="importthumb"   id="importthumb" />
   <input type="hidden" name="importscreen1" id="importscreen1" />
   <input type="hidden" name="importscreen2" id="importscreen2" />
@@ -353,7 +354,7 @@
         </tr>
         <tr>
           <td>
-            <input name="gametags" type="text" size="50" />
+            <input name="gametags" id="gametags" type="text" size="50" />
             <br />
             <i><?php _e("Enter description tags. Separate the tags with commas (,).", MYARCADE_TEXT_DOMAIN); ?></i>
           </td>
@@ -403,7 +404,7 @@
               $i--;
               $br = '';
               if ($i > 0) $br = '<br />';
-              echo '<input type="checkbox" name="gamecategs[]" value="'.get_cat_name($cat_id).'" />&nbsp;'.get_cat_name($cat_id).$br;
+              echo '<input type="checkbox" class="gamecat'.$cat_id.'" name="gamecategs[]" value="'.get_cat_name($cat_id).'" />&nbsp;'.get_cat_name($cat_id).$br;
             }
           ?>
             <br /><br />

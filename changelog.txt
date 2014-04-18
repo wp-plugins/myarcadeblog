@@ -1,5 +1,16 @@
 - MyArcadePlugin Lite -
 
+v4.0.0 - 2014-04-18
+  - New: Unityfeeds integration
+  - New: Unity3D game support
+  - New: Draft button on Manage Games / Edit Form pages
+  - New: Option to enable all categories on MyArcadeFeed
+  - New: Removed MySQL functions which are not compatible with MySQLi
+  - Fix: Spilgames - use bigger image as thumbnail if small image is not available
+  - Fix: Publishing HTML5 Games from Spilgames feed
+  - Fix: MyArcadeFeed game type recognition
+  - Removed Mochi Media support: Service has been discontinued
+
 v3.0.0 - 2013-11-07
   - New: MyArcadeFeed integration
   - New: Spilgames integration

@@ -3,7 +3,7 @@
  * Game Output Functions
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Posts
  */
@@ -46,15 +46,7 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
   }
 
   $general  = get_option('myarcade_general');
-  $mochi    = get_option('myarcade_mochi');
-
   $maxwidth   = intval($general['max_width']);
-
-  // Check if we have a Mochimedia ID
-  if ( !empty( $mochi['publisher_id'] ) && ($game_variant == 'mochi')) {
-    $game_url .= '?affiliate_id='.$mochi['publisher_id'];
-  }
-
   // Should the game be resized..
   if ( !$fullsize && $maxwidth && $gamewidth && $gameheight )  {
     if ($gamewidth > $maxwidth) {
@@ -83,8 +75,13 @@ function get_game($gameID, $fullsize = false, $preview = false, $fullscreen = fa
       // Premium
     } break;
 
+    case 'unityfeeds':
     case 'unity': {
-      // Premium
+      $code  = '<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>' . "\n";
+      $code .= '<script type="text/javascript">' . "\n";
+      $code .= 'unityObject.embedUnity("unityPlayer", "'.$game_url.'", "'.$gamewidth.'", "'.$gameheight.'");' . "\n";
+      $code .= '</script>' . "\n";
+      $code .= '<div id="unityPlayer"><div class="missing"><a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!"><img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" /></a></div></div>';
     } break;
 
     default: {

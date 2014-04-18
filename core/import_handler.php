@@ -5,7 +5,7 @@
  *
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Import
  */
@@ -123,6 +123,7 @@ switch ( $_POST['upload'] ) {
         @unlink($_FILES['thumbfile']['tmp_name']);
       }
     }
+
 
     if ( empty($game->error) ) {
       if ($result == true) {

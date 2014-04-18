@@ -3,7 +3,7 @@
  * Install / Uninstall / Update Plugin
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Setup
  */
@@ -41,7 +41,7 @@ function myarcade_install() {
     // Create new games table
     $sql = "CREATE TABLE `".MYARCADE_GAME_TABLE."` (
       `id` int(11) NOT NULL auto_increment,
-      `postid` int(11),
+      `postid` int(11) DEFAULT NULL,
       `uuid` text collate utf8_unicode_ci NOT NULL,
       `game_tag` text collate utf8_unicode_ci NOT NULL,
       `game_type` text collate utf8_unicode_ci NOT NULL,
@@ -61,8 +61,10 @@ function myarcade_install() {
       `screen2_url` text collate utf8_unicode_ci NOT NULL,
       `screen3_url` text collate utf8_unicode_ci NOT NULL,
       `screen4_url` text collate utf8_unicode_ci NOT NULL,
+      `video_url`   text collate utf8_unicode_ci NOT NULL,
       `created` text collate utf8_unicode_ci NOT NULL,
       `leaderboard_enabled` text collate utf8_unicode_ci NOT NULL,
+      `highscore_type` text collate utf8_unicode_ci NOT NULL,
       `coins_enabled` text collate utf8_unicode_ci NOT NULL,
       `status` text collate utf8_unicode_ci NOT NULL,
       PRIMARY KEY  (`id`)
@@ -108,24 +110,6 @@ function myarcade_install() {
     }
     update_option('myarcade_general', $myarcade_general);
   }
-
-  // Mochi Settings
-  $myarcade_mochi = get_option('myarcade_mochi');
-
-  if ( !$myarcade_mochi ) {
-    update_option('myarcade_mochi', $myarcade_mochi_default);
-  }
-  else {
-    // Upgrade General Settings if needed
-    foreach ($myarcade_mochi_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_mochi) ) {
-        $myarcade_mochi[$setting] = $val;
-      }
-    }
-    $myarcade_mochi['feed'] = $myarcade_mochi_default['feed'];
-    update_option('myarcade_mochi', $myarcade_mochi);
-  }
-
   // Kongregate Settings
   $myarcade_kongregate = get_option('myarcade_kongregate');
 
@@ -187,6 +171,12 @@ function myarcade_install() {
         $myarcade_spilgames[$setting] = $val;
       }
     }
+    
+    // Fix Spilgames feed URL
+    if ( $myarcade_spilgames['feed'] != $myarcade_spilgames_default['feed'] )  {
+      $myarcade_spilgames['feed'] = $myarcade_spilgames_default['feed'];
+    }
+
     update_option('myarcade_spilgames', $myarcade_spilgames);
   }
 
@@ -204,21 +194,12 @@ function myarcade_install() {
       }
     }
 
-    // Insert MyArcadePlugin Feed
-    $empty_key = FALSE;
-    $myarcade_feed_found = FALSE;
-    foreach ( $myarcade_myarcadefeed as $key => $val ) {
-      // Find the first empty key
-      if ( !$empty_key && empty($val) ) {
-        $empty_key = $key;
-      }
-      if ( strpos( $val, 'games.myarcadeplugin.com') !== FALSE ) {
-        $myarcade_feed_found = TRUE;
-      }
+    if ( $myarcade_myarcadefeed['feed1'] != $myarcade_myarcadefeed_default['feed1']  ) {
+      $myarcade_myarcadefeed['feed1'] = $myarcade_myarcadefeed_default['feed1'];
     }
-
-    if ( ! $myarcade_feed_found && $empty_key ) {
-      $myarcade_myarcadefeed[ $empty_key ] = $myarcade_myarcadefeed_default['feed1'];
+    
+    if ( $myarcade_myarcadefeed['feed2'] != $myarcade_myarcadefeed_default['feed2']  ) {
+      $myarcade_myarcadefeed['feed2'] = $myarcade_myarcadefeed_default['feed2'];
     }
 
     // Update MyArcadeFeed Settings
@@ -272,6 +253,22 @@ function myarcade_install() {
     }
     update_option('myarcade_gamefeed', $myarcade_gamefeed);
   }
+  
+    // UnityFeeds Settings
+    $myarcade_unityfeeds = get_option('myarcade_unityfeeds');
+
+    if ( empty($myarcade_unityfeeds) ) {
+      update_option('myarcade_unityfeeds', $myarcade_unityfeeds_default, '', 'no');
+    }
+    else {
+      // Upgrade Settings if needed
+      foreach ($myarcade_unityfeeds_default as $setting => $val) {
+        if ( !array_key_exists($setting, $myarcade_unityfeeds) ) {
+          $myarcade_unityfeeds[$setting] = $val;
+        }
+      }
+      update_option('myarcade_unityfeeds', $myarcade_unityfeeds);
+    }
 
    // Categories
   $myarcade_categories = get_option('myarcade_categories');
@@ -303,28 +300,6 @@ function myarcade_install() {
       // An Old settings table exists..
 
       $myarcade_settings  = $wpdb->get_row("SELECT * FROM ".MYARCADE_SETTINGS_TABLE);
-
-      // Upgrade Mochi settings
-      $myarcade_mochi = get_option('myarcade_mochi');
-      $myarcade_mochi['publisher_id'] = $myarcade_settings->mochiads_id;
-      $myarcade_mochi['secret_key']   = $myarcade_settings->mochi_skey;
-      $myarcade_mochi['limit']        = intval($myarcade_settings->feed_games);
-      $myarcade_mochi['tag']          = $myarcade_settings->tag;
-      if ( $myarcade_settings->cron_active == 'Yes') { $myarcade_mochi['cron'] = true; } else { $myarcade_mochi['cron'] = false; }
-
-      switch ($myarcade_settings->feed_cat) {
-        case 'Coins':       $myarcade_mochi['special'] = 'coins_enabled'; break;
-        case 'Featured':    $myarcade_mochi['special'] = 'featured_games'; break;
-        case 'Leaderboard': $myarcade_mochi['special'] = 'leaderboard_enabled'; break;
-        case 'All':
-        default:            $myarcade_mochi['special'] = ''; break;
-      }
-
-      if ( $myarcade_settings->global_scores == 'Yes') { $myarcade_mochi['global_score'] = true; } else { $myarcade_mochi['global_score'] = false; }
-
-      update_option('myarcade_mochi', $myarcade_mochi);
-
-
       // Upgrade General Settings
       $myarcade_general = get_option('myarcade_general');
       if ($myarcade_settings->leaderboard_active == 'Yes') { $myarcade_general['scores'] = true; } else { $myarcade_general['scores'] = false; }
@@ -535,7 +510,6 @@ function myarcade_load_default_settings() {
   }
 
   update_option('myarcade_general', $myarcade_general_default);
-  update_option('myarcade_mochi', $myarcade_mochi_default);
   update_option('myarcade_kongregate', $myarcade_kongregate_default);
   update_option('myarcade_fgd', $myarcade_fgd_default);
   update_option('myarcade_fog', $myarcade_fog_default);

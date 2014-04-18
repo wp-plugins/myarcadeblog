@@ -1,10 +1,10 @@
 === MyArcadePlugin Lite ===
 Contributors: NetReview.de
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GD2C5P5RPPRYN
-Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Playtomic, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
+Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Unity3D, Unity, HTML5, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.6
-Tested up to: 3.7
-Stable tag: 3.0.0
+Tested up to: 3.9
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Transform a boring WordPress Blog into an amazing WP Arcade Site with over 70.00
 
 MyArcadePlugin is a powerful WordPress Arcade Plugin which is able to transform a WordPress Blog into an Online Games Portal or just to enhance your existing Blog with an Arcade section. MyArcadePlugin brings you all the features an Arcade Script needs. This Arcade Plugin will embed games automatically, without theme editing! In addition, it is able to generate unique game descriptions!
 
-Add thousands of free flash games provided by Mochi Media, Spilgames and MyArcadeFeed with just two clicks:
+Add thousands of free flash games provided by several game distributors with just two clicks:
 
 1. Fetch Games
 2. Publish Games
@@ -26,14 +26,22 @@ Here are some WP Arcade Themes that you can use to start right now to build your
 
 * <a href='http://myarcadeplugin.com/free-wp-arcade-theme-buddypress-arcade/' title='BuddyPress Arcade Theme'>BuddyPress Arcade Theme</a>
 * <a href='http://myarcadeplugin.com/free-wp-arcade-theme-gallerygames/' title='WP Arcade Theme - GallerGane'>WP Arcade Theme - GalleryGames</a>
-* <a href='http://myarcadeplugin.com/free-wp-arcade-theme-triqui//' title='WP Arcade Theme - Triqui'>WP Arcade Theme - Triqui</a>
+* <a href='http://myarcadeplugin.com/free-wp-arcade-theme-triqui/' title='WP Arcade Theme - Triqui'>WP Arcade Theme - Triqui</a>
 
 FunGames Theme in Action
 
 [youtube http://www.youtube.com/watch?v=iZ9BkbVoC8c]
 
 = MyArcadePlugin Lite Features =
-* One-Click Game Feeding (Mochi Media)
+* Fetch Games from MyArcadeFeed
+* Fetch Games from Spilgames
+* Fetch Games from UnityGames
+* Fetch Games from 2PG
+* Play Flash Games
+* Play HTML5 Games
+* Play Unity3D Games
+* Play Iframe / Embed Games
+* One-Click Game Feeding
 * One-Click Game Publishing
 * Publish games immediately
 * Publish games time shifted - scheduled with individual time interval!
@@ -58,26 +66,31 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Fetch Games from FlashGameDistribution
 * Fetch Games from FreeGamesForYourWebsite
 * Fetch Games from Kongregate
-* Fetch Games from Mochi Media
-* Fetch Games from Playtomic
 * Fetch Games from Scirra
 * Fetch Games from Spilgames
-* Fetch Games from TalkArcades
+* Fetch Games from GameFeed by TalkArcades
+* Fetch Games from MyArcadeFeed
+* Fetch Games from 2PG
+* Fetch Games from UnityFeeds
 * Automated Game Fetching (WP Cron)
 * Import Unity 3D Games
 * Import IBPArcade Games
 * Import PHPBB Games
 * Import ZIP Games
+* Import Mochi ZIP Files (Mochi Legacy Import)
+* Import HTML5 Games
 * Import SWF Games
 * Import DCR Games
 * Import Embed Codes Games
 * Import Iframe Games
 * Import Games Uploaded via FTP
+* GameFeed AutoPublisher Integration
 * Detect Game Dimensions Automatically (SWF, IBPArcade)
 * Grab Game Files From URL
+* SWFObject Integration
 * Edit Games Before Publishing
-* Save Mochi Scores
 * Save IBPArcade Scores
+* Save PHPBB Scores
 * Leaderboards
 * Save Highest Score Only
 * Ajaxed Category-Mapping
@@ -91,7 +104,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * BuddyPress integration
 * and a lot of more..
 
-With MyArcadePlugin you can automatically fetch games from 10 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, Mochi Media, MyArcadeFeed, Playtomic, Scirra, TalkArcades and Spil Games. Additionally you can import 8 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Unity 3D Games, Embed Codes and Iframe Codes. There are over 70.000 games available that you can add to your site instantly!
+With MyArcadePlugin you can automatically fetch games from 10 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, MyArcadeFeed, Scirra, TalkArcades, Spilgames, 2PG and UnityFeeds. Additionally you can import 10 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Mochi ZIP Files, Unity 3D Games, HTML5, Embed Codes and Iframe Codes. There are over 70.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
@@ -159,7 +172,7 @@ Yes, but only with the Pro version. MyArcadePlugin Pro is able to add a gaming s
 [youtube http://www.youtube.com/watch?v=lN1Cb7VrS_o]
 
 = Where can I buy Arcade Themes for MyArcadePlugin? =
-Check <a href='http://exells.com'>MyArcadePlugin Theme Directory</a>
+Check <a href='http://exells.com'>WP Arcade Theme Directory</a>
 
 = Is MyArcadePlugin Lite compatible with MyArcadePlugin Pro? =
 Yes, you can upgrade to the PRO version without any modifications!
@@ -186,6 +199,17 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 
 == CHANGELOG ==
 
+= Version 4.0.0 - 2014-04-18 =
+  * New: Unityfeeds integration
+  * New: Unity3D game support
+  * New: Draft button on Manage Games / Edit Form pages
+  * New: Option to enable all categories on MyArcadeFeed
+  * New: Removed MySQL functions which are not compatible with MySQLi
+  * Fix: Spilgames - use bigger image as thumbnail if small image is not available
+  * Fix: Publishing HTML5 Games from Spilgames feed
+  * Fix: MyArcadeFeed game type recognition
+  * Removed Mochi Media support: Service has been discontinued
+
 = Version 3.0.0 - 2013-11-07 =
   * New: MyArcadeFeed integration
   * New: Spilgames integration
@@ -202,11 +226,11 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
   * New: Compatibility with WordPress 3.7.x
   * New: Compatibility with PHP 5.5.x
 
-= Version 2.60 - 2013-04-21 =
+= Version 2.6.0 - 2013-04-21 =
   * New: Compatibility with WordPress 3.6
   * Fix: Fetch games link in the admin bar
 
-= Version 2.50 - 2012-09-21 =
+= Version 2.5.0 - 2012-09-21 =
   * New: Improved feed download
   * New: Placeholder %THUMB_URL% for game post template
   * New: Placeholder %SWF_URL% for game post template
@@ -223,31 +247,31 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
   * New: Updated settings handling like on MyArcadePlugin Pro
   * New: is_game function to check if the displayed post is a game post
 
-= Version 2.40 - 2011-12-21 =
+= Version 2.4.0 - 2011-12-21 =
   * Fix: Admin bar fix for WP 3.3
   * Fix: News url
 
-= Version 2.30 - 2011-11-13 =
+= Version 2.3.0 - 2011-11-13 =
   * New: Dashboard
   * New: Admin Bar Menu
   * Removed HeyZap menu because HeyZap closed down his game distribution API
 
-= Version 2.20 - 2011-11-01 =
+= Version 2.2.0 - 2011-11-01 =
  * New: Menu structure updated
  * Fix: Compatibility with Arcade Themes from MyArcadeBlogThemes.com
  * Checked: WP 3.3 compatibility
 
-= Version: 2.11 - 2011-07-12 =
+= Version: 2.1.1 - 2011-07-12 =
 * Fixed: PHP Notices when WP is in debug mode
 * Checked: WP 3.2 compatibility
 
-= Version: 2.10 - 2011-06-23 =
+= Version: 2.1.0 - 2011-06-23 =
 * Fixed: Can't create categories
 * Fixed: PHP Notices in WP Debug mode
 * Fixed: Reset Feeded Games button
 * Fixed: Can't add game screenshots
 
-= Version: 2.00 - 2011-05-28 =
+= Version: 2.0.0 - 2011-05-28 =
 * New: Plugin renamed to MyArcadePlugin Lite
 * New: Mochi Publisher ID will be added to the game code to get credits
 * New: New look & feel of the settings page. Now, the setup will be more comfortable.
@@ -269,7 +293,7 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 * Added second check for allow_url_open setting
 * Fixed Mochimedia Feed URL (mochiads -> mochimedia)
 
-= Version: 1.8 - 2009-09-22 =
+= Version: 1.8.0 - 2009-09-22 =
 * Added new categories: Education, Rhythm, Strategy
 * Removed category: Highscore
 * Added new check for duplicate games
@@ -278,31 +302,31 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 = Version: 1.7.1 - 2009-08-09 =
 * Fixed Board Games and Dress-Up problem
 
-= Version: 1.7 - 2009-07-26 =
+= Version: 1.7.0 - 2009-07-26 =
 * Added option to reset feeded games
 * Added an import function for custom/individual games
 
-= Version: 1.6 - 2009-07-15 =
+= Version: 1.6.0 - 2009-07-15 =
 * Bug fixing
 * Added max. allowed game width
 
-= Version: v1.5 - 2009-07-01 =
+= Version: 1.5.0 - 2009-07-01 =
 * Game thumbnails will be shown when adding games to blog
 * Check, if Feed has been downloaded successfully
 * SWF file names will be decoded before storing (%20-problem)
 * White spaces will be automatically removed from MochiadsURL and MochiadsID
 
-= Version: 1.4 - 2009-06-20 =
+= Version: 1.4.0 - 2009-06-20 =
 * Added routines to check PHP Version and PHP Settings (JSON Support)
 
-= Version: 1.3 - 2009-06-17 =
+= Version: 1.3.0 - 2009-06-17 =
 * Fixes
 
-= Version: 1.2 - 2009-06-16 =
+= Version: 1.2.0 - 2009-06-16 =
 * Fixed some error messages.
 
-= Version: v1.1 - 2009-06-15 =
+= Version: 1.1.0 - 2009-06-15 =
 * Added new download method for feed, games and thumbs. When allow_url_fopen is set to 0 the plugin will use cURL for downloading files.
 
-= Version: 1.0 - 2009-06-14 =
+= Version: 1.0.0 - 2009-06-14 =
 * Initial Release

@@ -3,7 +3,7 @@
  * Manage Games Module
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Manage
  */
@@ -29,6 +29,7 @@ function myarcade_show_game($game) {
 
   // Buttons
   $publish     = "<button class=\"button-secondary\" onclick = \"jQuery('#gstatus_$game->id').html('<div class=\'gload\'> </div>');jQuery.post('".admin_url('admin-ajax.php')."',{action:'myarcade_handler',gameid:'$game->id',func:'publish'},function(data){jQuery('#gstatus_$game->id').html(data);});\">".__("Publish", MYARCADE_TEXT_DOMAIN)."</button>&nbsp;";
+  $draft     = "<button class=\"button-secondary\" onclick = \"jQuery('#gstatus_$game->id').html('<div class=\'gload\'> </div>');jQuery.post('".admin_url('admin-ajax.php')."',{action:'myarcade_handler',gameid:'$game->id',func:'draft'},function(data){jQuery('#gstatus_$game->id').html(data);});\">".__("Draft", MYARCADE_TEXT_DOMAIN)."</button>&nbsp;";
   $delete      = "<button class=\"button-secondary\" onclick = \"jQuery('#gstatus_$game->id').html('<div class=\'gload\'> </div>');jQuery.post('".admin_url('admin-ajax.php')."',{action:'myarcade_handler',gameid:'$game->id',func:'delete'},function(data){jQuery('#gstatus_$game->id').html(data);});\">".__("Delete", MYARCADE_TEXT_DOMAIN)."</button>&nbsp;";
   $delgame     = "<div class=\"myhelp\"><img style=\"cursor: pointer;border:none;padding:0;\" src='".MYARCADE_CORE_URL."/images/delete.png' alt=\"Remove game from the database\" onclick = \"jQuery('#gstatus_$game->id').html('<div class=\'gload\'> </div>');jQuery.post('".admin_url('admin-ajax.php')."',{action:'myarcade_handler',gameid:'$game->id',func:'remove'},function(){jQuery('#gamebox_$game->id').fadeOut('slow');});\" />
                 <span class=\"myinfo\">".__("Remove this game from the database", MYARCADE_TEXT_DOMAIN)."</span></div>
@@ -38,7 +39,7 @@ function myarcade_show_game($game) {
   if ( empty($game->height) ) $game->height = '600';
   if ( empty($game->width)  ) $game->width = '480';
 
-  $edit ='<a href="#" onclick="alert(\'If you want to edit games please consider updating to MyArcadePlugin Pro\');return false;" class="button-secondary edit" title="'.__("Edit", MYARCADE_TEXT_DOMAIN).'">'.__("Edit", MYARCADE_TEXT_DOMAIN).'</a>&nbsp;';
+  $edit ='<a href="#" onclick="alert(\'If you want to edit games please consider upgrading to MyArcadePlugin Pro\');return false;" class="button-secondary edit" title="'.__("Edit", MYARCADE_TEXT_DOMAIN).'">'.__("Edit", MYARCADE_TEXT_DOMAIN).'</a>&nbsp;';
 
   if ($game->status == 'published') {
     $edit_post = '<a href="post.php?post='.$game->postid.'&action=edit" class="button-secondary" target="_blank">Edit Post</a>&nbsp;';
@@ -57,7 +58,7 @@ function myarcade_show_game($game) {
     $thumb_url = get_post_meta($game->postid, 'mabp_thumbnail_url', true);
     $game_post = get_post($game->postid);
     $description = strip_tags($game_post->post_content);
-    $description = substr( mysql_real_escape_string($description), 0, 320)."..";
+    $description = substr( esc_sql($description), 0, 320)."..";
 
     $categs = wp_get_post_categories($game->postid);
     $categories = false;
@@ -103,7 +104,7 @@ function myarcade_show_game($game) {
     $name      = $game->name;
     $thumb_url = $game->thumbnail_url;
     $description = str_replace(array("\r", "\r\n", "\n"), '', $game->description);
-    $description = substr( mysql_real_escape_string($description), 0, 280)."..";
+    $description = substr( esc_sql($description), 0, 280)."..";
     if ( isset($categories) )
       $categories = '<div style="margin-top:6px;"><strong>Categories:</strong> '.$categories."</div>";
     else
@@ -162,9 +163,9 @@ function myarcade_show_game($game) {
               <?php
                 switch ($game->status) {
                   case 'ignored':
-                  case 'new':         echo $delete; echo $edit; echo $publish;       break;
+                  case 'new':         echo $delete; echo $edit; echo $publish; echo $draft; break;
                   case 'published':   echo $delete; echo $edit_post; echo $contest; break;
-                  case 'deleted':     echo $edit; echo $publish;                    break;
+                  case 'deleted':     echo $edit; echo $publish; echo $draft; break;
                 }
               ?>
             </td>
@@ -229,7 +230,7 @@ function myarcade_manage_games() {
 
   if ( ($action == 'search') /*&& $search*/) {
 
-    $keyword = mysql_real_escape_string($search);
+    $keyword = esc_sql($search);
 
     $query_array = array();
 
@@ -286,7 +287,7 @@ function myarcade_manage_games() {
       <p class="myarcade_hr">&nbsp;</p>
 
       <div class="myarcade_border white" style="width:300px;float:left;height:30px;">
-        <label for="distr"><?php _e("Game Type", MYARCADE_TEXT_DOMAIN); ?>: </label>
+        <label for="distr"><?php _e("Type", MYARCADE_TEXT_DOMAIN); ?>: </label>
         <select name="distr" id="distr">
           <option value="all" <?php myarcade_selected($game_type, 'all'); ?>>All</option>
           <?php foreach ($myarcade_distributors as $slug => $name) : ?>
@@ -351,9 +352,9 @@ function myarcade_manage_games() {
 
       <div class="myarcade_border white" style="width:300px;height:30px;float:left;margin-left:20px;">
         <label><?php _e("Display", MYARCADE_TEXT_DOMAIN); ?></label>
-        <input type="text" size="5" name="games" value="<?php echo $games; ?>" />
+        <input type="text" size="3" name="games" value="<?php echo $games; ?>" />
         <label><?php _e("games from offset", MYARCADE_TEXT_DOMAIN); ?></label>
-        <input type="text" size="5" name="offset" value="<?php echo $offset; ?>" />
+        <input type="text" size="3" name="offset" value="<?php echo $offset; ?>" />
       </div>
 
       <div class="clear"> </div>
@@ -578,11 +579,12 @@ function myarcade_handler() {
   switch ($_POST['func']) {
     /* Manage Games */
     case "publish":
+    case "draft":
     {
       if ( !isset($gameID) || empty($gameID) ) { echo "No Game ID!"; die(); }
 
       // Publish this game
-      myarcade_add_games_to_blog( array('game_id' => $gameID, 'echo' => false) );
+      myarcade_add_games_to_blog( array('game_id' => $gameID, 'echo' => false, 'post_status' => $_POST['func'] ) );
 
       // Get game status
       $status = $wpdb->get_var("SELECT status FROM ".MYARCADE_GAME_TABLE." WHERE id = '$gameID'");

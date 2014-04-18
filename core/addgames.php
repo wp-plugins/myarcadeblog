@@ -3,7 +3,7 @@
  * Publish Games, Create Game Posts
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2014, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Posts
  */
@@ -183,7 +183,7 @@ function myarcade_add_game_post($game) {
   // Required fields
   add_post_meta($post_id, 'mabp_game_type',     $game->type);
   add_post_meta($post_id, 'mabp_description',   $game->description);
-  if ( $game->instructions ) add_post_meta($post_id, 'mabp_instructions',  mysql_real_escape_string( $game->instructions ));
+  if ( $game->instructions ) add_post_meta($post_id, 'mabp_instructions',  esc_sql( $game->instructions ));
   add_post_meta($post_id, 'mabp_swf_url',       $game->file);
   add_post_meta($post_id, 'mabp_thumbnail_url', $game->thumb);
   add_post_meta($post_id, 'mabp_game_tag',      $game->game_tag);
@@ -198,7 +198,10 @@ function myarcade_add_game_post($game) {
   if ( $game->screen3_url ) add_post_meta($post_id, 'mabp_screen3_url', $game->screen3_url);
   if ( $game->screen4_url ) add_post_meta($post_id, 'mabp_screen4_url', $game->screen4_url);
   if ( $game->video_url )   add_post_meta($post_id, 'mabp_video_url', $game->video_url);
-  if ( $game->leaderboard_enabled ) add_post_meta($post_id, 'mabp_leaderboard', $game->leaderboard_enabled);
+  if ( $game->leaderboard_enabled ) {
+    add_post_meta($post_id, 'mabp_leaderboard', $game->leaderboard_enabled);
+    add_post_meta($post_id, 'mabp_score_order', $game->highscore_type);
+  }
 
   // Generate Featured Image id activated
   if ( $general['featured_image'] ) {
@@ -233,9 +236,9 @@ function myarcade_add_game_post($game) {
  * @return string
  */
 function myarcade_make_slug($string) {
-  $string = sanitize_title($string);
+  $slug = sanitize_title($string);
   $slug = strtolower( str_replace(" ", "-", $string ) );
-  $slug = preg_replace("[^A-Za-z0-9-]", "", $slug);
+  $slug = preg_replace("/[^\dA-Za-z0-9-]/i", "", $slug);
   return $slug;
 }
 
@@ -521,6 +524,7 @@ function myarcade_add_games_to_blog( $args = array() ) {
   // v5
   $game_to_add->leaderboard_enabled = $game->leaderboard_enabled;
   $game_to_add->game_tag = $game->game_tag;
+  $game_to_add->highscore_type = $game->highscore_type;
 
   // Add game as a post
   $post_id = myarcade_add_game_post($game_to_add);
@@ -703,7 +707,7 @@ function myarcade_publish_games() {
           <option value="draft" <?php myarcade_selected($status, 'draft'); ?>>Draft</option>
           <option value="future" <?php myarcade_selected($status, 'future'); ?>>Scheduled</option>
         </select>
-        time <input type="text" name="scheduletime" value="<?php echo $schedule; ?>" size="5" /> min.
+        time <input type="text" name="scheduletime" value="<?php echo $schedule; ?>" size="3" /> min.
       </div>
 
       <div class="myarcade_border white" style="width:300px;height:30px;float:left;margin-left:20px;">
