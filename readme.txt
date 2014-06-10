@@ -200,6 +200,18 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 
 == CHANGELOG ==
 
+= Version 4.1.0 - 2014-06-10 =
+  * New: Updated to Spilgames Feed API v3
+  * New: Spilgames - Game Player API integration. Can be enabled on MyArcade -> Spilgames Settings
+  * New: Spilgames - Offset fetching
+  * New: MyArcadeFeed - Unity and Iframe game types added
+  * New: Iframe codes are not stored directly anymore while fetching. Only the URL is stored and the code will be generated automatically
+  * New: Custom game type: Iframe URL. Just enter a URL of a game or page which should be embedded. The Iframe code will be generated automatically
+  * New: Filter to manipulate game images before they get added
+  * New: Video URL field on MyArcade Game Details meta box
+  * Fix: Game dimensions are not stored correctly for Iframe/Embed games (Import games page)
+  * Fix: UnityFeeds URL on settings page
+
 = Version 4.0.0 - 2014-04-18 =
   * New: Unityfeeds integration
   * New: Unity3D game support
