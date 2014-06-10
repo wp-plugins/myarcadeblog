@@ -1,9 +1,18 @@
 <?php
-/*
- * Module:       Default Settings
- * Author:       Daniel Bakovic
- * Author URI:   http://myarcadeplugin.com
+/**
+ * MyArcadePlugin default settings
+ *
+ * @author Daniel Bakovic <contact@myarcadeplugin.com>
+ * @copyright (c) 2014, Daniel Bakovic
+ * @license http://myarcadeplugin.com
+ * @package MyArcadePlugin/Core/Settings
  */
+
+// No direct access
+if( !defined( 'ABSPATH' ) ) {
+  die();
+}
+
 $default_theme = esc_sql('<p><div style="float:left;margin-right: 10px; margin-bottom: 10px;">%THUMB%</div>%DESCRIPTION% %INSTRUCTIONS%</p>');
 
 $myarcade_general_default = array (
@@ -41,6 +50,7 @@ $myarcade_general_default = array (
     'featured_image' => false,
     'disable_game_tags' => false,
     'swfobject' => false,
+    /* Translation Settings */
     'translation'   => 'none',
     'bingid'        => '',
     'bingsecret'    => '',
@@ -85,10 +95,10 @@ $myarcade_fog_default = array (
 );
 
 $myarcade_spilgames_default = array (
-    'feed'          => 'http://publishers.spilgames.com/rss-2/',
+    'feed'          => 'http://publishers.spilgames.com/rss-3',
     'limit'         => '20',
     'thumbsize'     => '1',
-    'language'      => 'default',
+    'player_api'    => false,
     'cron_fetch'    => false,
     'cron_fetch_limit' => '1',
     'cron_publish'  => false,
@@ -112,7 +122,8 @@ $myarcade_bigfish_default = array(
     'gametype'        => 'og',
     'template'        => '%DESCRIPTION% %BULLET_POINTS% %BUY_GAME% %SYSREQUIREMENTS%',
     'thumbnail'       => 'medium',
-    'cron_publish'  => false,
+    'create_cats'     => true,
+    'cron_publish'    => false,
     'cron_publish_limit' => '1'
 );
 
@@ -137,3 +148,4 @@ $myarcade_unityfeeds_default = array (
     'cron_publish'  => false,
     'cron_publish_limit' => '1',
 );
+?>

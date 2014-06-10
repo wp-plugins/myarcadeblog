@@ -93,14 +93,18 @@ function myarcade_fetch() {
   $myarcadefeed = get_option('myarcade_myarcadefeed');
 
   $spilgames['search'] = '';
+  $spilgames['method'] = 'latest';
+  $spilgames['offset'] = 1;
 
-  $distributor = 'myarcadefeed';
+  $distributor = 'spilgames';
 
   if ( isset($_POST['fetch']) && $_POST['fetch'] == 'start' ) {
     $distributor = $_POST['distr'];
     //Spilgames
-    $spilgames['search']  = $_POST['searchspilgames'];
-    $spilgames['limit']   = $_POST['limitspilgames'];
+    $spilgames['search']  = filter_input( INPUT_POST, 'searchspilgames');
+    $spilgames['limit']   = (!empty($_POST['limitspilgames']) ) ? $_POST['limitspilgames'] : 100;
+    $spilgames['method']  = (!empty($_POST['fetchmethodspilgames'])) ? $_POST['fetchmethodspilgames'] : 'latest';
+    $spilgames['offset']  = (!empty($_POST['offsetspilgames'])) ? $_POST['offsetspilgames'] : 1;
     //MyArcadeFeed
     $myarcadefeed['feed'] = isset($_POST['myarcadefeedselect']) ? $_POST['myarcadefeedselect'] : false;
   }
@@ -109,10 +113,10 @@ function myarcade_fetch() {
   <script type="text/javascript">
     /* <![CDATA[ */
     function js_myarcade_offset() {
-      if (jQuery("input:radio:checked[name='fetchmethod']").val() === 'latest') {
-        jQuery("#offs").fadeOut("fast");
-      } else if (jQuery("input:radio:checked[name='fetchmethod']").val() === 'offset') {
-        jQuery("#offs").fadeIn("fast");
+      if (jQuery("input:radio:checked[name='fetchmethodspilgames']").val() === 'latest') {
+        jQuery("#offsspilgames").fadeOut("fast");
+      } else if (jQuery("input:radio:checked[name='fetchmethodspilgames']").val() === 'offset') {
+        jQuery("#offsspilgames").fadeIn("fast");
       }
     }
 
@@ -125,13 +129,10 @@ function myarcade_fetch() {
       });
       <?php endif; ?>
 
-
-      jQuery(this).find("input:radio[name='fetchmethod']").click(function() {
-       js_myarcade_offset();
+      jQuery(this).find("input:radio[name='fetchmethodspilgames']").click(function() {
+        js_myarcade_offset();
       });
-
     });
-
 
     // new
     function js_myarcade_selection() {
@@ -215,9 +216,15 @@ function myarcade_fetch() {
         <label><?php _e("Filter by search query", MYARCADE_TEXT_DOMAIN); ?>: </label>
         <input type="text" size="40"  name="searchspilgames" value="<?php echo $spilgames['search']; ?>" />
         <p class="myarcade_hr">&nbsp;</p>
-        Fetch <input type="text" name="limitspilgames" size="6" value="<?php echo $spilgames['limit']; ?>" /> games
+        <div style="float:left;margin-right:50px;">
+          <input type="radio" name="fetchmethodspilgames" value="latest" <?php myarcade_checked($spilgames['method'], 'latest');?>>
+        <label><?php _e("Latest Games", MYARCADE_TEXT_DOMAIN); ?></label>
+        <br />
+        <input type="radio" name="fetchmethodspilgames" value="offset" <?php myarcade_checked($spilgames['method'], 'offset');?>>
+        <label><?php _e("Use Offset", MYARCADE_TEXT_DOMAIN); ?></label>
+        </div>
+        Fetch <input type="text" name="limitspilgames" size="6" value="<?php echo $spilgames['limit']; ?>" /> games <span id="offsspilgames" class="hide">from page <input id="radiooffsspilgames" type="text" name="offsetspilgames" size="4" value="<?php echo $spilgames['offset']; ?>" /> </span>
         <div class="clear"></div>
-
       </div><!-- end spilgames -->
 
       <?php
@@ -562,17 +569,26 @@ function myarcade_feed_myarcadefeed($args) {
         else {
           $extension = pathinfo( $game->gamecode , PATHINFO_EXTENSION );
 
-          if ( $extension == 'dcr') {
-            $game->type = $extension;
-          }
-          else {
-            $game->type = 'myarcadefeed';
+          switch ( $extension ) {
+            case 'dcr' : {
+              $game->type = 'dcr';
+            } break;
+
+            case 'unity3d' : {
+              $game->type = 'unity';
+            }
+
+            case 'html' : {
+              $game->type = 'iframe';
+            } break;
+
+            default : {
+              $game->type = 'myarcadefeed';
+            } break;
           }
         }
-
         $game->name           = esc_sql( $game->name );
         $game->slug           = myarcade_make_slug($game->name);
-
         $game->description    = esc_sql($game->description);
         $game->instructions    = esc_sql($game->instructions);
         $game->categs         = esc_sql($game->category);
@@ -636,44 +652,43 @@ function myarcade_feed_spilgames( $args = array() ) {
   $feedcategories = get_option('myarcade_categories');
 
   // Init settings var's
-  if ( !empty($settings) )
+  if ( ! empty( $settings ) ) {
     $settings = array_merge($spilgames, $settings);
-  else
+  }
+  else {
     $settings = $spilgames;
+  }
 
-  /**
-   * Generate Feed URL
-  */
+  if ( !isset($settings['method']) ) {
+    $settings['method'] = 'latest';
+  }
 
-  $feed_format ='?format=json';
+   // Generate Feed URL
+  $feed = add_query_arg( array("format" => "json"), trim( $settings['feed'] ) );
+
 
   // Check if there is a feed limit. If not, feed all games
-  if ( empty($settings['limit']) || ($settings['limit'] == 'all') ) {
-    $limit = '';
-  } else $limit = '&limit='.$settings['limit'];
-
-  $thumb = '&tsize='.$spilgames['thumbsize'];
-
-  if ( $spilgames['language'] == 'default' ) {
-    $language = '';
-  } else {
-    $language = '&lang='.$spilgames['language'];
+  if ( ! empty( $settings['limit'] ) ) {
+    $feed = add_query_arg( array("limit" => $settings['limit'] ), $feed );
   }
 
-  if ( empty($settings['search']) ) {
-    $search = '';
-  } else {
-    $search = '&q='.$settings['search'];
+  if ( $settings['method'] == 'offset' ) {
+    $feed = add_query_arg( array("page" => $settings['offset'] ), $feed );
   }
 
-  // Generate the Mochi Feed URL
-  $feed = trim($spilgames['feed']).$feed_format.$search.$limit.$thumb.$language;
+  // Add search query
+  if ( ! empty( $settings['search'] ) ) {
+    $feed = add_query_arg( array( "q" => $settings['search'] ), $feed );
+  }
+
+  // Add source attribute
+  $feed = add_query_arg( array( "source" => 'MyArcadePlugin' ), $feed );
 
   // Fetch Spilgames games
   $json_games = myarcade_fetch_games( array('url' => $feed, 'service' => 'spilgames', 'echo' => $echo) );
 
   //====================================
-  if ( !empty($json_games) ) {
+  if ( ! empty($json_games->entries ) ) {
 
     $images = array('png', 'jpg', 'jpeg', 'gif', 'bmp');
 
@@ -693,20 +708,7 @@ function myarcade_feed_spilgames( $args = array() ) {
 
         $add_game   = false;
 
-        // Continue on games without category
-        if ( empty($game_obj->category) ) {
-          $game->category = 'Other';
-        }
-
-        // Check if this is a HTML5/EMBED game
-        if ( strpos( $game_obj->category, "HTML5") !== false ) {
-          $html5_game = TRUE;
-        }
-        else {
-          $html5_game = FALSE;
-        }
-
-        // Transform some categories
+        // Map ategories
         if ( ! empty($game_obj->category) ) {
           $categories = explode(',', $game_obj->category);
           $categories = array_map( 'trim', $categories );
@@ -721,18 +723,23 @@ function myarcade_feed_spilgames( $args = array() ) {
         foreach($categories as $gamecat) {
           $gamecat = htmlspecialchars_decode ( trim($gamecat) );
 
-          foreach ($feedcategories as $feedcat) {
-            if ( is_array( $feedcat['Spilgames'] ) ) {
-              if ( $feedcat['Status'] == 'checked') {
-                if ( strpos($feedcat['Spilgames']['name'], $gamecat) !== false ) {
-                  $add_game = true;
-                  $categories_string = $feedcat['Name'];
-                  break;
-                }
+          foreach ( $feedcategories as $feedcat ) {
+            if ( $feedcat['Status'] == 'checked' ) {
+              // Name to check
+              if ( $feedcat['Spilgames'] === true ) {
+                $cat_name = $feedcat['Name'];
+              }
+              else {
+                $cat_name = $feedcat['Spilgames'];
+              }
+
+              if ( strpos( $cat_name, $gamecat ) !== false ) {
+                $add_game = true;
+                $categories_string = $feedcat['Name'];
+                break 2;
               }
             }
           }
-          if ($add_game == true) break;
         } // END - Category-Check
 
         if (!$add_game) {
@@ -741,21 +748,21 @@ function myarcade_feed_spilgames( $args = array() ) {
 
         switch ( $spilgames['thumbsize'] ) {
           case '1': {
-            $thumbnail_url = $game_obj->thumbnails['0']->url;
+            $thumbnail_url = $game_obj->thumbnails->small;
             $ext = pathinfo( $thumbnail_url, PATHINFO_EXTENSION);
             if ( in_array( $ext, $images ) ) {
               break;
             }
           }
           case '2': {
-            $thumbnail_url = $game_obj->thumbnails['1']->url;
+            $thumbnail_url = $game_obj->thumbnails->medium;
             $ext = pathinfo( $thumbnail_url, PATHINFO_EXTENSION);
             if ( in_array( $ext, $images ) ) {
               break;
             }
           }
           case '3': {
-            $thumbnail_url = $game_obj->thumbnails['2']->url;
+            $thumbnail_url = $game_obj->thumbnails->large;
             $ext = pathinfo( $thumbnail_url, PATHINFO_EXTENSION);
             if ( in_array( $ext, $images ) ) {
               break;
@@ -769,22 +776,21 @@ function myarcade_feed_spilgames( $args = array() ) {
         }
 
         // Check if this is a HTML5 game. If so, then change game type and generate an iframe code
-        if ( $html5_game ) {
-          $game->type          = 'embed';
-          $game->swf_url       = '<iframe src="'.$game_obj->player->url.'" width="'.$game_obj->player->width.'" height="'.$game_obj->player->height.'" frameborder="0" scrolling="0" marginwidith="0" marginheight="0"></iframe>';
+        if ( "iframe" == $game_obj->technology ) {
+          $game->type          = 'iframe';
         }
         else {
           $game->type          = 'spilgames';
-          $game->swf_url       = esc_sql($game_obj->player->url);
         }
 
         $game->name          = esc_sql($game_obj->title);
         $game->slug          = myarcade_make_slug($game_obj->title);
-        $game->created       = esc_sql($game_obj->published);
+        $game->created       = date( 'Y-m-d h:i:s', time() );
         $game->description   = esc_sql($game_obj->description);
         $game->instructions  = '';
         $game->rating        = '';
         $game->categs        = esc_sql($categories_string);
+        $game->swf_url       = esc_sql($game_obj->gameUrl);
         $game->control       = '';
         $game->thumbnail_url = esc_sql($thumbnail_url);
         $game->screen1_url   = '';
@@ -792,12 +798,12 @@ function myarcade_feed_spilgames( $args = array() ) {
         $game->screen3_url   = '';
         $game->screen4_url   = '';
         $game->video_url     = '';
-        $game->leaderboard_enabled =  '';
+        $game->leaderboard_enabled = esc_sql( $game_obj->properties->highscore );
         $game->highscore_type = '';
         $game->coins_enabled = '';
         $game->tags          = '';
-        $game->width         = $game_obj->player->width;
-        $game->height        = $game_obj->player->height;
+        $game->width         = $game_obj->width;
+        $game->height        = $game_obj->height;
         $game->status        = 'new';
 
         $new_games++;
@@ -923,7 +929,7 @@ function myarcade_feed_unityfeeds( $args = array() ) {
         else {
           $screenshot_url = '';
         }
-        
+
         $tags_string = '';
         $tags = (array) $game_obj->tags;
         if ( ! empty( $tags ) ) {

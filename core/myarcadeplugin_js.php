@@ -247,8 +247,6 @@ jQuery(document).ready(function() {
     jQuery('#importscreen2').val('');
     jQuery('#importscreen3').val('');
     jQuery('#importscreen4').val('');
-    jQuery('#lbenabled').val('');
-    jQuery('#highscoretype').val('');
     jQuery('#slug').val('');
 
     switch (this.value) {

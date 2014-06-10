@@ -183,24 +183,47 @@ function myarcade_add_game_post($game) {
   // Required fields
   add_post_meta($post_id, 'mabp_game_type',     $game->type);
   add_post_meta($post_id, 'mabp_description',   $game->description);
-  if ( $game->instructions ) add_post_meta($post_id, 'mabp_instructions',  esc_sql( $game->instructions ));
+  if ( $game->instructions ) {
+    add_post_meta($post_id, 'mabp_instructions',  esc_sql( $game->instructions ));
+  }
   add_post_meta($post_id, 'mabp_swf_url',       $game->file);
   add_post_meta($post_id, 'mabp_thumbnail_url', $game->thumb);
   add_post_meta($post_id, 'mabp_game_tag',      $game->game_tag);
+  add_post_meta($post_id, 'mabp_game_uuid',     $game->uuid);
   add_post_meta($post_id, 'mabp_game_slug',     $game->slug);
 
   // Optional fields
-  if ( $game->height )      add_post_meta($post_id, 'mabp_height', $game->height);
-  if ( $game->width )       add_post_meta($post_id, 'mabp_width', $game->width);
-  if ( $game->rating )      add_post_meta($post_id, 'mabp_rating', $game->rating);
-  if ( $game->screen1_url ) add_post_meta($post_id, 'mabp_screen1_url', $game->screen1_url);
-  if ( $game->screen2_url ) add_post_meta($post_id, 'mabp_screen2_url', $game->screen2_url);
-  if ( $game->screen3_url ) add_post_meta($post_id, 'mabp_screen3_url', $game->screen3_url);
-  if ( $game->screen4_url ) add_post_meta($post_id, 'mabp_screen4_url', $game->screen4_url);
-  if ( $game->video_url )   add_post_meta($post_id, 'mabp_video_url', $game->video_url);
+  if ( $game->height ) {
+    add_post_meta($post_id, 'mabp_height', $game->height);
+  }
+  if ( $game->width ) {
+    add_post_meta($post_id, 'mabp_width', $game->width);
+  }
+  if ( $game->rating ) {
+    add_post_meta($post_id, 'mabp_rating', $game->rating);
+  }
+  if ( $game->screen1_url ) {
+    add_post_meta($post_id, 'mabp_screen1_url', $game->screen1_url);
+  }
+  if ( $game->screen2_url ) {
+    add_post_meta($post_id, 'mabp_screen2_url', $game->screen2_url);
+  }
+  if ( $game->screen3_url ) {
+    add_post_meta($post_id, 'mabp_screen3_url', $game->screen3_url);
+  }
+  if ( $game->screen4_url ) {
+    add_post_meta($post_id, 'mabp_screen4_url', $game->screen4_url);
+  }
+  if ( $game->video_url ) {
+    add_post_meta($post_id, 'mabp_video_url', $game->video_url);
+  }
   if ( $game->leaderboard_enabled ) {
     add_post_meta($post_id, 'mabp_leaderboard', $game->leaderboard_enabled);
     add_post_meta($post_id, 'mabp_score_order', $game->highscore_type);
+  }
+  
+  if ( $game->score_bridge ) {
+    add_post_meta($post_id, 'mabp_score_bridge', $game->score_bridge);
   }
 
   // Generate Featured Image id activated
@@ -305,8 +328,8 @@ function myarcade_add_games_to_blog( $args = array() ) {
     return false;
   }
 
-  // Check if this is a import game..
-  // If it is an imported game don't download the files again...
+  // Check if this is an imported game..
+  // If so, then don't download the files again...
   if (md5($game->name . 'import') == $game->uuid) {
     $download_games   = false;
     $download_thumbs  = false;
@@ -314,10 +337,14 @@ function myarcade_add_games_to_blog( $args = array() ) {
   }
 
   // Disable game download for Big Fish Games and Scirra Games
-  if ( ($game->game_type == 'bigfish') || ($game->game_type == 'scirra') ) {
-    $download_games   = false;
+  switch ( $game->game_type ) {
+    case 'bigfish':
+    case 'scirra':
+    case 'iframe':
+    case 'embed': {
+      $download_games = false;
+    }
   }
-
   // Initialise category array
   $cat_id = array();
   // Check game categories..
@@ -441,7 +468,7 @@ function myarcade_add_games_to_blog( $args = array() ) {
     } // END - downlaod screens
 
     // Put the screen urls into the post array
-    $game_to_add->$screenshot_url = $game->$screenshot_url;
+    $game_to_add->$screenshot_url = apply_filters( 'myarcade_filter_screenshot', $game->$screenshot_url, $screenshot_url );
   } // END for - screens
 
 
@@ -507,12 +534,13 @@ function myarcade_add_games_to_blog( $args = array() ) {
     $game_to_add->date = gmdate('Y-m-d H:i:s', ( time() + (get_option('gmt_offset') * 3600 )));
 
   $game_to_add->id = $game->id;
+  $game_to_add->uuid = $game->uuid;
   $game_to_add->name = $game->name;
   $game_to_add->slug = $game->slug;
-  $game_to_add->file = $game->swf_url;
+  $game_to_add->file = apply_filters( 'myarcade_filter_game_code', $game->swf_url, $game->game_type );
   $game_to_add->width = $game->width;
   $game_to_add->height = $game->height;
-  $game_to_add->thumb = $game->thumbnail_url;
+  $game_to_add->thumb = apply_filters( 'myarcade_filter_thumbnail', $game->thumbnail_url );
   $game_to_add->description = $game->description;
   $game_to_add->instructions = $game->instructions;
   $game_to_add->video_url = $game->video_url;
@@ -525,6 +553,7 @@ function myarcade_add_games_to_blog( $args = array() ) {
   $game_to_add->leaderboard_enabled = $game->leaderboard_enabled;
   $game_to_add->game_tag = $game->game_tag;
   $game_to_add->highscore_type = $game->highscore_type;
+  $game_to_add->score_bridge = $game->score_bridge;
 
   // Add game as a post
   $post_id = myarcade_add_game_post($game_to_add);
@@ -602,7 +631,6 @@ function myarcade_publish_games() {
   if ( isset($_POST) && isset($_POST['action']) && ($_POST['action'] == 'publish') ) {
     $game_type        = $_POST['distr'];
     $leaderboard      = (isset($_POST['leaderboard'])) ? '1' : '0';
-    $coins            = (isset($_POST['coins'])) ? '1' : '0';
     $status           = $_POST['status'];
     $schedule         = (isset($_POST['scheduletime'])) ? intval($_POST['scheduletime']) : $general['schedule'];
     $order            = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
@@ -619,7 +647,6 @@ function myarcade_publish_games() {
     $query_array[] = "status = 'new'";
     if ( $game_type != 'all') $query_array[] = "game_type = '".$game_type."'";
     if ( $leaderboard == '1') $query_array[] = "leaderboard_enabled = '1'";
-    if ( $coins == '1')       $query_array[] = "coins_enabled = '1'";
     if ( $cat != 'all')       $query_array[] = "categories LIKE '%".$feedcategories[ (int) $cat ]['Name']."%'";
 
     if ( $posts )
@@ -658,7 +685,6 @@ function myarcade_publish_games() {
   } else {
     $game_type        = 'all';
     $leaderboard      = '0';
-    $coins            = '0';
     $status           = $general['status'];
     $schedule         = $general['schedule'];
     $order            = 'ASC';
@@ -679,7 +705,7 @@ function myarcade_publish_games() {
     <input type="hidden" name="action" value="publish" />
     <div class="myarcade_border grey" style="width:680px">
       <div class="myarcade_border white" style="width:300px;float:left;height:30px;">
-        <label for="distr"><?php _e("Game Type", MYARCADE_TEXT_DOMAIN); ?>: </label>
+        <label for="distr"><?php _e("Type", MYARCADE_TEXT_DOMAIN); ?>: </label>
         <select name="distr" id="distr">
           <option value="all" <?php myarcade_selected($game_type, 'all'); ?>>All</option>
           <?php foreach ($myarcade_distributors as $slug => $name) : ?>
@@ -694,8 +720,7 @@ function myarcade_publish_games() {
       </div>
 
       <div class="myarcade_border white" style="width:300px;float:left;margin-left:20px;height:30px;padding: 10px 5px 10px 10px;">
-        <input type="checkbox" name="leaderboard" value="1" <?php myarcade_checked($leaderboard, '1'); ?> /> <label><?php _e('Only Leaderboard Games', MYARCADE_TEXT_DOMAIN); ?></label><br />
-        <input type="checkbox" name="coins" value="1" <?php myarcade_checked($coins, '1'); ?> /> <label><?php _e('Only Coins Enabled Games', MYARCADE_TEXT_DOMAIN); ?></label>
+        <input type="checkbox" name="leaderboard" value="1" <?php myarcade_checked($leaderboard, '1'); ?> /> <?php _e('Only Leaderboard Games', MYARCADE_TEXT_DOMAIN); ?><br />
       </div>
 
       <div class="clear"> </div>
@@ -721,7 +746,7 @@ function myarcade_publish_games() {
       <div class="clear"> </div>
 
       <div class="myarcade_border white" style="width:300px;height:30px;float:left;">
-        <label for="category"><?php _e("Game Categories", MYARCADE_TEXT_DOMAIN); ?>: </label>
+        <label for="category"><?php _e("Category", MYARCADE_TEXT_DOMAIN); ?>: </label>
         <select name="category" id="category">
           <option value="all" <?php myarcade_selected($cat, 'all'); ?>>All Activated</option>
           <?php
@@ -739,9 +764,7 @@ function myarcade_publish_games() {
       </div>
 
       <div class="myarcade_border white" style="width:300px;height:30px;float:left;margin-left:20px;">
-        <label><?php _e("Create", MYARCADE_TEXT_DOMAIN); ?></label>
-        <input type="text" size="5" name="games" value="<?php echo $posts; ?>" />
-        <label><?php _e("game posts", MYARCADE_TEXT_DOMAIN); ?></label>
+        <?php _e("Create", MYARCADE_TEXT_DOMAIN); ?> <input type="text" size="5" name="games" value="<?php echo $posts; ?>" /> <?php _e("game posts", MYARCADE_TEXT_DOMAIN); ?>
       </div>
 
       <div class="myarcade_border white" style="width:300px;height:50px;float:left;">
@@ -1034,7 +1057,7 @@ function myarcade_ajax_publish() {
       }
     }
 
-    die(
+    wp_die(
       json_encode(
         array( 'success' => '<strong>'.esc_html( get_the_title($post_id) ).'</strong><br />
           <div>

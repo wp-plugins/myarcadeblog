@@ -182,9 +182,18 @@ switch ( $_POST['upload'] ) {
   // Import Embed / Iframe Code
   case 'emif':
   {
-    if ( !empty($_POST['embedcode']) ) {
-      $game->type = 'embed';
-      $game->importgame = urlencode(str_replace('"', '\'', $_POST['embedcode']));
+    if ( !empty( $_POST['embedcode'] ) ) {
+      $game_code = filter_input( INPUT_POST, 'embedcode' );
+
+      // Check the code
+      if( filter_var( $game_code, FILTER_VALIDATE_URL ) ) {
+        $game->type = 'iframe';
+      }
+      else {
+        $game->type = 'embed';
+      }
+
+      $game->importgame = urlencode( str_replace( '"', '\'', $game_code ) );
       $game->result = 'OK';
     }
     else {

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Unity3D, Unity, HTML5, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 4.0.0
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ FunGames Theme in Action
 = MyArcadePlugin Lite Features =
 * Fetch Games from MyArcadeFeed
 * Fetch Games from Spilgames
-* Fetch Games from UnityGames
+* Fetch Games from UnityFeeds
 * Fetch Games from 2PG
 * Play Flash Games
 * Play HTML5 Games
@@ -89,6 +89,7 @@ MyArcadePlugin Lite is a fully functional but limited version of <a href='http:/
 * Grab Game Files From URL
 * SWFObject Integration
 * Edit Games Before Publishing
+* Save GamerSafe Scores (GamerSafe Bridge Integration)
 * Save IBPArcade Scores
 * Save PHPBB Scores
 * Leaderboards
@@ -129,7 +130,7 @@ After the installation you have to setup the plugin. You can find a <a href='htt
 == Upgrade Notice ==
 
 1. Deactivate MyArcadePlugin
-2. Upload a new version
+2. Upload new version
 3. Activate MyArcadePlugin
 
 == Frequently Asked Questions ==

@@ -449,11 +449,11 @@ function myarcade_edit_settings() {
     if ( isset($_POST['spilgamesurl'])) $spilgames['feed'] = esc_url_raw($_POST['spilgamesurl']); else $spilgames['feed'] = '';
     if ( isset($_POST['spilgameslimit'])) $spilgames['limit'] = sanitize_text_field($_POST['spilgameslimit']); else $spilgames['limit'] = '20';
     if ( isset($_POST['spilgamesthumbsize'])) $spilgames['thumbsize'] = trim($_POST['spilgamesthumbsize']); else $spilgames['thumbsize'] = 'small';
-    if ( isset($_POST['spilgameslanguage'])) $spilgames['language'] = trim($_POST['spilgameslanguage']); else $spilgames['language'] = 'default';
     $spilgames['cron_fetch']          = (isset($_POST['spilgames_cron_fetch'])) ? true : false;
     $spilgames['cron_fetch_limit']    = (isset($_POST['spilgames_cron_fetch_limit']) ) ? intval($_POST['spilgames_cron_fetch_limit']) : 1;
     $spilgames['cron_publish']        = (isset($_POST['spilgames_cron_publish']) ) ? true : false;
     $spilgames['cron_publish_limit']  = (isset($_POST['spilgames_cron_publish_limit']) ) ? intval($_POST['spilgames_cron_publish_limit']) : 1;
+    $spilgames['player_api'] = (isset($_POST['spilgames_player_api'])) ? true : false;
       // Update Settings
       update_option('myarcade_spilgames', $spilgames);
 
@@ -1243,32 +1243,12 @@ function myarcade_edit_settings() {
                 <td><i><?php _e("Select the size of the thumbnails that should be used for games from Spil Games. Default size is small (100x75).", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
-              <tr><td colspan="2"><h3><?php _e("Language", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
-
+              <tr><td colspan="2"><h3><?php _e("Gamer Player API", MYARCADE_TEXT_DOMAIN); ?></h3></td></tr>
               <tr>
                 <td>
-                  <select size="1" name="spilgameslanguage" id="spilgameslanguage">
-                    <option value="default" <?php myarcade_selected($spilgames['language'], 'default'); ?>>Default</option>
-                    <option value="AR" <?php myarcade_selected($spilgames['language'], 'AR'); ?>>AR</option>
-                    <option value="de-DE" <?php myarcade_selected($spilgames['language'], 'de-DE'); ?>>de-DE</option>
-                    <option value="en-GB" <?php myarcade_selected($spilgames['language'], 'en-GB'); ?>>en-GB</option>
-                    <option value="en-ID" <?php myarcade_selected($spilgames['language'], 'en-ID'); ?>>en-ID</option>
-                    <option value="en-US" <?php myarcade_selected($spilgames['language'], 'en-US'); ?>>en-US</option>
-                    <option value="es-ES" <?php myarcade_selected($spilgames['language'], 'es-ES'); ?>>es-ES</option>
-                    <option value="fr-FR" <?php myarcade_selected($spilgames['language'], 'fr-FR'); ?>>fr-FR</option>
-                    <option value="it-IT" <?php myarcade_selected($spilgames['language'], 'it-IT'); ?>>it-IT</option>
-                    <option value="jp-JP" <?php myarcade_selected($spilgames['language'], 'jp-JP'); ?>>jp-JP</option>
-                    <option value="ms-MY" <?php myarcade_selected($spilgames['language'], 'ms-MY'); ?>>ms-MY</option>
-                    <option value="nl-NL" <?php myarcade_selected($spilgames['language'], 'nl-NL'); ?>>nl-NL</option>
-                    <option value="pl-PL" <?php myarcade_selected($spilgames['language'], 'pl-PL'); ?>>pl-PL</option>
-                    <option value="pt-BR" <?php myarcade_selected($spilgames['language'], 'pt-BR'); ?>>pt-BR</option>
-                    <option value="pt-PT" <?php myarcade_selected($spilgames['language'], 'pt-PT'); ?>>pt-PT</option>
-                    <option value="ru-RU" <?php myarcade_selected($spilgames['language'], 'ru-RU'); ?>>ru-RU</option>
-                    <option value="sv-SE" <?php myarcade_selected($spilgames['language'], 'sv-SE'); ?>>sv-SE</option>
-                    <option value="tr-TR" <?php myarcade_selected($spilgames['language'], 'tr-TR'); ?>>tr-TR</option>
-                  </select>
+                  <input type="checkbox" name="spilgames_player_api" value="true" <?php myarcade_checked($spilgames['player_api'], true); ?> /><label class="opt">&nbsp;<?php _e("Yes", MYARCADE_TEXT_DOMAIN); ?></label>
                 </td>
-                <td><i><?php _e("Select a game language that you would like to fetch from Spil Games.", MYARCADE_TEXT_DOMAIN); ?></i></td>
+                <td><i><?php _e("Enable this if you want to use the Spilgames Game Player API to embed games. Spilgames will add revenue sharing trough the API in the future.", MYARCADE_TEXT_DOMAIN); ?></i></td>
               </tr>
 
               <tr><td colspan="2"><h3><?php _e("Automated Game Fetching", MYARCADE_TEXT_DOMAIN); ?><?php myarcade_premium_settings() ?></h3></td></tr>
@@ -1323,7 +1303,7 @@ function myarcade_edit_settings() {
               <tr>
                 <td colspan="2">
                   <i>
-                    <?php _e("UnityFeeds provides a game feed with exclusive Unity3D games.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="http://gamefeeds.com/">here</a> to visit the UnityFeeds site.
+                    <?php _e("UnityFeeds provides a game feed with exclusive Unity3D games.", MYARCADE_TEXT_DOMAIN); ?> Click <a href="http://unityfeeds.com/">here</a> to visit the UnityFeeds site.
                   </i>
                 </td>
               </tr>

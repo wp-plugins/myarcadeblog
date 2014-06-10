@@ -20,19 +20,23 @@ function myarcade_import_games() {
   $game = new stdClass();
 
   if ( isset($_POST['impcostgame']) && ($_POST['impcostgame'] == 'import') ) {
-    if ( $_POST['importtype'] == 'embed' ) {
+    if ( $_POST['importtype'] == 'embed' || $_POST['importtype'] == 'iframe' ) {
       $game->swf_url = esc_sql(urldecode($_POST['importgame']));
-      $game->width  = '';
-      $game->height = '';
     }
     else {
-      $game->swf_url        = $_POST['importgame'];
-      $game->width          = $_POST['gamewidth'];
-      $game->height         = $_POST['gameheight'];
+      $game->swf_url = $_POST['importgame'];
     }
 
-    $game->slug           = preg_replace("/[^a-zA-Z0-9 ]/", "", strtolower($_POST['gamename']));
-    $game->slug           = str_replace(" ", "-", $game->slug);
+    $game->width = !empty($_POST['gamewidth']) ? $_POST['gamewidth'] : '';
+    $game->height = !empty($_POST['gameheight']) ? $_POST['gameheight'] : '';
+
+    if ( ($_POST['importtype'] == 'ibparcade') OR ($_POST['importtype'] == 'phpbb') ) {
+      $game->slug = $_POST['slug'];
+    }
+    else {
+      $game->slug           = preg_replace("/[^a-zA-Z0-9 ]/", "", strtolower($_POST['gamename']));
+      $game->slug           = str_replace(" ", "-", $game->slug);
+    }
 
     $game->name           = $_POST['gamename'];
     $game->type           = $_POST['importtype'];
@@ -44,9 +48,9 @@ function myarcade_import_games() {
     $game->control        = '';
     $game->rating         = '';
     $game->tags           = $_POST['gametags'];
-    $game->categs         = implode(",", $_POST['gamecategs']);
+    $game->categs         = ( isset($_POST['gamecategs']) ) ? implode(",", $_POST['gamecategs']) : 'Other';
     $game->created        = gmdate( 'Y-m-d H:i:s', ( time() + (get_option( 'gmt_offset' ) * 3600 ) ) );
-    $game->leaderboard_enabled = $_POST['lbenabled'];
+    $game->leaderboard_enabled = filter_input( INPUT_POST, 'lbenabled' );
 
 if ( ! empty( $_POST['highscoretype'] ) && 'low' == $_POST['highscoretype'] ) {
       $game->highscore_type = 'ASC';

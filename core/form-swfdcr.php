@@ -86,7 +86,7 @@
 
 <?php // IMPORT EMBED / IFRAME GAME ?>
 <div id="importembedif">
-<h2><?php _e("Add Embed / Iframe Game", MYARCADE_TEXT_DOMAIN); ?></h2>
+<h2><?php _e("Add Embed Code / Iframe URL", MYARCADE_TEXT_DOMAIN); ?></h2>
 <h2 class="box"><?php _e("Game Files", MYARCADE_TEXT_DOMAIN); ?></h2>
 <form method="post" id="uploadFormEMIF">
   <input type="hidden" name="upload" value="emif" />
@@ -101,7 +101,7 @@
           <td>
             <textarea rows="6" cols="80" name="embedcode"></textarea>
             <br />
-            <i><?php _e("Paste here the embed or iframe code and click on 'Add Code'.", MYARCADE_TEXT_DOMAIN); ?></i>
+            <i><?php _e("Paste here a complete embed code or an iframe URL and click on 'Add Code'.", MYARCADE_TEXT_DOMAIN); ?></i>
           </td>
         </tr>
         <tr>
@@ -266,8 +266,6 @@
   <input type="hidden" name="importscreen2" id="importscreen2" />
   <input type="hidden" name="importscreen3" id="importscreen3" />
   <input type="hidden" name="importscreen4" id="importscreen4" />
-  <input type="hidden" name="highscoretype" id="highscoretype" />
-  <input type="hidden" name="lbenabled"     id="lbenabled" />
   <input type="hidden" name="slug"          id="slug" />
 
   <div class="container">
@@ -409,6 +407,30 @@
           ?>
             <br /><br />
             <i><?php _e("Select one or more categories for this game.", MYARCADE_TEXT_DOMAIN); ?></i>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="block">
+      <table class="optiontable" width="100%">
+        <tr>
+          <td><h3><?php _e("Score Options", MYARCADE_TEXT_DOMAIN); ?></h3></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="checkbox" id="lbenabled" name="lbenabled" value="1" />&nbsp;
+            <i><?php _e("Yes - This game is able to submit scores", MYARCADE_TEXT_DOMAIN); ?></i>
+            <br /><br />
+            <?php _e("Score Order", MYARCADE_TEXT_DOMAIN); ?>
+            <select name="highscoretype" id="highscoretype">
+              <option value="high"><?php _e("DESC (High to Low)", MYARCADE_TEXT_DOMAIN); ?></option>
+              <option value="low"><?php _e("ASC (Low to High)", MYARCADE_TEXT_DOMAIN); ?></option>
+            </select>
+            <br /><br />
+            <input type="checkbox" name="score_bridge" value="gamersafe" />&nbsp;<i><?php _e("GamerSafe Support - Check this if the game has GamerSafe Data Bridge integrated.", MYARCADE_TEXT_DOMAIN); ?></i>
           </td>
         </tr>
       </table>

@@ -3,7 +3,7 @@
  * Plugin Name:  MyArcadePlugin Lite
  * Plugin URI:   http://myarcadeplugin.com
  * Description:  WordPress Arcade Plugin
- * Version:      4.0.0
+ * Version:      4.1.0
  * Author:       Daniel Bakovic
  * Author URI:   http://myarcadeplugin.com
  * Requires at least: 3.6
@@ -30,7 +30,7 @@
  *   G L O B A L S
  *******************************************************************************
  */
-define('MYARCADE_VERSION', '4.0.0');
+define('MYARCADE_VERSION', '4.1.0');
 
 // You need at least PHP Version 5.2.0+ to run this plugin
 define('MYARCADE_PHP_VERSION', '5.2.0');
@@ -134,12 +134,13 @@ function myarcade_init() {
   $myarcade_distributors = apply_filters('myarcade_game_distributors', $default_distributors );
 
   $myarcade_game_type_custom = array(
-    'custom'    => 'SWF Game',
-    'embed'     => 'Embed / Iframe Game',
-    'dcr'       => '- PRO - DCR Game',
-    'ibparcade' => '- PRO - IBPArcade Game',
-    'phpbb'     => '- PRO - PHPBB Game',
-    'unity'     => '- PRO - Unity'
+    'embed'     => __( "Embed Code", MYARCADE_TEXT_DOMAIN ),
+    'custom'    => __( "Flash (SWF)", MYARCADE_TEXT_DOMAIN ),
+    'iframe'    => __( "Iframe URL", MYARCADE_TEXT_DOMAIN ),
+    'dcr'       => __( '- PRO - DCR Game', MYARCADE_TEXT_DOMAIN ),
+    'ibparcade' => __( '- PRO - IBPArcade Game', MYARCADE_TEXT_DOMAIN ),
+    'phpbb'     => __( '- PRO - PHPBB Game', MYARCADE_TEXT_DOMAIN ),
+    'unity'     => __( '- PRO - Unity', MYARCADE_TEXT_DOMAIN ),
   );
 }
 add_action('init', 'myarcade_init');

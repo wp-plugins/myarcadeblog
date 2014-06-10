@@ -8,10 +8,13 @@
  * @package MyArcadePlugin/Core/Setup
  */
 
-defined('MYARCADE_VERSION') or die();
+// No direct access
+if( !defined( 'ABSPATH' ) ) {
+  die();
+}
 
 /**
- * @brief Plugin installation. Adds needed tables
+ * Installation function
  */
 function myarcade_install() {
   global $wpdb, $wp_version;
@@ -20,18 +23,22 @@ function myarcade_install() {
 
   if (version_compare($wp_version, '3.5', '>=') ) {
     if ( $wpdb->has_cap( 'collation' ) ) {
-      if( ! empty($wpdb->charset ) )
+      if( ! empty($wpdb->charset ) ) {
         $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
-      if( ! empty($wpdb->collate ) )
+      }
+      if( ! empty($wpdb->collate ) ) {
         $collate .= " COLLATE $wpdb->collate";
+      }
     }
   }
   else {
     if( $wpdb->supports_collation() ) {
-      if( !empty($wpdb->charset) )
+      if( !empty($wpdb->charset) ) {
         $collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
-      if( !empty($wpdb->collate) )
+      }
+      if( !empty($wpdb->collate) ) {
         $collate.= " COLLATE ".$wpdb->collate;
+      }
     }
   }
 
@@ -65,6 +72,7 @@ function myarcade_install() {
       `created` text collate utf8_unicode_ci NOT NULL,
       `leaderboard_enabled` text collate utf8_unicode_ci NOT NULL,
       `highscore_type` text collate utf8_unicode_ci NOT NULL,
+      `score_bridge` text collate utf8_unicode_ci NOT NULL,
       `coins_enabled` text collate utf8_unicode_ci NOT NULL,
       `status` text collate utf8_unicode_ci NOT NULL,
       PRIMARY KEY  (`id`)
@@ -114,7 +122,7 @@ function myarcade_install() {
   $myarcade_kongregate = get_option('myarcade_kongregate');
 
   if ( !$myarcade_kongregate ) {
-    update_option('myarcade_kongregate', $myarcade_kongregate_default, '', 'no');
+    add_option('myarcade_kongregate', $myarcade_kongregate_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -130,7 +138,7 @@ function myarcade_install() {
   $myarcade_fgd = get_option('myarcade_fgd');
 
   if ( !$myarcade_fgd ) {
-    update_option('myarcade_fgd', $myarcade_fgd_default, '', 'no');
+    add_option('myarcade_fgd', $myarcade_fgd_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -146,7 +154,7 @@ function myarcade_install() {
   $myarcade_fog = get_option('myarcade_fog');
 
   if ( !$myarcade_fog ) {
-    update_option('myarcade_fog', $myarcade_fog_default, '', 'no');
+    add_option('myarcade_fog', $myarcade_fog_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -162,7 +170,7 @@ function myarcade_install() {
   $myarcade_spilgames = get_option('myarcade_spilgames');
 
   if ( empty($myarcade_spilgames) ) {
-    update_option('myarcade_spilgames', $myarcade_spilgames_default, '', 'no');
+    add_option('myarcade_spilgames', $myarcade_spilgames_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -172,10 +180,8 @@ function myarcade_install() {
       }
     }
     
-    // Fix Spilgames feed URL
-    if ( $myarcade_spilgames['feed'] != $myarcade_spilgames_default['feed'] )  {
-      $myarcade_spilgames['feed'] = $myarcade_spilgames_default['feed'];
-    }
+    // Overwrite Spilgames Feed URL
+    $myarcade_spilgames['feed'] = $myarcade_spilgames_default['feed'];
 
     update_option('myarcade_spilgames', $myarcade_spilgames);
   }
@@ -184,7 +190,7 @@ function myarcade_install() {
   $myarcade_myarcadefeed = get_option('myarcade_myarcadefeed');
 
   if ( empty($myarcade_myarcadefeed) ) {
-    update_option('myarcade_myarcadefeed', $myarcade_myarcadefeed_default, '', 'no');
+    add_option('myarcade_myarcadefeed', $myarcade_myarcadefeed_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -210,7 +216,7 @@ function myarcade_install() {
   $myarcade_bigfish = get_option('myarcade_bigfish');
 
   if ( !$myarcade_bigfish ) {
-    update_option('myarcade_bigfish', $myarcade_bigfish_default, '', 'no');
+    add_option('myarcade_bigfish', $myarcade_bigfish_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -226,7 +232,7 @@ function myarcade_install() {
   $myarcade_scirra = get_option('myarcade_scirra');
 
   if ( !$myarcade_scirra ) {
-    update_option('myarcade_scirra', $myarcade_scirra_default, '', 'no');
+    add_option('myarcade_scirra', $myarcade_scirra_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -242,7 +248,7 @@ function myarcade_install() {
   $myarcade_gamefeed = get_option('myarcade_gamefeed');
 
   if ( !$myarcade_gamefeed ) {
-    update_option('myarcade_gamefeed', $myarcade_gamefeed_default, '', 'no');
+    add_option('myarcade_gamefeed', $myarcade_gamefeed_default, '', 'no');
   }
   else {
     // Upgrade Settings if needed
@@ -258,7 +264,7 @@ function myarcade_install() {
     $myarcade_unityfeeds = get_option('myarcade_unityfeeds');
 
     if ( empty($myarcade_unityfeeds) ) {
-      update_option('myarcade_unityfeeds', $myarcade_unityfeeds_default, '', 'no');
+      add_option('myarcade_unityfeeds', $myarcade_unityfeeds_default, '', 'no');
     }
     else {
       // Upgrade Settings if needed
@@ -274,7 +280,7 @@ function myarcade_install() {
   $myarcade_categories = get_option('myarcade_categories');
 
   if ( empty($myarcade_categories) ) {
-    update_option('myarcade_categories', $feedcategories, '', 'no');
+    add_option('myarcade_categories', $feedcategories, '', 'no');
   }
   else {
     // Upgrade Categories if needed
@@ -349,7 +355,7 @@ function myarcade_install() {
       $wpdb->query("DROP TABLE ".MYARCADE_SETTINGS_TABLE);
     }
 
-    update_option('myarcade_version', MYARCADE_VERSION, '', 'no');
+    update_option('myarcade_version', MYARCADE_VERSION);
   }
   else {
     // version information exists.. regular upgrade
@@ -473,6 +479,16 @@ function myarcade_upgrade_games_table() {
 
   // Upgrade to 5.80
   $wpdb->query("ALTER TABLE `".MYARCADE_GAME_TABLE."` CHANGE  `postid`  `postid` INT( 11 )");
+
+
+  /// Upgrade to 5.14.0
+  if (!in_array('score_bridge', $gametable_cols)) {
+    $wpdb->query("
+      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ADD `score_bridge` text collate utf8_unicode_ci NOT NULL
+      AFTER `highscore_type`
+    ");
+  }
 }
 
 /**

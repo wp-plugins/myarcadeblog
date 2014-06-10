@@ -67,12 +67,6 @@ function myarcade_game_data_box() {
             'options' => $distributors
         ));
 
-        myarcade_wp_text_input( array(
-            'id' => 'mabp_game_tag',
-            'label' => __('Mochi Game Tag', MYARCADE_TEXT_DOMAIN),
-            'description' => __('Game Tag is only important for Mochi games.', MYARCADE_TEXT_DOMAIN)
-        ));
-
         myarcade_wp_select( array(
             'id' => 'mabp_leaderboard',
             'label' => __('Score Support', MYARCADE_TEXT_DOMAIN),
@@ -97,7 +91,7 @@ function myarcade_game_data_box() {
         // Game File
 				$file_path = get_post_meta($post->ID, 'mabp_swf_url', true);
         $game_type = get_post_meta($post->ID, 'mabp_game_type', true);
-        if ( $game_type == 'embed') {
+        if ( $game_type == 'embed' || $game_type == 'iframe') {
           $field = array( 'id' => 'mabp_swf_url', 'label' => __('Embed Code', MYARCADE_TEXT_DOMAIN) );
           echo '<p class="form-field"><label for="'.$field['id'].'">'.$field['label'].':</label>
 				  <textarea name="'.$field['id'].'" id="'.$field['id'].'">'.$file_path.'</textarea>
@@ -144,6 +138,12 @@ function myarcade_game_data_box() {
 					<input type="text" class="screen4_path" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$file_path.'" placeholder="'.__('File path / URL', MYARCADE_TEXT_DOMAIN).'" />
 					<input type="button"  class="upload_screen4_button button" value="'.__('Upload a file', MYARCADE_TEXT_DOMAIN).'" />
 				</p>';
+
+        myarcade_wp_text_input( array(
+            'id' => 'mabp_video_url',
+            'label' => __('Video URL', MYARCADE_TEXT_DOMAIN),
+            'description' => __('Paste a game play video URL (YouTube Link) here.', MYARCADE_TEXT_DOMAIN)
+        ));
         ?>
       </div>
     </div>
@@ -229,15 +229,12 @@ function myarcade_meta_box_save($post_id, $post) {
   if ( !isset($_POST['myarcade_meta_nonce']) || (isset($_POST['myarcade_meta_nonce']) && !wp_verify_nonce( $_POST['myarcade_meta_nonce'], 'myarcade_save_data' ))) return $post_id;
   if ( !current_user_can( 'edit_post', $post_id )) return $post_id;
 
-  $game_tag = (isset($_POST['mabp_game_tag'])) ? $_POST['mabp_game_tag'] : '';
   $game_height = (isset($_POST['mabp_height'])) ? $_POST['mabp_height'] : '';
   $game_width = (isset($_POST['mabp_width'])) ? $_POST['mabp_width'] : '';
   $game_description = (isset($_POST['mabp_description'])) ? $_POST['mabp_description'] : '';
   $game_instruction = (isset($_POST['mabp_instructions'])) ? $_POST['mabp_instructions'] : '';
   $game_scores = (isset($_POST['mabp_leaderboard'])) ? $_POST['mabp_leaderboard'] : '';
 
-
-  update_post_meta($post_id, 'mabp_game_tag', $game_tag);
   update_post_meta($post_id, 'mabp_game_type',$_POST['mabp_game_type']);
   update_post_meta($post_id, 'mabp_height', $game_height);
   update_post_meta($post_id, 'mabp_width', $game_width);
@@ -252,6 +249,7 @@ function myarcade_meta_box_save($post_id, $post) {
   $screen2 = (isset($_POST['mabp_screen2_url'])) ? $_POST['mabp_screen2_url'] : '';
   $screen3 = (isset($_POST['mabp_screen3_url'])) ? $_POST['mabp_screen3_url'] : '';
   $screen4 = (isset($_POST['mabp_screen4_url'])) ? $_POST['mabp_screen4_url'] : '';
+  $video_url = (isset($_POST['mabp_video_url'])) ? $_POST['mabp_video_url'] : '';
 
   update_post_meta($post_id, 'mabp_thumbnail_url', $thumb);
   update_post_meta($post_id, 'mabp_swf_url', $game);
@@ -259,6 +257,7 @@ function myarcade_meta_box_save($post_id, $post) {
   update_post_meta($post_id, 'mabp_screen2_url', $screen2);
   update_post_meta($post_id, 'mabp_screen3_url', $screen3);
   update_post_meta($post_id, 'mabp_screen4_url', $screen4);
+  update_post_meta($post_id, 'mabp_video_url', $video_url);
 }
 add_action('save_post', 'myarcade_meta_box_save', 1, 2);
 
