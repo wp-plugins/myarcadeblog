@@ -1,11 +1,20 @@
 <?php
-/*
- * Module:       MyAracadePlugin user feedback module
- * Author:       Daniel Bakovic
- * Author URI:   http://myarcadeplugin.com
+/**
+ * Feedback class to store errors and notifications
+ *
+ * @author Daniel Bakovic <contact@myarcadeplugin.com>
+ * @copyright (c) 2015, Daniel Bakovic
+ * @license http://myarcadeplugin.com
+ * @package MyArcadePlugin/Core/Feedback
+*/
+
+/**
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
+ * Do not modify! Do not sell! Do not distribute! -
+ * Check our license Terms!
  */
 
-class MyAracade_Feedback {
+class MyArcade_Feedback {
 
   // Stores the list of errors
   var $errors = array();
@@ -13,9 +22,18 @@ class MyAracade_Feedback {
   // Stores the list of messages
   var $messages = array();
 
+  /**
+   * Constructor
+   *
+   * @version 5.0.0
+   * @access  public
+   * @param   string  $type    message or error
+   * @param   string  $message Message text
+   */
+  public function __construct( $type = '', $message = '' ) {
 
-  function __construct($type = false, $message = '') {
     switch ($type) {
+
       case 'message': {
         $this->messages[] = $message;
       } break;
@@ -31,11 +49,13 @@ class MyAracade_Feedback {
   }
 
   /**
-  * Returns error array, error string or outputs all error messages
-  *
-  * @param undefined $args
-  *
-  */
+   * Retrieve all error messages. Returns an array, string or outputs all error messages
+   *
+   * @version 5.0.0
+   * @access  public
+   * @param   array  $args
+   * @return  string
+   */
   public function get_errors( $args = array() ) {
 
     $defaults = array(
@@ -47,7 +67,9 @@ class MyAracade_Feedback {
     $r = wp_parse_args( $args, $defaults );
     extract($r);
 
-    if ( !is_bool($output) && ($output == 'return') ) return $this->errors;
+    if ( !is_bool($output) && ($output == 'return') ) {
+      return $this->errors;
+    }
 
     $output_string = '';
 
@@ -59,13 +81,21 @@ class MyAracade_Feedback {
       if ( ( is_bool($output) && ($output === true) ) || ($output == 'echo' ) ) {
         echo $output_string;
       }
-      else if ( $output == 'string') {
+      elseif ( $output == 'string') {
         return $output_string;
       }
     }
   }
 
-  function get_messages( $args = array() ) {
+  /**
+   * Retrieve all messages. Returns an array, string or outputs all error messages
+   *
+   * @version 5.0.0
+   * @access  public
+   * @param   array  $args
+   * @return  string
+   */
+  public function get_messages( $args = array() ) {
 
     $defaults = array(
       'wrap_begin' => '<p class="mabp_info">',
@@ -76,7 +106,9 @@ class MyAracade_Feedback {
     $r = wp_parse_args( $args, $defaults );
     extract($r);
 
-    if ( !is_bool($output) && ($output == 'return') ) return $this->messages;
+    if ( !is_bool($output) && ($output == 'return') ) {
+      return $this->messages;
+    }
 
     $output_string = '';
 
@@ -88,52 +120,90 @@ class MyAracade_Feedback {
       if ( ( is_bool($output) && ($output === true) ) || ($output == 'echo') ) {
         echo $output_string;
       }
-      else if ( $output == 'string') {
+      elseif ( $output == 'string') {
         return $output_string;
       }
-    } else {
+    }
+    else {
       return false;
     }
   }
 
-  function add_error($message) {
+  /**
+   * Add a new error message
+   *
+   * @version 5.0.0
+   * @access  public
+   * @param   string $message Error message
+   */
+  function add_error( $message ) {
     $this->errors[] = $message;
   }
 
+  /**
+   * Add a new message
+   *
+   * @version 5.0.0
+   * @access  public
+   * @param   string $message Message string
+   */
   function add_message($message) {
     $this->messages[] = $message;
   }
 
+  /**
+   * Check if there are error messages available
+   *
+   * @version 5.0.0
+   * @access  public
+   * @return  boolean TRUE if there are error messages available
+   */
   function has_errors() {
     if ( empty($this->errors) ) {
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }
 
+  /**
+   * Check if there are messages available
+   *
+   * @version 5.0.0
+   * @access  public
+   * @return  boolean TRUE if there are messages available
+   */
   function has_messages() {
     if ( empty($this->messages) ) {
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }
-} // end class
-
+}
 
 /**
  * Check wheather the variable is a MyArcadePlugin feedback object
+ *
+ * @version 5.0.0
+ * @access  public
+ * @param   object $thing MyArcade_Feedback object
+ * @return  boolean TRUE if thing is a MyArcade_Feedback object
  */
-function is_myarcade_feedback($thing) {
-  if ( is_object($thing)  && is_a($thing, 'MyAracade_Feedback') ) {
+function is_myarcade_feedback( $thing ) {
+  if ( is_object($thing)  && is_a($thing, 'MyArcade_Feedback') ) {
     return true;
-  } else {
+  }
+  else {
     return false;
   }
 }
 
+// Create a new Feedback instance
 global $myarcade_feedback;
 if ( !is_myarcade_feedback($myarcade_feedback) ) {
-  $myarcade_feedback = new MyAracade_Feedback();
+  $myarcade_feedback = new MyArcade_Feedback();
 }
+?>

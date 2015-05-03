@@ -71,9 +71,38 @@ jQuery(document).ready(function() {
 
     // Folder selection
     jQuery(".fileselection").click( function() {
-      alert("Please consider upgrading to MyArcadePlugin Pro if you want to use this feature.");
+      var selected = jQuery(this).closest('div').attr('id');
+      jQuery("#folder" + selected).hide();
+      jQuery("#" + selected + " .loadimg").show();
+      showfileSelection( selected );
     });
+
+    jQuery(".cancelselection").click( function() {
+      var selected = jQuery(this).closest('div').attr('id');
+      jQuery("#fileselect" + selected).remove();
+      jQuery("#" + selected + " .cancelselection").hide();
+      jQuery("#" + selected + " .fileselection").show();
+    });
+
 });
+
+function showfileSelection( selected ) {
+  jQuery.ajax({
+    type: 'POST',
+    url: ajaxurl,
+    data: {
+      action: "myarcade_get_filelist",
+      type: selected
+    },
+    dataType: "html",
+    success: function( response ) {
+      jQuery( "#" + selected + " .loadimg" ).hide();
+      jQuery( "#" + selected ).prepend(response);
+      jQuery( "#" + selected + " .cancelselection" ).show();
+    },
+    error: function( response ) {}
+  });
+}
 
 function showResponseSWF(data, statusText, xhr, $form)  {
   hideLoader('#loadimgswf');
@@ -167,20 +196,20 @@ function showResponseEMIF(data, statusText, xhr, $form)  {
 
 function myarcade_chkImportCustom() {
   if (document.FormCustomGame.importgame.value == "") {
-    alert("<?php _e("No game file added!", MYARCADE_TEXT_DOMAIN); ?>");
+    alert("<?php _e("No game file added!", 'myarcadeplugin'); ?>");
     return false;
   }
   if (document.FormCustomGame.importthumb.value == "") {
-    alert("<?php _e("No thumbnail added!", MYARCADE_TEXT_DOMAIN); ?>");
+    alert("<?php _e("No thumbnail added!", 'myarcadeplugin'); ?>");
     return false;
   }
   if (document.FormCustomGame.gamename.value == "") {
-    alert("<?php _e("Game name not set!", MYARCADE_TEXT_DOMAIN); ?>");
+    alert("<?php _e("Game name not set!", 'myarcadeplugin'); ?>");
     document.FormCustomGame.gamename.focus();
     return false;
   }
   if (document.FormCustomGame.gamedescr.value == "") {
-    alert("<?php _e("There is no game description!", MYARCADE_TEXT_DOMAIN); ?>");
+    alert("<?php _e("There is no game description!", 'myarcadeplugin'); ?>");
     document.FormCustomGame.gamedescr.focus();
     return false;
   }
@@ -194,7 +223,7 @@ function myarcade_chkImportCustom() {
   }
 
   if (categs == false) {
-    alert("<?php _e("Select at least one category!", MYARCADE_TEXT_DOMAIN);?>");
+    alert("<?php _e("Select at least one category!", 'myarcadeplugin');?>");
     return false;
   }
 
@@ -225,7 +254,7 @@ function myarcade_check_file_size( fileID, targetID ) {
   jQuery(targetID).html("File Size: " + iSize  + unit);
 
   if ( iSizeBit >allowedSize ) {
-    alert( '<?php _e("ERROR: Max allowed file size exceeded!", MYARCADE_TEXT_DOMAIN); ?>' );
+    alert( '<?php _e("ERROR: Max allowed file size exceeded!", 'myarcadeplugin'); ?>' );
   }
 }
 
@@ -247,33 +276,13 @@ jQuery(document).ready(function() {
     jQuery('#importscreen2').val('');
     jQuery('#importscreen3').val('');
     jQuery('#importscreen4').val('');
+    //jQuery('#lbenabled').val('');
+    //jQuery('#highscoretype').val('');
     jQuery('#slug').val('');
 
     switch (this.value) {
-      case 'importibparcade': {
-        jQuery('#importswfdcr').hide();
-        jQuery('#importembedif').hide();
-        jQuery('#thumbform').hide();
-        jQuery('#importphpbb').hide();
-        jQuery('#importunity').hide();
-        jQuery('#importibparcade').fadeIn('slow');
-      }
-      break;
-
-      case 'importphpbb': {
-        jQuery('#importswfdcr').hide();
-        jQuery('#importembedif').hide();
-        jQuery('#thumbform').hide();
-        jQuery('#importphpbb').fadeIn('slow');
-        jQuery('#importunity').hide();
-        jQuery('#importibparcade').hide();
-      }
-      break;
-
       case 'importswfdcr': {
-        jQuery('#importibparcade').hide();
         jQuery('#importembedif').hide();
-        jQuery('#importphpbb').hide();
         jQuery('#importunity').hide();
         jQuery('#importswfdcr').fadeIn('slow');
         jQuery('#thumbform').fadeIn('slow');
@@ -281,9 +290,7 @@ jQuery(document).ready(function() {
       break;
 
       case 'importembedif': {
-        jQuery('#importibparcade').hide();
         jQuery('#importswfdcr').hide();
-        jQuery('#importphpbb').hide();
         jQuery('#importunity').hide();
         jQuery('#importembedif').fadeIn('slow');
         jQuery('#thumbform').fadeIn('slow');
@@ -291,9 +298,7 @@ jQuery(document).ready(function() {
       break;
 
       case 'importunity': {
-        jQuery('#importibparcade').hide();
         jQuery('#importswfdcr').hide();
-        jQuery('#importphpbb').hide();
         jQuery('#importunity').fadeIn('slow');
         jQuery('#importembedif').hide();
         jQuery('#thumbform').fadeIn('slow');

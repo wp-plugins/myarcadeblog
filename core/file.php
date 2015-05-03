@@ -3,13 +3,13 @@
  * File handle functions
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2014, Daniel Bakovic
+ * @copyright (c) 2015, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/File
  */
 
 /*
- * Copyright @ Daniel Bakovic - kontakt@netreview.de
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
  * Do not modify! Do not sell! Do not distribute! -
  * Check our license Terms!
  */
@@ -19,21 +19,17 @@ if( !defined( 'ABSPATH' ) ) {
   die();
 }
 
-defined('MYARCADE_VERSION') or die();
-
-/* Add game delete function */
-add_action('before_delete_post', 'myarcade_delete_game');
-
-
-if (!function_exists('file_put_contents')) {
+if ( !function_exists('file_put_contents') ) {
   /**
    * Alternative file_put_contents function
    *
-   * @param <type> $filename
-   * @param <type> $data
-   * @return <type>
+   * @version 5.0.0
+   * @access  public
+   * @param   string $filename File name
+   * @param   string $data Data that should be written into the file
+   * @return  int|bool Bytes written or FALSE on error
    */
-  function file_put_contents($filename, $data) {
+  function file_put_contents( $filename, $data ) {
     $f = @fopen($filename, 'w');
     if (!$f) {
       return false;
@@ -45,12 +41,13 @@ if (!function_exists('file_put_contents')) {
   }
 }
 
-
 /**
- * Deletes a given file from the hard drive
+ * Delete a given file from the hard drive
  *
- * @param <type> $dir_p
- * @param <type> $file_p
+ * @version 5.0.0
+ * @access  public
+ * @param   string $file_abs Absolute path to a file
+ * @return  void
  */
 function myarcade_del_file( $file_abs ) {
   if ( file_exists( $file_abs ) ) {
@@ -60,10 +57,13 @@ function myarcade_del_file( $file_abs ) {
 
 /**
  * Checks if a game is deleteable
- * @param type $gametype
- * @return boolean
+ *
+ * @version 5.0.0
+ * @access  public
+ * @param   string $gametype Game type / distributor ID
+ * @return  bool TRUE if game type is deletable
  */
-function myarcade_is_game_deleteable($gametype) {
+function myarcade_is_game_deleteable( $gametype ) {
   switch ($gametype) {
     case 'mochi':
     case 'heyzap':
@@ -74,6 +74,8 @@ function myarcade_is_game_deleteable($gametype) {
     case 'fog':
     case 'spilgames':
     case 'gamefeed':
+    case 'unityfeeds':
+    case 'myarcadefeed':
     {
       $result = true;
     } break;
@@ -87,28 +89,33 @@ function myarcade_is_game_deleteable($gametype) {
   return $result;
 }
 
-
 /**
  * Get the abspath of the given URL
- * base_dir = MYARCADE_GAMES_DIR or MYARCADE_THUMBS_DIR
- * return string abspath or boolean false on fail
+ *
+ * @version 5.0.0
+ * @access  public
+ * @param   string $url URL
+ * @return  string|bool string if the absolute path has been found. Otherwise FALSE
  */
-function myarcade_get_abs_path( $base_dir, $url )  {
+function myarcade_get_abs_path( $url )  {
 
-  $path_parts = pathinfo($url);
+  // Get the content URL
+  $content_url = content_url();
 
-  if ( empty($path_parts['dirname']) || empty($path_parts['basename']) ) {
+  // Check if the URL matches with our content URL
+  if ( strpos( $url, $content_url ) === FALSE ) {
+    // External site
     return false;
   }
 
-  preg_match("@".$base_dir."(.*)@", $path_parts['dirname'], $match);
+  // Remove content URL
+  $link_part = str_replace( $content_url, "", $url );
 
-  if ( isset($match[1]) && !empty($match[1]) ) {
-    if ( strpos($match[1], -1) !== '/' ) {
-      $match[1] .= '/';
-    }
+  // Generate the file abs path
+  $file_path = WP_CONTENT_DIR . $link_part;
 
-    return ABSPATH . $base_dir . $match[1] . $path_parts['basename'];
+  if ( file_exists( $file_path ) ) {
+    return $file_path;
   }
 
   return false;
@@ -117,10 +124,12 @@ function myarcade_get_abs_path( $base_dir, $url )  {
 /**
  * Delete game files when deleting a post
  *
- * @global <type> $wpdb
- * @param <type> $post_ID
+ * @version 5.0.0
+ * @access  public
+ * @param   int $post_ID Post ID
+ * @return  bool
  */
-function myarcade_delete_game($post_ID) {
+function myarcade_delete_game( $post_ID ) {
   global $wpdb;
 
   // Get myarcadeplugin settings
@@ -132,9 +141,11 @@ function myarcade_delete_game($post_ID) {
     $thumburl = get_post_meta($post_ID, "mabp_thumbnail_url", true);
 
     if ($thumburl) {
-      $thumb_abs = myarcade_get_abs_path(MYARCADE_THUMBS_DIR, $thumburl);
-      if ($thumb_abs)
+      $thumb_abs = myarcade_get_abs_path( $thumburl );
+
+      if ($thumb_abs) {
         myarcade_del_file($thumb_abs);
+      }
     }
 
     // Delete game screenshots if exists
@@ -142,9 +153,11 @@ function myarcade_delete_game($post_ID) {
       $screenshot = get_post_meta($post_ID, "mabp_screen".$i."_url", true);
 
       if ($screenshot) {
-        $screen_abs = myarcade_get_abs_path(MYARCADE_THUMBS_DIR, $screenshot);
-        if ($screen_abs)
+        $screen_abs = myarcade_get_abs_path( $screenshot );
+
+        if ($screen_abs) {
           myarcade_del_file($screen_abs);
+        }
       }
     } // END for screens
 
@@ -153,14 +166,22 @@ function myarcade_delete_game($post_ID) {
     $gametype = get_post_meta($post_ID, "mabp_game_type", true);
 
     if ( myarcade_is_game_deleteable($gametype) && $gameurl ) {
-      $game_abs = myarcade_get_abs_path(MYARCADE_GAMES_DIR, $gameurl);
-      if ($game_abs)
+      $game_abs = myarcade_get_abs_path( $gameurl);
+
+      if ($game_abs) {
         myarcade_del_file($game_abs);
+      }
     }
   } // END if delete files
 
+  // Delete game scores
+    // Get game_tag
+  $game_tag = $wpdb->get_var("SELECT game_tag FROM `".$wpdb->prefix . 'myarcadegames'."` WHERE `postid` = '$post_ID'");
+    // Delete scores
+  $wpdb->query("DELETE FROM `".$wpdb->prefix.'myarcadescores'."` WHERE  `game_tag` = '$game_tag'");
+
   // Set game status to deleted
-  $query = "UPDATE `".MYARCADE_GAME_TABLE."` SET
+  $query = "UPDATE `".$wpdb->prefix . 'myarcadegames'."` SET
            `status` = 'deleted',
            `postid` = ''
            WHERE `postid` = '$post_ID'";
@@ -169,16 +190,18 @@ function myarcade_delete_game($post_ID) {
 
   return true;
 }
-
+add_action('before_delete_post', 'myarcade_delete_game');
 
 /**
- * Downloads a given file using WordPress HTTP function. After the download
+ * Downloads a file using WordPress HTTP function. After the download
  * the file content will be returned. On error the function will return false.
  *
- * @param <type> $url
- * @return file
+ * @version 5.0.0
+ * @access  public
+ * @param   string $url URL
+ * @return  array
  */
-function myarcade_get_file($url) {
+function myarcade_get_file( $url ) {
 
   $output = array ( 'response' => null, 'error' => null );
 
@@ -192,7 +215,7 @@ function myarcade_get_file($url) {
   else {
     // Check if the server sent a 404 code
     if (wp_remote_retrieve_response_code($response) == 404) {
-      $output['error'] = __("File not found", MYARCADE_TEXT_DOMAIN);
+      $output['error'] = __("File not found", 'myarcadeplugin');
     }
   }
 
@@ -203,22 +226,21 @@ function myarcade_get_file($url) {
 
 /**
  * Determinate the file folder depended on the game type, file type and file name
- * @param string $name - name of the file
- * @param string $type - game type
- * @return array folder paths
+ *
+ * @version 5.0.0
+ * @access  public
+ * @param   string $name File name
+ * @param   string $type Game type
+ * @return  array        Folder paths
  */
 function myarcade_get_folder_path($name = '', $type = '') {
   global $myarcade_feedback;
 
-  // Initialize the base folder
-  $base_folder = array(
-    'game'  => MYARCADE_GAMES_DIR,
-    'image' => MYARCADE_THUMBS_DIR
-  );
+  $upload_dir = myarcade_upload_dir();
 
   if ( empty($name) || empty($type) ) {
     $myarcade_feedback->add_message("Missing parameters on the create folder function!");
-    return $base_folder;
+    return $upload_dir;
   }
 
   $general = get_option('myarcade_general');
@@ -226,7 +248,7 @@ function myarcade_get_folder_path($name = '', $type = '') {
 
   // If not folder structure is set then return false. Check if user has entered just a slash ("/")
   if ( empty($general['folder_structure']) || (strlen($general['folder_structure']) <= 1) ) {
-    return $base_folder;
+    return $upload_dir;
   }
 
   // Init folder vars
@@ -244,36 +266,47 @@ function myarcade_get_folder_path($name = '', $type = '') {
   $folder = str_replace("%alphabetical%", $sub_folder, $folder);
   // Clean up the folder string
   $folder = str_replace( '//', '/', $folder );
-  // Check if the path ends with "/". If not, add one.
-  if ( substr($folder, -1) !== '/' ) $folder .= '/';
-
-  $folder_array = array(
-    'game'  => $base_folder['game']  . $folder,
-    'image' => $base_folder['image'] . $folder
-  );
+  // append a slash
+  $folder = trailingslashit( $folder );
+  // add slash at the beginning
+  /*if ( strpos( $folder, '/') !== 0 ) {
+    $folder = '/' . $folder;
+  }*/
 
   // Check if the folder exists and create if needed
-  if ( !wp_mkdir_p(ABSPATH . $folder_array['game']) ) {
+  if ( wp_mkdir_p( $upload_dir['gamesdir'] . $folder ) ) {
+    // Folder created or already exists
+    // Modify default game paths
+    $upload_dir['gamesdir']   = $upload_dir['gamesdir'] . $folder;
+    $upload_dir['gamesurl']   = $upload_dir['gamesurl'] . $folder;
+    $upload_dir['gamesbase']  = $upload_dir['gamesbase'] . $folder;
+  }
+  else {
     // Folder creation failed
-    $myarcade_feedback->add_message("Can't create folder: ".$folder_array['game']);
-    // Set base folder
-    $folder_array['game'] = $base_folder['game'];
+    $myarcade_feedback->add_message("Can't create folder: " . $upload_dir['gamesdir'] . $folder );
   }
 
-  if ( !wp_mkdir_p(ABSPATH . $folder_array['image']) ) {
+  if ( wp_mkdir_p( $upload_dir['thumbsdir'] . $folder ) ) {
+    // Folder created or already exists
+    // Modify default game paths
+    $upload_dir['thumbsdir']  = $upload_dir['thumbsdir'] . $folder;
+    $upload_dir['thumbsurl']  = $upload_dir['thumbsurl'] . $folder;
+    $upload_dir['thumbsbase'] = $upload_dir['thumbsbase'] . $folder;
+  }
+  else {
     // Folder creation failed
-    $myarcade_feedback->add_message("Can't create folder: ".$folder_array['image']);
-    // Set base folder
-    $folder_array['image'] = $base_folder['image'];
+    $myarcade_feedback->add_message("Can't create folder: " . $upload_dir['thumbsdir'] . $folder );
   }
 
-  return $folder_array;
+  return $upload_dir;
 }
-
 
 /**
  * Display a max post size message
  *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
 function myarcade_get_max_post_size_message() {
 
@@ -282,7 +315,7 @@ function myarcade_get_max_post_size_message() {
   if ( $post_max_size ) {
     ?>
     <div class="mabp_info mabp_680">
-      <?php echo sprintf( __("Your server settings allow you to upload files up to %s.", MYARCADE_TEXT_DOMAIN), $post_max_size ); ?>
+      <?php echo sprintf( __("Your server settings allow you to upload files up to %s.", 'myarcadeplugin'), $post_max_size ); ?>
     </div>
     <?php
   }
@@ -291,7 +324,9 @@ function myarcade_get_max_post_size_message() {
 /**
  * Returns the max post size in bytes
  *
- * @return int
+ * @version 5.0.0
+ * @access  public
+ * @return  int
  */
 function myarcade_get_max_post_size_bytes() {
 
@@ -306,7 +341,11 @@ function myarcade_get_max_post_size_bytes() {
 }
 
 /**
- * Output file list
+ * List all files available in the uploads/game_type folder
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
 function myarcade_get_filelist() {
 
@@ -314,8 +353,10 @@ function myarcade_get_filelist() {
     exit;
   }
 
+  $upload_dir = myarcade_upload_dir();
+
   $type = $_POST['type'];
-  $dir =  ABSPATH . MYARCADE_GAMES_DIR . 'uploads/' . $type;
+  $dir =  $upload_dir['gamesdir'] . 'uploads/' . $type;
 
   $files_array = array();
 
@@ -335,36 +376,19 @@ function myarcade_get_filelist() {
 
   if ( !empty( $files_array ) ) {
     echo '<select name="fileselect'.$type.'" id="fileselect'.$type.'">';
+
     foreach ($files_array as $file_name) {
       echo '<option value="'.$file_name.'">'.$file_name.'</option>';
     }
+
     echo '</select>';
 
   }
   else {
-   echo '<span id="fileselect'.$type.'">'. __("No files found!", MYARCADE_TEXT_DOMAIN) . '</span>';
+   echo '<span id="fileselect'.$type.'">'. __("No files found!", 'myarcadeplugin') . '</span>';
   }
 
   exit;
 }
-
-
-/**
- * Creates needed directories
- */
-function myarcade_create_directories() {
-
-  // Game folders
-  $upload_dir   = wp_upload_dir();
-  $image_url    = $upload_dir['basedir'] . '/thumbs';
-  $games_url    = $upload_dir['basedir'] . '/games';
-  @wp_mkdir_p($image_url);
-  @wp_mkdir_p($games_url);
-
-  @wp_mkdir_p( ABSPATH . MYARCADE_GAMES_DIR );
-  @wp_mkdir_p( ABSPATH . MYARCADE_GAMES_DIR . 'uploads/swf' );
-  @wp_mkdir_p( ABSPATH . MYARCADE_GAMES_DIR . 'uploads/ibparcade' );
-  @wp_mkdir_p( ABSPATH . MYARCADE_GAMES_DIR . 'uploads/phpbb' );
-  @wp_mkdir_p( ABSPATH . MYARCADE_GAMES_DIR . 'uploads/unity' );
-  @wp_mkdir_p( ABSPATH . MYARCADE_THUMBS_DIR );
-}
+add_action('wp_ajax_myarcade_get_filelist', 'myarcade_get_filelist');
+?>

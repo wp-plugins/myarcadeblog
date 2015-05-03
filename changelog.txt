@@ -1,5 +1,23 @@
 - MyArcadePlugin Lite -
 
+v5.0.0 - 2015-04-28 - Based on MyArcadePlugin Pro v5.16.2
+  - New: 2PG feed integration (http://2pg.com)
+  - New: Famobi feed integration (http://famobi.com)
+  - New: Gamepix feed integration (http://gamepix.com)
+  - New: Moved MyArcadePlugin upload folders to WordPress upload folder (uploads/games, uploads/thumbs).
+  - New: Display MyArcade Game Details post meta only if the current post is a game
+  - New: Video URL field on import games form
+  - New: Display custom taxonomies on game import form if custom post type is activated
+  - New: Display MyArcade Game Details meta box on custom post types
+  - New: Option to select Iframe games on "Publish Games" page
+  - New: Action when a game post has been created to allow users to add additional data to the post
+    - do_action( 'myarcade_post_created', $post_id );
+  - New: Create required directories on settings update and not only on plugin activation/update
+  - Fix: Don't try to download Iframe games
+  - Fix: Import embed games where the embed code contains line breaks
+  - Fix: Sanitize description and instruction fields correctly
+  - Fix: Clean "new line" characters
+
 v4.1.0 - 2014-06-10
   - New: Updated to Spilgames Feed API v3
   - New: Spilgames - Game Player API integration. Can be enabled on MyArcade -> Spilgames Settings

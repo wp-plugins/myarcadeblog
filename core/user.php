@@ -1,24 +1,30 @@
 <?php
 /**
- * This modul contains MyArcadePlugin output functions
+ * User functions
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2015, Daniel Bakovic
  * @license http://myarcadeplugin.com
- * @package MyArcadePlugin/Core/User
+ * @package MyArcadePlugin/Core/Game
  */
 
+/*
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
+ * Do not modify! Do not sell! Do not distribute! -
+ * Check our license Terms!
+ */
 
-defined('MYARCADE_VERSION') or die();
-
-/* Extend the WP Bar */
-add_action( 'admin_bar_menu', 'myarcade_bar_menu', 1000 );
+// No direct access
+if( !defined( 'ABSPATH' ) ) {
+  die();
+}
 
 /**
  * Shows MyArcade menu on the admin bar (Only for WP 3.1 and above)
- * @global <type> $wp_admin_bar
- * @global $wpdb $wpdb
- * @return <type>
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
 function myarcade_bar_menu() {
   global $wp_admin_bar;
@@ -40,3 +46,5 @@ function myarcade_bar_menu() {
     $wp_admin_bar->add_menu( array('id' => 'myarcade-settings', 'parent'  => $id, 'title' => 'Settings',      'href' => admin_url('admin.php?page=myarcade-edit-settings') ) );
   }
 }
+add_action( 'admin_bar_menu', 'myarcade_bar_menu', 1000 );
+?>

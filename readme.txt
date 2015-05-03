@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: WordPress Arcade, WP Arcade, WP Arcade Plugin, WPArcade, WPArcade Plugin, Flash Games, Mochi Media, BigFish Games, Big Fish, Kongregate, Unity3D, Unity, HTML5, FlashGameDistribution, FreeGamesForYourWebsite, Scirra, Spilgames, Autoblog, Auto post, Games, Arcade Script, Arcade Plugin, Game Script, Arcade
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 4.1.0
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,79 +33,80 @@ FunGames Theme in Action
 [youtube http://www.youtube.com/watch?v=iZ9BkbVoC8c]
 
 = MyArcadePlugin Lite Features =
+* Fetch Games from 2PG
+* Fetch Games from GamePix
+* Fetch Games from Famobi
 * Fetch Games from MyArcadeFeed
 * Fetch Games from Spilgames
-* Fetch Games from UnityFeeds
-* Fetch Games from 2PG
+* Fetch Games from UnityGames
+* Import Flash Games (SWF)
+* Import Iframe Games
+* Import Embed Code Games
 * Play Flash Games
 * Play HTML5 Games
 * Play Unity3D Games
 * Play Iframe / Embed Games
-* One-Click Game Feeding
-* One-Click Game Publishing
-* Publish games immediately
-* Publish games time shifted - scheduled with individual time interval!
-* Game Management (search, publish, delete) with pagination
-* Option to embed games automatically (No Theme Editing Needed)
+* Option to download game files to your server
+* Detect Game Dimensions Automatically (SWF)
+* Publish games immediately or time shifted
+* Game Management (search, publish, delete)
 * Post templates with several placeholders to generate unique game descriptions
-* Download Games automatically to your server
-* Download Thumbs automatically to your server
-* Download Screenshots automatically to your server
-* Delete game files when deleting a game post
-* Import Flash Games (SWF Format)
-* Import Iframe Games
-* Import Emebed Code Games
 * Option to reset the games database
-* Multilingual Support - Easy translation to every language
-* Compatible with Premium <a href='http://exells.com' title='WP Arcade Themes'>WP Arcade Themes</a>
+* Works with every WordPress Theme
+* Works with all Premium <a href='http://exells.com' title='WP Arcade Themes'>WP Arcade Themes</a>
 
 = MyArcadePlugin Pro Features =
 MyArcadePlugin Lite is a fully functional but limited version of <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>MyArcadePlugin Pro</a>. Here are some of the features you will get with the premium version:
 
-* Fetch Games from Big Fish Games
-* Fetch Games from FlashGameDistribution
-* Fetch Games from FreeGamesForYourWebsite
-* Fetch Games from Kongregate
-* Fetch Games from Scirra
-* Fetch Games from Spilgames
-* Fetch Games from GameFeed by TalkArcades
-* Fetch Games from MyArcadeFeed
 * Fetch Games from 2PG
+* Fetch Games from Arcade Game Feed
+* Fetch Games from Big Fish Games
+* Fetch Games from Famobi
+* Fetch Games from FlashGameDistributrion
+* Fetch Games from FreeOnlineGames
+* Fetch Games from GameFeed by TalkArcades
+* Fetch Games from GamePix
+* Fetch Games from Kongregate
+* Fetch Games from MyArcadeFeed
+* Fetch Games from Scirra
+* Fetch Games from Spil Games
 * Fetch Games from UnityFeeds
-* Automated Game Fetching (WP Cron)
-* Import Unity 3D Games
+* Import Flash Games (SWF)
+* Import HTML5 Games
+* Import Shockwave Games (DCR)
 * Import IBPArcade Games
 * Import PHPBB Games
 * Import ZIP Games
+* Import Unity 3D Games
 * Import Mochi ZIP Files (Mochi Legacy Import)
-* Import HTML5 Games
-* Import SWF Games
-* Import DCR Games
 * Import Embed Codes Games
 * Import Iframe Games
 * Import Games Uploaded via FTP
-* GameFeed AutoPublisher Integration
 * Detect Game Dimensions Automatically (SWF, IBPArcade)
 * Grab Game Files From URL
-* SWFObject Integration
 * Edit Games Before Publishing
-* Save GamerSafe Scores (GamerSafe Bridge Integration)
 * Save IBPArcade Scores
 * Save PHPBB Scores
+* Save GamerSafe Scores
 * Leaderboards
 * Save Highest Score Only
-* Ajaxed Category-Mapping
-* Save Games as drafts
+* Category Mapping
 * Allow Users To Import Games
-* Single Category Publishing
 * Microsoft Translation API (36 Languages)
 * Google Tranlator v2 API (64 Languages)
-* CubePoints Support
+* Yandex Translator API (25 Languages)
 * MyCRED integration
 * BuddyPress integration
+* CubePoints integration
+* WordPress Achievements integration
+* WordPress Multi Site Support (WPMU)
 * and a lot of more..
 
-With MyArcadePlugin you can automatically fetch games from 10 game distributors: Big Fish Games, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), Kongregate, MyArcadeFeed, Scirra, TalkArcades, Spilgames, 2PG and UnityFeeds. Additionally you can import 10 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Mochi ZIP Files, Unity 3D Games, HTML5, Embed Codes and Iframe Codes. There are over 70.000 games available that you can add to your site instantly!
+With MyArcadePlugin you can automatically fetch games from 13 game distributors: 2PG, Arcade Game Feed, Big Fish Games, Famobi, FlashGameDistributrion (FGD), FreeGamesForYourWebsite (FOG), GameFeed by TalkArcades, GamePix, Kongregate, MyArcadeFeed, Scirra, Spil Games and UnityFeeds.
+
+Additionally you can import 10 game types manually: SWF Games, DCR Games, IBPArcade (IBProArcade), PHPBB Games, ZIP Games, Mochi ZIP Files, Unity 3D Games, HTML5, Embed Codes and Iframe Codes.
+
+There are over 70.000 games available that you can add to your site instantly!
 
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>Upgrade to the full version now »</a>
 
@@ -118,19 +119,13 @@ With MyArcadePlugin you can automatically fetch games from 10 game distributors:
 4. Visit your WordPress admin panel -> Plugins and activate MyArcadePlugin
 5. Click on MyArcade -> Settings and setup the plugin
 
-= Downloading Files =
-- If you want to download games to your server, create a `games` folder: `/wp-content/games/`
-  * CHMOD directory `/wp-content/games/` to 777
-- If you want to download thumbnails to your server, then create a `thumbs` folder: `/wp-content/thumbs/`
-  * CHMOD directory `/wp-content/thumbs/` to 777
-
 = Usage =
-After the installation you have to setup the plugin. You can find a <a href='http://myarcadeplugin.com/documentation/' title='WP Arcade Plugin Documentation'>MyArcadePlugin setup and usage instructions with screenshots and video here »</a>
+After the installation you have to setup the plugin. You can find a <a href='http://myarcadeplugin.com/documentation/' title='WP Arcade Plugin Documentation'>MyArcadePlugin setup and usage instructions with screen shots and video here »</a>
 
 == Upgrade Notice ==
 
 1. Deactivate MyArcadePlugin
-2. Upload new version
+2. Upload a new version
 3. Activate MyArcadePlugin
 
 == Frequently Asked Questions ==
@@ -143,8 +138,8 @@ The plugin adds the following custom fields to each game post:
 <ul>
 <li>mabp_description - holds the description of a game</li>
 <li>mabp_instructions - holds game instructions</li>
-<li>mabp_thumbnail_url - holds the complete url of the game thumb</li>
-<li>mabp_swf_url - holds the url of the game embed file</li>
+<li>mabp_thumbnail_url - holds the complete URL of the game thumb</li>
+<li>mabp_swf_url - holds the URL of the game embed file</li>
 <li>mabp_screen1_url - screenshot 1 url</li>
 <li>mabp_screen2_url - screenshot 2 url</li>
 <li>mabp_screen3_url - screenshot 3 url</li>
@@ -168,21 +163,21 @@ To embed the flash code of a game manually, you can use this inside your WordPre
 
 
 = Can I use MyArcadePlugin on an existing WordPress blog? =
-Yes, but only with the Pro version. MyArcadePlugin Pro is able to add a gaming section on your existing blog within minutes. Take a look to our demonstration video:
-
-[youtube http://www.youtube.com/watch?v=lN1Cb7VrS_o]
+Yes, you can. We have created a theme integration Plugin that will integrate MyArcadePlugin with ease to every existing WordPress blog. Check the features on our site: <a href="http://myarcadeplugin.com/features/enhance-your-wp-blog/" title="MyArcadePlugin Theme Integration" target="_blank">MyArcadePlugin Theme Integration</a>
 
 = Where can I buy Arcade Themes for MyArcadePlugin? =
-Check <a href='http://exells.com'>WP Arcade Theme Directory</a>
+Check our <a href='http://exells.com' title="WPArcade Themes">WP Arcade Theme Directory</a>
 
 = Is MyArcadePlugin Lite compatible with MyArcadePlugin Pro? =
 Yes, you can upgrade to the PRO version without any modifications!
 <a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 = How to Upgrade from Lite to Pro? =
-Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro and activate it.
+Deactivate MyArcadePlugin Lite and delete the Plugin. Upload MyArcadePugin Pro and activate it.
 
 == Screenshots ==
+
+<a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
 
 1. MyArcadePlugin Settings Page - Here you can adjust all settings and setup your feeds.
 2. Fetch Games Page - Fetch games from selected game distributor and your filters.
@@ -194,23 +189,40 @@ Deactivate MyArcadePlugin Lite and delete the plugin. Upload MyArcadePugin Pro a
 8. FunGames24.net - http://fungames24.net - demo page with default theme
 9. BuddyPress Arcade - Free WP Arcade Theme available on MyArcadePlugin blog
 10. Triqui - Free WP Arcade Theme available on MyArcadePlugin blog
-9. GalleryGames - Free WP Arcade Theme available on MyArcadePlugin blog
-
-<a href='http://myarcadeplugin.com/' title='WordPress Arcade Plugin'>** Upgrade to the full version now » **</a>
+11. GalleryGames - Free WP Arcade Theme available on MyArcadePlugin blog
 
 == CHANGELOG ==
 
+= Version 5.0.0 - 2015-05-03 - Based on MyArcadePlugin Pro v5.16.2 =
+  - New: Famobi feed integration (http://famobi.com)
+  - New: Gamepix feed integration (http://gamepix.com)
+  - New: Moved MyArcadePlugin upload folders to WordPress upload folder (wp-content/uploads/games, wp-content/uploads/thumbs). This was required for the multi site support.
+  - New: Display MyArcade Game Details post meta only if the current post is a game
+  - New: Video URL field on import games form
+  - New: Display custom taxonomies on game import form if custom post type is activated
+  - New: Display MyArcade Game Details meta box on custom post types
+  - New: Option to select Iframe games on "Publish Games" page
+  - New: Action when a game post has been created to allow users to add additional data to the post
+    - do_action( 'myarcade_post_created', $post_id );
+  - New: Create required directories on settings update and not only on Plugin activation/update
+  - Fix: Don't try to download Iframe games
+  - Fix: Sanitize description and instruction fields correctly
+  - Fix: Clean up "new line" characters
+
 = Version 4.1.0 - 2014-06-10 =
-  * New: Updated to Spilgames Feed API v3
-  * New: Spilgames - Game Player API integration. Can be enabled on MyArcade -> Spilgames Settings
-  * New: Spilgames - Offset fetching
-  * New: MyArcadeFeed - Unity and Iframe game types added
-  * New: Iframe codes are not stored directly anymore while fetching. Only the URL is stored and the code will be generated automatically
-  * New: Custom game type: Iframe URL. Just enter a URL of a game or page which should be embedded. The Iframe code will be generated automatically
-  * New: Filter to manipulate game images before they get added
-  * New: Video URL field on MyArcade Game Details meta box
-  * Fix: Game dimensions are not stored correctly for Iframe/Embed games (Import games page)
-  * Fix: UnityFeeds URL on settings page
+  - New: Updated to Spilgames Feed API v3
+  - New: Spilgames - Game Player API integration. Can be enabled on MyArcade -> Spilgames Settings
+  - New: Spilgames - Offset fetching
+  - New: MyArcadeFeed - Unity and Iframe game types added
+  - New: Iframe codes are not stored directly anymore while fetching. Only the URL is stored and the code will be generated automatically
+  - New: Custom game type: Iframe URL. Just enter a URL of a game or page which should be embedded. The Iframe code will be generated automatically
+  - New: Filter to manipulate game images before they get added
+    - apply_filters( 'myarcade_filter_game_code', $game_code, $game_type );
+    - apply_filters( 'myarcade_filter_thumbnail', $thumbnail_url )
+    - apply_filters( 'myarcade_filter_screenshot', $screenshot_url, $screenshot_number );
+  - New: Video URL field on MyArcade Game Details meta box
+  - Fix: Game dimensions are not stored correctly for Iframe/Embed games (Import games page)
+  - Fix: UnityFeeds URL on settings page
 
 = Version 4.0.0 - 2014-04-18 =
   * New: Unityfeeds integration

@@ -1,20 +1,47 @@
 <?php
 /**
- * MyArcadePlugin Template Functions
+ * MyArcade Template Functions
  *
- * Author:       Daniel Bakovic
- * Author URI:   http://myarcadeplugin.com
+ * Functions used in the template files to output content
+ *
+ * @author Daniel Bakovic <contact@myarcadeplugin.com>
+ * @copyright (c) 2015, Daniel Bakovic
+ * @license http://myarcadeplugin.com
+ * @package MyArcadePlugin/Core/Template
  */
 
-defined('MYARCADE_VERSION') or die();
+/*
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
+ * Do not modify! Do not sell! Do not distribute! -
+ * Check our license Terms!
+ */
 
-add_action( 'wp_head', 'myarcade_generator' );
-add_action( 'wp_footer', 'myarcade_comment' );
-
-function myarcade_generator() {
-	echo "\n" . '<!-- MyArcadePlugin Lite Version -->' . "\n" . '<meta name="generator" content="MyArcadePlugin Lite ' . MYARCADE_VERSION . '" />' . "\n";
+// No direct access
+if( !defined( 'ABSPATH' ) ) {
+  die();
 }
 
+/**
+ * Add MyArcade comment on the theme footer
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
+ */
 function myarcade_comment() {
   echo "\n"."<!-- Powered by MyArcadePlugin Lite - http://myarcadeplugin.com -->"."\n";
 }
+add_action('wp_footer', 'myarcade_comment');
+
+/**
+ * Add MyArcade comment on theme header
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
+ */
+function myarcade_generator_tag() {
+  echo "\n" . '<meta name="generator" content="MyArcadePlugin Lite ' . esc_attr( MYARCADE_VERSION ) . '" />' . "\n";
+}
+add_action('wp_head', 'myarcade_generator_tag');
+?>

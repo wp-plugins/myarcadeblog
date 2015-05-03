@@ -102,9 +102,11 @@ margin:0;
 text-shadow:0 1px 0 #FFFFFF;
 }
 
+
 .clear {
   clear:both;
 }
+
 
 .game {
 	clear:both;
@@ -312,6 +314,7 @@ text-shadow:0 1px 0 #FFFFFF;
   font-size: 2em;
   font-weight: normal;
   color: #fff;
+  /* float: left; */
  }
 
 

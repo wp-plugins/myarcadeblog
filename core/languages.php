@@ -107,3 +107,32 @@ $languages_google = array (
 'cy' => 'Welsh',
 'yi' => 'Yiddish'
 );
+
+$languages_yandex = array(
+  "sq" => "Albanian",
+  "be" => "Belarusian",
+  "ca" => "Catalan",
+  "cs" => "Czech",
+  "da" => "Danish",
+  "nl" => "Dutch",
+  "et" => "Estonian",
+  "fi" => "Finnish",
+  "fr" => "French",
+  "de" => "German",
+  "el" => "Greek",
+  "hu" => "Hungarian",
+  "it" => "Italian",
+  "lv" => "Latvian",
+  "lt" => "Lithuanian",
+  "mk" => "Macedonian",
+  "no" => "Norwegian",
+  "pt" => "Portuguese",
+  "ru" => "Russian",
+  "sk" => "Slovak",
+  "sl" => "Slovenian",
+  "es" => "Spanish",
+  "sv" => "Swedish",
+  "tr" => "Turkish",
+  "uk" => "Ukrainian",
+);
+?>

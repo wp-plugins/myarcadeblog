@@ -1,18 +1,29 @@
 <?php
 /**
- * Game Preview Module for MyArcadePlugin Pro
- *
+ * Game Preview
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2013, Daniel Bakovic
+ * @copyright (c) 2015, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Game
  */
 
+/*
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
+ * Do not modify! Do not sell! Do not distribute! -
+ * Check our license Terms!
+ */
+
+// Locate WordPress root folder
 $root = dirname( dirname( dirname( dirname( dirname(__FILE__)))));
+
 if ( file_exists($root . '/wp-load.php') ) {
   define('MYARCADE_DOING_ACTION', true);
   require_once($root . '/wp-load.php');
+}
+else {
+  // WordPress not found
+  die();
 }
 
 // Check user privilege

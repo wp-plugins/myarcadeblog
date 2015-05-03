@@ -1,11 +1,17 @@
 <?php
 /**
- * Install / Uninstall / Update Plugin
+ * Install / Update functions
  *
  * @author Daniel Bakovic <contact@myarcadeplugin.com>
- * @copyright (c) 2014, Daniel Bakovic
+ * @copyright (c) 2015, Daniel Bakovic
  * @license http://myarcadeplugin.com
  * @package MyArcadePlugin/Core/Setup
+ */
+
+/*
+ * Copyright @ Daniel Bakovic - contact@myarcadeplugin.com
+ * Do not modify! Do not sell! Do not distribute! -
+ * Check our license Terms!
  */
 
 // No direct access
@@ -15,38 +21,29 @@ if( !defined( 'ABSPATH' ) ) {
 
 /**
  * Installation function
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  [type] [description]
  */
 function myarcade_install() {
   global $wpdb, $wp_version;
 
   $collate = '';
 
-  if (version_compare($wp_version, '3.5', '>=') ) {
-    if ( $wpdb->has_cap( 'collation' ) ) {
-      if( ! empty($wpdb->charset ) ) {
-        $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
-      }
-      if( ! empty($wpdb->collate ) ) {
-        $collate .= " COLLATE $wpdb->collate";
-      }
-    }
+  if ( ! empty( $wpdb->charset ) ) {
+    $collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
   }
-  else {
-    if( $wpdb->supports_collation() ) {
-      if( !empty($wpdb->charset) ) {
-        $collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
-      }
-      if( !empty($wpdb->collate) ) {
-        $collate.= " COLLATE ".$wpdb->collate;
-      }
-    }
+
+  if ( ! empty( $wpdb->collate ) ) {
+    $collate .= " COLLATE {$wpdb->collate}";
   }
 
   // Check if games table exisits
-  if ($wpdb->get_var("show tables like '".MYARCADE_GAME_TABLE."'") != MYARCADE_GAME_TABLE) {
+  if ($wpdb->get_var("show tables like '".$wpdb->prefix . 'myarcadegames'."'") != $wpdb->prefix . 'myarcadegames') {
 
     // Create new games table
-    $sql = "CREATE TABLE `".MYARCADE_GAME_TABLE."` (
+    $sql = "CREATE TABLE `".$wpdb->prefix . 'myarcadegames'."` (
       `id` int(11) NOT NULL auto_increment,
       `postid` int(11) DEFAULT NULL,
       `uuid` text collate utf8_unicode_ci NOT NULL,
@@ -89,7 +86,7 @@ function myarcade_install() {
   // Include the feed game categories
   $catfile = MYARCADE_CORE_DIR.'/feedcats.php';
   if ( file_exists($catfile) ) {
-    @require_once($catfile);
+    include($catfile);
   }
   else {
     wp_die('Required configuration file not found!', 'Error: MyArcadePlugin Activation');
@@ -97,7 +94,7 @@ function myarcade_install() {
 
   $default_settings = MYARCADE_CORE_DIR.'/settings.php';
   if ( file_exists($default_settings) ) {
-    @require_once($default_settings);
+    include($default_settings);
   }
   else {
     wp_die('Required configuration file not found!', 'Error: MyArcadePlugin Activation');
@@ -118,165 +115,11 @@ function myarcade_install() {
     }
     update_option('myarcade_general', $myarcade_general);
   }
-  // Kongregate Settings
-  $myarcade_kongregate = get_option('myarcade_kongregate');
 
-  if ( !$myarcade_kongregate ) {
-    add_option('myarcade_kongregate', $myarcade_kongregate_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_kongregate_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_kongregate) ) {
-        $myarcade_kongregate[$setting] = $val;
-      }
-    }
-    update_option('myarcade_kongregate', $myarcade_kongregate);
-  }
+  // Update distributor settings
+  myarcade_update_distributor_settings();
 
-  // FlashGameDistribution Settings
-  $myarcade_fgd = get_option('myarcade_fgd');
-
-  if ( !$myarcade_fgd ) {
-    add_option('myarcade_fgd', $myarcade_fgd_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_fgd_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_fgd) ) {
-        $myarcade_fgd[$setting] = $val;
-      }
-    }
-    update_option('myarcade_fgd', $myarcade_fgd);
-  }
-
-  // FreeGamesForYourWebsite Settings
-  $myarcade_fog = get_option('myarcade_fog');
-
-  if ( !$myarcade_fog ) {
-    add_option('myarcade_fog', $myarcade_fog_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_fog_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_fog) ) {
-        $myarcade_fog[$setting] = $val;
-      }
-    }
-    update_option('myarcade_fog', $myarcade_fog);
-  }
-
-  // spilgames Settings
-  $myarcade_spilgames = get_option('myarcade_spilgames');
-
-  if ( empty($myarcade_spilgames) ) {
-    add_option('myarcade_spilgames', $myarcade_spilgames_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_spilgames_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_spilgames) ) {
-        $myarcade_spilgames[$setting] = $val;
-      }
-    }
-    
-    // Overwrite Spilgames Feed URL
-    $myarcade_spilgames['feed'] = $myarcade_spilgames_default['feed'];
-
-    update_option('myarcade_spilgames', $myarcade_spilgames);
-  }
-
-  // MyArcadeFeed Settings
-  $myarcade_myarcadefeed = get_option('myarcade_myarcadefeed');
-
-  if ( empty($myarcade_myarcadefeed) ) {
-    add_option('myarcade_myarcadefeed', $myarcade_myarcadefeed_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_myarcadefeed_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_myarcadefeed) ) {
-        $myarcade_myarcadefeed[$setting] = $val;
-      }
-    }
-
-    if ( $myarcade_myarcadefeed['feed1'] != $myarcade_myarcadefeed_default['feed1']  ) {
-      $myarcade_myarcadefeed['feed1'] = $myarcade_myarcadefeed_default['feed1'];
-    }
-    
-    if ( $myarcade_myarcadefeed['feed2'] != $myarcade_myarcadefeed_default['feed2']  ) {
-      $myarcade_myarcadefeed['feed2'] = $myarcade_myarcadefeed_default['feed2'];
-    }
-
-    // Update MyArcadeFeed Settings
-    update_option('myarcade_myarcadefeed', $myarcade_myarcadefeed);
-  }
-
-  // Big Fish Games Settings
-  $myarcade_bigfish = get_option('myarcade_bigfish');
-
-  if ( !$myarcade_bigfish ) {
-    add_option('myarcade_bigfish', $myarcade_bigfish_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_bigfish_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_bigfish) ) {
-        $myarcade_bigfish[$setting] = $val;
-      }
-    }
-    update_option('myarcade_bigfish', $myarcade_bigfish);
-  }
-
-  // Scirra Settings
-  $myarcade_scirra = get_option('myarcade_scirra');
-
-  if ( !$myarcade_scirra ) {
-    add_option('myarcade_scirra', $myarcade_scirra_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_scirra_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_scirra) ) {
-        $myarcade_scirra[$setting] = $val;
-      }
-    }
-    update_option('myarcade_scirra', $myarcade_scirra);
-  }
-
-  // GameFeed Settings
-  $myarcade_gamefeed = get_option('myarcade_gamefeed');
-
-  if ( !$myarcade_gamefeed ) {
-    add_option('myarcade_gamefeed', $myarcade_gamefeed_default, '', 'no');
-  }
-  else {
-    // Upgrade Settings if needed
-    foreach ($myarcade_gamefeed_default as $setting => $val) {
-      if ( !array_key_exists($setting, $myarcade_gamefeed) ) {
-        $myarcade_gamefeed[$setting] = $val;
-      }
-    }
-    update_option('myarcade_gamefeed', $myarcade_gamefeed);
-  }
-  
-    // UnityFeeds Settings
-    $myarcade_unityfeeds = get_option('myarcade_unityfeeds');
-
-    if ( empty($myarcade_unityfeeds) ) {
-      add_option('myarcade_unityfeeds', $myarcade_unityfeeds_default, '', 'no');
-    }
-    else {
-      // Upgrade Settings if needed
-      foreach ($myarcade_unityfeeds_default as $setting => $val) {
-        if ( !array_key_exists($setting, $myarcade_unityfeeds) ) {
-          $myarcade_unityfeeds[$setting] = $val;
-        }
-      }
-      update_option('myarcade_unityfeeds', $myarcade_unityfeeds);
-    }
-
-   // Categories
+  // Categories
   $myarcade_categories = get_option('myarcade_categories');
 
   if ( empty($myarcade_categories) ) {
@@ -301,11 +144,11 @@ function myarcade_install() {
 
   // Check for upgrade to the new settings structure
   if ( !get_option('myarcade_version') ) {
-    if ($wpdb->get_var("show tables like '".MYARCADE_SETTINGS_TABLE."'") == MYARCADE_SETTINGS_TABLE) {
+    if ($wpdb->get_var("show tables like '" . $wpdb->prefix . 'myarcadesettings' . "'") == $wpdb->prefix . 'myarcadesettings') {
 
       // An Old settings table exists..
+      $myarcade_settings  = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix . 'myarcadesettings');
 
-      $myarcade_settings  = $wpdb->get_row("SELECT * FROM ".MYARCADE_SETTINGS_TABLE);
       // Upgrade General Settings
       $myarcade_general = get_option('myarcade_general');
       if ($myarcade_settings->leaderboard_active == 'Yes') { $myarcade_general['scores'] = true; } else { $myarcade_general['scores'] = false; }
@@ -352,7 +195,7 @@ function myarcade_install() {
       update_option('myarcade_categories', $feedcategories);
 
       // Remove the settings table after successfull upgrade
-      $wpdb->query("DROP TABLE ".MYARCADE_SETTINGS_TABLE);
+      $wpdb->query("DROP TABLE ".$wpdb->prefix . 'myarcadesettings');
     }
 
     update_option('myarcade_version', MYARCADE_VERSION);
@@ -365,24 +208,97 @@ function myarcade_install() {
     update_option('myarcade_version', MYARCADE_VERSION);
   }
 
-   // Make also an update of post meta
-  myarcade_upgrade_post_metas();
+  // Check if scores table exisits
+  if ($wpdb->get_var("show tables like '".$wpdb->prefix.'myarcadescores'."'") != $wpdb->prefix.'myarcadescores') {
+
+    $sql = "CREATE TABLE `".$wpdb->prefix.'myarcadescores'."` (
+      `id`        int(11) NOT NULL auto_increment,
+      `session`   text collate utf8_unicode_ci NOT NULL,
+      `date`      text collate utf8_unicode_ci NOT NULL,
+      `datatype`  text collate utf8_unicode_ci NOT NULL,
+      `game_tag`  text collate utf8_unicode_ci NOT NULL,
+      `user_id`   text collate utf8_unicode_ci NOT NULL,
+      `score`     text collate utf8_unicode_ci NOT NULL,
+      `sortorder` text collate utf8_unicode_ci NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) $collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+  }
+  else {
+    // Table already exists..
+    // Check if the table needs to be upgraded..
+    myarcade_upgrade_scores_table();
+  }
+
+  if ($wpdb->get_var("show tables like '".$wpdb->prefix.'myarcadehighscores'."'") != $wpdb->prefix.'myarcadehighscores') {
+
+    $sql = "CREATE TABLE `".$wpdb->prefix.'myarcadehighscores'."` (
+      `id`        INT(11) NOT NULL auto_increment,
+      `game_tag`  text collate utf8_unicode_ci NOT NULL,
+      `user_id`   text collate utf8_unicode_ci NOT NULL,
+      `score`     text collate utf8_unicode_ci NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) $collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+  }
+
+  // Check if scores table exisits
+  if ($wpdb->get_var("show tables like '".$wpdb->prefix.'myarcademedals'."'") != $wpdb->prefix.'myarcademedals') {
+
+    $sql = "CREATE TABLE `".$wpdb->prefix.'myarcademedals'."` (
+      `id`          int(11) NOT NULL auto_increment,
+      `date`        text collate utf8_unicode_ci NOT NULL,
+      `game_tag`    text collate utf8_unicode_ci NOT NULL,
+      `user_id`     text collate utf8_unicode_ci NOT NULL,
+      `score`       text collate utf8_unicode_ci NOT NULL,
+      `name`        text collate utf8_unicode_ci NOT NULL,
+      `description` text collate utf8_unicode_ci NOT NULL,
+      `thumbnail`   text collate utf8_unicode_ci NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) $collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+  }
+
+  // Check if game plays table exisits
+  if ($wpdb->get_var("show tables like '".$wpdb->prefix.'myarcadeuser'."'") != $wpdb->prefix.'myarcadeuser') {
+
+    $sql = "CREATE TABLE `".$wpdb->prefix.'myarcadeuser'."` (
+      `id`          int(11) NOT NULL auto_increment,
+      `user_id`     int(11) NOT NULL,
+      `points`      int(11) NOT NULL DEFAULT '0',
+      `plays`       int(11) NOT NULL DEFAULT '0',
+      PRIMARY KEY  (`id`)
+    ) $collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+  }
 
   myarcade_create_directories();
 }
 
 /**
- * @brief Upgrades the games table
+ * Upgrade games table
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
 function myarcade_upgrade_games_table() {
   global $wpdb;
 
   // Upgrade to 1.8
-  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".MYARCADE_GAME_TABLE);
+  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".$wpdb->prefix . 'myarcadegames');
 
   if (!in_array('rating', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `rating` text collate utf8_unicode_ci NOT NULL
       AFTER `controls`
     ");
@@ -390,18 +306,18 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('game_tag', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `game_tag` text collate utf8_unicode_ci NOT NULL
       AFTER `uuid`
     ");
   }
 
   // Update to 2.0
-  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".MYARCADE_GAME_TABLE);
+  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".$wpdb->prefix . 'myarcadegames');
 
   if (!in_array('postid', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `postid` text collate utf8_unicode_ci NOT NULL
       AFTER `id`
     ");
@@ -409,7 +325,7 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('screen1_url', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `screen1_url` text collate utf8_unicode_ci NOT NULL
       AFTER `swf_url`
     ");
@@ -417,7 +333,7 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('screen2_url', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `screen2_url` text collate utf8_unicode_ci NOT NULL
       AFTER `screen1_url`
     ");
@@ -425,7 +341,7 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('screen3_url', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `screen3_url` text collate utf8_unicode_ci NOT NULL
       AFTER `screen2_url`
     ");
@@ -433,7 +349,7 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('screen4_url', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `screen4_url` text collate utf8_unicode_ci NOT NULL
       AFTER `screen3_url`
     ");
@@ -441,29 +357,29 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('coins_enabled', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `coins_enabled` text collate utf8_unicode_ci NOT NULL
       AFTER `leaderboard_enabled`
     ");
   }
 
   // Upgrade to 2.60
-  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".MYARCADE_GAME_TABLE);
+  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".$wpdb->prefix . 'myarcadegames');
 
   if (!in_array('game_type', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `game_type` text collate utf8_unicode_ci NOT NULL
       AFTER `game_tag`
     ");
   }
 
   // Upgrade to 4.00
-  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".MYARCADE_GAME_TABLE);
+  $gametable_cols = $wpdb->get_col("SHOW COLUMNS FROM ".$wpdb->prefix . 'myarcadegames');
 
   if (!in_array('video_url', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `video_url` text collate utf8_unicode_ci NOT NULL
       AFTER `screen4_url`
     ");
@@ -471,20 +387,20 @@ function myarcade_upgrade_games_table() {
 
   if (!in_array('highscore_type', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `highscore_type` text collate utf8_unicode_ci NOT NULL
       AFTER `leaderboard_enabled`
     ");
   }
 
   // Upgrade to 5.80
-  $wpdb->query("ALTER TABLE `".MYARCADE_GAME_TABLE."` CHANGE  `postid`  `postid` INT( 11 )");
+  $wpdb->query("ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."` CHANGE  `postid`  `postid` INT( 11 )");
 
 
   /// Upgrade to 5.14.0
   if (!in_array('score_bridge', $gametable_cols)) {
     $wpdb->query("
-      ALTER TABLE `".MYARCADE_GAME_TABLE."`
+      ALTER TABLE `".$wpdb->prefix . 'myarcadegames'."`
       ADD `score_bridge` text collate utf8_unicode_ci NOT NULL
       AFTER `highscore_type`
     ");
@@ -492,77 +408,148 @@ function myarcade_upgrade_games_table() {
 }
 
 /**
- * @brief Updates the posts meta to avoid conflicts with All In One Seo
- *        and maybe other plugins
+ * Upgrade scores table
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
-function myarcade_upgrade_post_metas() {
+function myarcade_upgrade_scores_table() {
   global $wpdb;
 
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_description'  WHERE meta_key = 'description'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_instructions' WHERE meta_key = 'instructions'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_height'       WHERE meta_key = 'height'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_width'        WHERE meta_key = 'width'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_swf_url'      WHERE meta_key = 'swf_url'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_thumbnail_url' WHERE meta_key = 'thumbnail_url'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_rating'       WHERE meta_key = 'rating'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_screen1_url'  WHERE meta_key = 'screen1_url'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_screen2_url'  WHERE meta_key = 'screen2_url'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_screen3_url'  WHERE meta_key = 'screen3_url'");
-  $wpdb->query("UPDATE $wpdb->postmeta SET meta_key = 'mabp_screen4_url'  WHERE meta_key = 'screen4_url'");
+  $settings_cols  = $wpdb->get_col("SHOW COLUMNS FROM ".$wpdb->prefix.'myarcadescores');
+
+  // Upgrade to v4.00
+  if (!in_array('session', $settings_cols)) {
+    $wpdb->query("
+      ALTER TABLE `".$wpdb->prefix.'myarcadescores'."`
+      ADD `session` text collate utf8_unicode_ci NOT NULL
+      AFTER `id`
+    ");
+  }
+
+  if (!in_array('sortorder', $settings_cols)) {
+    $wpdb->query("
+      ALTER TABLE `".$wpdb->prefix.'myarcadescores'."`
+      ADD `sortorder` text collate utf8_unicode_ci NOT NULL
+      AFTER `score`
+    ");
+  }
 }
 
-
 /**
- * Load default settings
+ * Upgrade the feed categories
+ *
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
-function myarcade_load_default_settings() {
-
-  $default_settings = MYARCADE_CORE_DIR.'/settings.php';
-  if ( file_exists($default_settings) ) {
-    @include_once($default_settings);
-  }
-  else {
-    wp_die('Required configuration file not found!', 'Error: MyArcadePlugin Activation');
-  }
-
-  update_option('myarcade_general', $myarcade_general_default);
-  update_option('myarcade_kongregate', $myarcade_kongregate_default);
-  update_option('myarcade_fgd', $myarcade_fgd_default);
-  update_option('myarcade_fog', $myarcade_fog_default);
-  update_option('myarcade_spilgames', $myarcade_spilgames_default);
-  update_option('myarcade_myarcadefeed', $myarcade_myarcadefeed_default);
+function myarcade_upgrade_categories() {
+  global $wpdb;
 
   // Include the feed game categories
-  $catfile = MYARCADE_CORE_DIR.'/feedcats.php';
-  if ( file_exists($catfile) ) {
-    @include_once($catfile);
+  include_once 'feedcats.php';
+
+  // Get current settings
+  $myarcade_settings  = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix . 'myarcadesettings');
+  $old_cat_settings = unserialize($myarcade_settings->game_categories);
+
+  for ($i = 0; $i < count($feedcategories); $i++) {
+    foreach ($old_cat_settings as $old_cat) {
+      if ($old_cat['Name'] == $feedcategories[$i]['Name']) {
+        // Save Category Status and Mapping to the new array
+        $feedcategories[$i]['Status']  = $old_cat['Status'];
+        $feedcategories[$i]['Mapping'] = $old_cat['Mapping'];
+        // Go to the next category
+        break;
+      }
+    }
+  }
+
+  // Update the categories
+  $categories_str = serialize($feedcategories);
+  $wpdb->query("UPDATE ".$wpdb->prefix . 'myarcadesettings'." SET game_categories = '".$categories_str."'");
+}
+
+/**
+ * Update distributor's settings
+ *
+ * @version 5.0.0
+ * @return  void
+ */
+function myarcade_update_distributor_settings() {
+  global $myarcade_distributors;
+
+  if ( empty( $myarcade_distributors ) ) {
+    myarcade_set_distributors();
+  }
+
+  $default_settings = MYARCADE_CORE_DIR.'/settings.php';
+
+  if ( file_exists( $default_settings ) ) {
+    include( $default_settings );
   }
   else {
     wp_die('Required configuration file not found!', 'Error: MyArcadePlugin Activation');
   }
 
-  update_option('myarcade_categories', $feedcategories, '', 'no');
+  foreach ($myarcade_distributors as $key => $name) {
+    // Generate the default var name
+    $default_settings_var = 'myarcade_' . $key . '_default';
+
+    if ( isset( $$default_settings_var ) && ! empty( $$default_settings_var ) ) {
+
+      $default_settings = $$default_settings_var;
+
+      // Get options
+      $options = get_option( 'myarcade_' . $key );
+
+      // Check if options exists
+      if ( ! $options ) {
+        // Add new options
+        add_option( 'myarcade_' . $key, $default_settings, '', 'no' );
+      }
+      else {
+        // Options already exists. We need an update
+        foreach ( $default_settings as $setting => $val ) {
+          if ( ! array_key_exists( $setting, $options ) ) {
+            $options[ $setting ] = $val;
+          }
+        }
+
+        // Do a settings specific update routine
+        switch ( $key ) {
+          case 'spilgames': {
+            // Overwrite Spilgames Feed URL
+            $options['feed'] = $default_settings['feed'];
+          } break;
+
+          case 'myarcadefeed': {
+            // Delete 2PG feed URL
+            for ( $i = 1; $i <= 5; $i++ ) {
+              if ( !empty( $options['feed' . $i] ) ) {
+                if ( strpos( $options['feed'.$i], '2pg.com') !== FALSE ) {
+                  $options['feed'.$i] = '';
+                }
+              }
+            }
+          } break;
+        }
+
+        // Update settings
+        update_option( 'myarcade_' . $key, $options );
+      }
+    } // end if default sttings exists
+  } // end foreach distributors
 }
 
-
 /**
- * Uninstall MyArcadePlugin.
+ * Uninstall MyArcadePlugin
  *
- * @global <type> $wpdb
+ * @version 5.0.0
+ * @access  public
+ * @return  void
  */
-function myarcade_uninstall() {}
-
-/**
- * Display settings update notice
- */
-function myarcade_plugin_update_notice() {
-  // Avoid message displaying when settings have been saved
-  if ( isset($_POST['feedaction']) && $_POST['feedaction'] == 'save' ) {
-    return;
-  }
-  ?>
-  <div style="border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;background:#FEB1B1;border:1px solid #FE9090;color:#820101;font-size:14px;font-weight:bold;height:auto;margin:30px 15px 15px 0px;overflow:hidden;padding:4px 10px 6px;line-height:30px;">
-    MyArcadePlugin was just updated / installed - Please visit the <a href="admin.php?page=myarcade-edit-settings">Plugin Options Page</a> and setup the plugin!
-  </div>
-  <?php
+function myarcade_uninstall() {
 }
+?>
